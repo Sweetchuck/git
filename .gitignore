@@ -1,0 +1,23 @@
+### Common.
+/.cache/
+/reports/
+
+
+### Composer.
+/vendor/
+
+
+### PHPCS.
+/phpcs.xml
+
+
+### PHPStan
+/phpstan.neon
+
+
+### PHPUnit.
+/phpunit.xml
+
+
+### Dev tooling.
+/robo.yml

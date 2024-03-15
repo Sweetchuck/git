@@ -1,0 +1,23 @@
+parameters:
+	typeAliases:
+		sweetcuck-git-commit-msg-part: '''
+			array{
+				enabled: bool,
+				weight: int,
+				marginTop: int,
+				content: string,
+			}
+		'''
+		sweetcuck-git-commit-msg-part-modifier: '''
+			array{
+				enabled: bool,
+				weight: int,
+				callback: callable,
+			}
+		'''
+		sweetcuck-git-commit-msg-part-recognizer-options: '''
+			array{
+				keyTemplate?: string,
+				checkerPattern?: string,
+			}
+		'''
