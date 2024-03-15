@@ -1,0 +1,27 @@
+subject:
+    enabled: true
+    weight: -999
+    marginTop: 0
+    content: |
+        Issue #42 Initial commit
+unknown.2:
+    enabled: true
+    weight: 2
+    marginTop: 1
+    content: |
+        Body-1 line 1/1
+unknown.3:
+    enabled: true
+    weight: 3
+    marginTop: 1
+    content: |
+        Body-2 line 1/2
+        Body-2 line 2/2
+footer_comment:
+    enabled: true
+    weight: 999
+    marginTop: 1
+    content: |+
+        # Line 1
+        # Line 2
+        # Line 3

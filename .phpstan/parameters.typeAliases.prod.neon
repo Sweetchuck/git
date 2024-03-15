@@ -1,0 +1,29 @@
+parameters:
+	typeAliases:
+		sweetchuck-git-commit-msg-part: '''
+			array{
+				enabled: bool,
+				weight: int,
+				marginTop: int,
+				content: string,
+			}
+		'''
+		sweetchuck-git-commit-msg-part-modifier: '''
+			array{
+				enabled: bool,
+				weight: int,
+				callback: callable,
+			}
+		'''
+		sweetchuck-git-commit-msg-part-recognizer-options: '''
+			array{
+				keyTemplate?: string,
+				checkerPattern?: string,
+			}
+		'''
+		sweetchuck-git-ignored-modes: '''
+			""|"traditional"|"no"|"matching"
+		'''
+		sweetchuck-git-untracked-files-modes: '''
+			""|"no"|"normal"|"all"
+		'''

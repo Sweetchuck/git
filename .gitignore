@@ -1,0 +1,38 @@
+### Common.
+/.cache/
+/reports/
+
+
+### Composer.
+/vendor/
+/sweetchuck-git-*.tar
+/sweetchuck-git-*.tar.bz2
+/sweetchuck-git-*.tar.gz
+/sweetchuck-git-*.zip
+
+
+### Composer Suite.
+/.composer-suite/
+/composer.local.json
+/composer.local.lock
+
+
+### PHPUnit.
+/phpunit.xml
+
+
+### PHP Code Sniffer.
+/phpcs.xml
+
+
+### PHPStan.
+/tests/src/Phpstan.php
+/phpstan.neon
+
+
+### Robo.
+/robo.yml
+
+
+### sweetchuck/git-hooks.
+/.git-hooks.local
