@@ -30,6 +30,8 @@ class GrepFilesParser implements OutcomeParserInterface
     }
 
     /**
+     * @phpstan-param array<string, mixed> $options
+     *
      * @phpstan-return null|SweetchuckGitCommandGrepFilesArtifacts
      */
     protected function parseDefault(
@@ -51,6 +53,8 @@ class GrepFilesParser implements OutcomeParserInterface
     }
 
     /**
+     * @phpstan-param array<string, mixed> $options
+     *
      * @phpstan-return null|SweetchuckGitCommandGrepFilesArtifacts
      */
     protected function parseOnlyFilePaths(

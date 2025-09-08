@@ -582,6 +582,24 @@ class Repository
     }
 
     /**
+     * Represents the "git rm" command.
+     *
+     * @param array<string, mixed> $properties
+     */
+    public function removeFiles(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createRemoveFiles()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
      * Represents the "git restore" command.
      *
      * @param array<string, mixed> $properties

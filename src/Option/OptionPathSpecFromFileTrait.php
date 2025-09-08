@@ -16,6 +16,11 @@ trait OptionPathSpecFromFileTrait
             'name' => '--pathspec-from-file',
             'value' => null,
         ];
+        $this->properties['commandOptions']['pathSpecFileNul'] = [
+            'type' => 'state:true',
+            'name' => '--pathspec-file-nul',
+            'state' => null,
+        ];
 
         return $this;
     }
@@ -29,6 +34,10 @@ trait OptionPathSpecFromFileTrait
             $this->setPathSpecFromFile($properties['pathSpecFromFile']);
         }
 
+        if (array_key_exists('pathSpecFileNul', $properties)) {
+            $this->setPathSpecFileNul($properties['pathSpecFileNul']);
+        }
+
         return $this;
     }
 
@@ -40,6 +49,18 @@ trait OptionPathSpecFromFileTrait
     public function setPathSpecFromFile(null|false|string $value): static
     {
         $this->properties['commandOptions']['pathSpecFromFile']['value'] = $value;
+
+        return $this;
+    }
+
+    public function getPathSpecFileNul(): ?bool
+    {
+        return $this->properties['commandOptions']['pathSpecFileNul']['state'];
+    }
+
+    public function setPathSpecFileNul(?bool $value): static
+    {
+        $this->properties['commandOptions']['pathSpecFileNul']['state'] = $value;
 
         return $this;
     }

@@ -23,7 +23,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git add`
   * ✔ `git mv`
   * ✔ `git restore`
-  * 🛠 `git rm`
+  * ✔ `git rm`
   * 🛠 `git apply`
   * 🛠 `git stash list`
   * 🛠 `git stash show`

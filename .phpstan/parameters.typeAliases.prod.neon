@@ -33,9 +33,9 @@ parameters:
 		'''
 		sweetchuck-git-command-properties: '''
 			array{
-				workingDirectory?: ?string,
+				workingDirectory?: null|string,
 				envVars?: array<string, string>,
-				executable?: ?string,
+				executable?: null|string,
 				globalOptions?: array<string, array<string, mixed>>,
 				command?: array<string>,
 				commandOptions?: array<string, array<string, mixed>>,
@@ -96,15 +96,15 @@ parameters:
 				shallowExclude?: null|array<string>,
 				singleBranch?: null|bool|'no',
 				tags?: null|bool|'no',
-				shallowSubmodules?: bool,
+				shallowSubmodules?: null|bool,
 				separateGitDir?: null|string,
 				refFormat?: null|string,
 				serverOption?: null|array<string>,
 				ipv?: null|bool|'4'|'6',
 				filter?: null|string,
-				alsoFilterSubmodules?: bool,
+				alsoFilterSubmodules?: null|bool,
 				remoteSubmodules?: null|bool|'no','on-demand',
-				sparse?: bool,
+				sparse?: null|bool,
 				bundleUri?: null|string,
 				repository?: null|string,
 				directory?: null|string,
@@ -264,7 +264,7 @@ parameters:
 		'''
 		sweetchuck-git-command-grep-files-artifacts: '''
 			array{
-				files?: array<string, array{matches: array<int, int>, lines: array<int: string>}>,
+				files?: array<string, array{matches: array<int, int>, lines: array<int, string>}>,
 				filePaths?: array<string>,
 			}
 		'''

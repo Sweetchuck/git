@@ -16,7 +16,6 @@ use Sweetchuck\Git\Option\OptionUpdateTrait;
 use Sweetchuck\Git\Option\OptionIntentToAddTrait;
 use Sweetchuck\Git\Option\OptionIgnoreRemovalTrait;
 use Sweetchuck\Git\Option\OptionPathSpecFromFileTrait;
-use Sweetchuck\Git\Option\OptionPathSpecFileNulTrait;
 use Sweetchuck\Git\Option\OptionChmodTrait;
 use Sweetchuck\Git\Option\OptionRenormalizeTrait;
 use Sweetchuck\Git\Option\OptionRefreshTrait;
@@ -40,7 +39,6 @@ class StageFiles extends CliCommandBase
     use OptionIntentToAddTrait;
     use OptionIgnoreRemovalTrait;
     use OptionPathSpecFromFileTrait;
-    use OptionPathSpecFileNulTrait;
     use OptionChmodTrait;
     use OptionRenormalizeTrait;
     use OptionRefreshTrait;
@@ -65,7 +63,6 @@ class StageFiles extends CliCommandBase
             ->initPropertyIntentToAdd()
             ->initPropertyIgnoreRemoval()
             ->initPropertyPathSpecFromFile()
-            ->initPropertyPathSpecFileNul()
             ->initPropertyChmod()
             ->initPropertyRenormalize()
             ->initPropertyRefresh()
@@ -94,7 +91,6 @@ class StageFiles extends CliCommandBase
             ->setPropertyIntentToAdd($properties)
             ->setPropertyIgnoreRemoval($properties)
             ->setPropertyPathSpecFromFile($properties)
-            ->setPropertyPathSpecFileNul($properties)
             ->setPropertyChmod($properties)
             ->setPropertyRenormalize($properties)
             ->setPropertyRefresh($properties)

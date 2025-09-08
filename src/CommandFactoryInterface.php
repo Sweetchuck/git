@@ -35,6 +35,7 @@ use Sweetchuck\Git\Command\UpdateRemote;
 use Sweetchuck\Git\Command\DeleteBranch;
 use Sweetchuck\Git\Command\CreateBranch;
 use Sweetchuck\Git\Command\MoveBranch;
+use Sweetchuck\Git\Command\RemoveFiles;
 
 interface CommandFactoryInterface
 {
@@ -127,6 +128,11 @@ interface CommandFactoryInterface
      * Represents the "git restore" command.
      */
     public function createRestoreFiles(): RestoreFiles;
+
+    /**
+     * Represents the "git rm" command.
+     */
+    public function createRemoveFiles(): RemoveFiles;
 
     /**
      * Represents the "git diff --cached --name-status" command.

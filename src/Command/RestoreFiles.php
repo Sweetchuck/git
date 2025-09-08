@@ -10,7 +10,6 @@ use Sweetchuck\Git\Option\OptionIgnoreSkipWorktreeBitsTrait;
 use Sweetchuck\Git\Option\OptionIgnoreUnmergedTrait;
 use Sweetchuck\Git\Option\OptionMergeTrait;
 use Sweetchuck\Git\Option\OptionOverlayTrait;
-use Sweetchuck\Git\Option\OptionPathSpecFileNulTrait;
 use Sweetchuck\Git\Option\OptionPathSpecFromFileTrait;
 use Sweetchuck\Git\Option\OptionRecurseSubmodulesTrait;
 use Sweetchuck\Git\Option\OptionSourceTrait;
@@ -43,7 +42,6 @@ class RestoreFiles extends CliCommandBase
     use OptionUnifiedTrait;
     use OptionIgnoreSkipWorktreeBitsTrait;
     use OptionPathSpecFromFileTrait;
-    use OptionPathSpecFileNulTrait;
     use ArgumentPathsTrait;
 
     protected function initProperties(): static
@@ -61,8 +59,7 @@ class RestoreFiles extends CliCommandBase
             ->initPropertyConflict()
             ->initPropertyUnified()
             ->initPropertyIgnoreSkipWorktreeBits()
-            ->initPropertyPathSpecFromFile()
-            ->initPropertyPathSpecFileNul();
+            ->initPropertyPathSpecFromFile();
 
         return $this;
     }
@@ -84,8 +81,7 @@ class RestoreFiles extends CliCommandBase
             ->setPropertyConflict($properties)
             ->setPropertyUnified($properties)
             ->setPropertyIgnoreSkipWorktreeBits($properties)
-            ->setPropertyPathSpecFromFile($properties)
-            ->setPropertyPathSpecFileNul($properties);
+            ->setPropertyPathSpecFromFile($properties);
 
         if (array_key_exists('paths', $properties)) {
             $this->setPaths($properties['paths']);

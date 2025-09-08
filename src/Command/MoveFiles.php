@@ -14,6 +14,8 @@ use Sweetchuck\Git\Option\OptionSkipErrorsTrait;
  *
  * @see https://git-scm.com/docs/git-mv
  *
+ * @todo Artifacts when --dry-run is used.
+ *
  * @phpstan-import-type SweetchuckGitCommandMoveFilesProperties from \Sweetchuck\Git\Phpstan
  */
 class MoveFiles extends CliCommandBase

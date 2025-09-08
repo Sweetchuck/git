@@ -36,6 +36,7 @@ use Sweetchuck\Git\Command\DeleteBranch;
 use Sweetchuck\Git\Command\CreateBranch;
 use Sweetchuck\Git\Command\MoveBranch;
 use Sweetchuck\Git\Command\SetBranchUpstream;
+use Sweetchuck\Git\Command\RemoveFiles;
 
 /**
  * @todo Central place for "new FooCommand();"
@@ -312,6 +313,14 @@ class CommandFactory implements CommandFactoryInterface
     public function createRestoreFiles(): RestoreFiles
     {
         $command = new RestoreFiles();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createRemoveFiles(): RemoveFiles
+    {
+        $command = new RemoveFiles();
         $this->prepareCommand($command);
 
         return $command;

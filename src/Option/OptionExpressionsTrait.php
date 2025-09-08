@@ -32,11 +32,17 @@ trait OptionExpressionsTrait
         return $this;
     }
 
+    /**
+     * @return null|array<mixed>
+     */
     public function getExpressions(): null|array
     {
         return $this->properties['commandOptions']['expressions']['value'];
     }
 
+    /**
+     * @param null|array<mixed> $value
+     */
     public function setExpressions(null|array $value): static
     {
         $this->properties['commandOptions']['expressions']['value'] = $value ?: null;
