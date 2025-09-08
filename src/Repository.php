@@ -582,6 +582,24 @@ class Repository
     }
 
     /**
+     * Represents the "git restore" command.
+     *
+     * @param array<string, mixed> $properties
+     */
+    public function restoreFiles(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createRestoreFiles()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
      * Get the content of a file from the repository.
      *
      * @param array<string, mixed> $properties

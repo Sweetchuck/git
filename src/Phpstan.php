@@ -22,6 +22,7 @@ namespace Sweetchuck\Git;
  * @phpstan-type SweetchuckGitCommandDeleteBranchProperties = sweetchuck-git-command-delete-branch-properties
  * @phpstan-type SweetchuckGitCommandMoveBranchProperties = sweetchuck-git-command-move-branch-properties
  * @phpstan-type SweetchuckGitCommandMoveFilesProperties = sweetchuck-git-command-move-files-properties
+ * @phpstan-type SweetchuckGitCommandRestoreFilesProperties = sweetchuck-git-command-restore-files-properties
  * @phpstan-type SweetchuckGitCommandSetBranchUpstreamProperties = sweetchuck-git-command-set-branch-upstream-properties
  * @phpstan-type SweetchuckGitCommandGrepFilesArtifacts = sweetchuck-git-command-grep-files-artifacts
  */

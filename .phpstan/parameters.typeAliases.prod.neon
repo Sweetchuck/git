@@ -198,6 +198,32 @@ parameters:
 				paths?: array<string>,
 			}
 		'''
+		sweetchuck-git-command-restore-files-properties: '''
+			array{
+				processFactory?: null|\Sweetchuck\Git\ProcessFactoryInterface,
+				workingDirectory?: null|string,
+				envVars?: null|array<string, string>,
+				gitExecutable?: string,
+				gitDir?: null|string,
+				workTree?: null|string,
+				cwd?: null|string,
+				outcomeParser?: null|\Sweetchuck\Git\OutcomeParserInterface,
+				source?: null|string,
+				worktree?: null|bool,
+				staged?: null|bool,
+				ignoreUnmerged?: null|bool,
+				overlay?: null|bool,
+				recurseSubmodules?: null|array<bool|string>,
+				merge?: null|bool,
+				conflict?: null|false|"merge"|"diff3"|"zdiff3",
+				ours?: null|bool,
+				theirs?: null|bool,
+				ignoreSkipWorktreeBits?: null|bool,
+				pathspecFromFile?: null|string,
+				pathspecFileNul?: null|string,
+				paths?: array<string>,
+			}
+		'''
 		sweetchuck-git-command-switch-branch-properties: '''
 			array{
 				processFactory?: null|\Sweetchuck\Git\ProcessFactoryInterface,

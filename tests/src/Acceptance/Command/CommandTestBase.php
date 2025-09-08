@@ -39,11 +39,19 @@ class CommandTestBase extends TestBase
                     }
 
                     if (isset($step['expectedOutput'])) {
-                        static::assertStringContainsString(
-                            $step['expectedOutput'],
-                            trim($process->getOutput()),
-                            sprintf('Command "%s" output mismatch', $command)
-                        );
+                        if ($step['expectedOutput'] === '') {
+                            static::assertSame(
+                                $step['expectedOutput'],
+                                trim($process->getOutput()),
+                                sprintf('Command "%s" output mismatch', $command)
+                            );
+                        } else {
+                            static::assertStringContainsString(
+                                $step['expectedOutput'],
+                                trim($process->getOutput()),
+                                sprintf('Command "%s" output mismatch', $command)
+                            );
+                        }
                     }
                     break;
 

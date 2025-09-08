@@ -22,7 +22,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
 * work on the current change
   * ✔ `git add`
   * ✔ `git mv`
-  * 🛠 `git restore`
+  * ✔ `git restore`
   * 🛠 `git rm`
   * 🛠 `git apply`
   * 🛠 `git stash list`

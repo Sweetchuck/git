@@ -12,7 +12,7 @@ trait OptionConflictTrait
     protected function initPropertyConflict(): static
     {
         $this->properties['commandOptions']['conflict'] = [
-            'type' => 'value:string-required',
+            'type' => 'value:false:string-required',
             'name' => '--conflict',
             'value' => null,
         ];
@@ -32,12 +32,12 @@ trait OptionConflictTrait
         return $this;
     }
 
-    public function getConflict(): ?string
+    public function getConflict(): null|false|string
     {
         return $this->properties['commandOptions']['conflict']['value'];
     }
 
-    public function setConflict(?string $value): static
+    public function setConflict(null|false|string $value): static
     {
         $this->properties['commandOptions']['conflict']['value'] = $value;
 

@@ -12,7 +12,7 @@ trait OptionMergeTrait
     protected function initPropertyMerge(): static
     {
         $this->properties['commandOptions']['merge'] = [
-            'type' => 'state:true',
+            'type' => 'state:bool',
             'state' => null,
         ];
 

@@ -26,6 +26,7 @@ use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
+use Sweetchuck\Git\Command\RestoreFiles;
 use Sweetchuck\Git\Command\SetConfig;
 use Sweetchuck\Git\Command\StageFiles;
 use Sweetchuck\Git\Command\SwitchBranch;
@@ -303,6 +304,14 @@ class CommandFactory implements CommandFactoryInterface
     public function createMoveFiles(): MoveFiles
     {
         $command = new MoveFiles();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createRestoreFiles(): RestoreFiles
+    {
+        $command = new RestoreFiles();
         $this->prepareCommand($command);
 
         return $command;

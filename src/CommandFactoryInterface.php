@@ -24,6 +24,7 @@ use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
+use Sweetchuck\Git\Command\RestoreFiles;
 use Sweetchuck\Git\Command\SetBranchUpstream;
 use Sweetchuck\Git\Command\SetConfig;
 use Sweetchuck\Git\Command\CommitStagedFiles;
@@ -121,6 +122,11 @@ interface CommandFactoryInterface
      * Represents the "git mv" command.
      */
     public function createMoveFiles(): MoveFiles;
+
+    /**
+     * Represents the "git restore" command.
+     */
+    public function createRestoreFiles(): RestoreFiles;
 
     /**
      * Represents the "git diff --cached --name-status" command.
