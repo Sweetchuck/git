@@ -82,16 +82,10 @@ class GetBranches extends CliCommandBase
             ->setPropertyContains($properties)
             ->setPropertyPointsAt($properties)
             ->setPropertyRemotes($properties)
+            ->setPropertyAll($properties)
             ->setPropertySort($properties)
-            ->setPropertyIgnoreCase($properties);
-
-        if (array_key_exists('all', $properties)) {
-            $this->setAll($properties['all']);
-        }
-
-        if (array_key_exists('format', $properties)) {
-            $this->setFormatRefPropertyMapping($properties['format']);
-        }
+            ->setPropertyIgnoreCase($properties)
+            ->setPropertyFormat($properties);
 
         if (array_key_exists('paths', $properties)) {
             $this->setPaths($properties['paths']);
@@ -126,6 +120,18 @@ class GetBranches extends CliCommandBase
     {
         return [
             'definition' => $this->properties['commandOptions']['format']['definition'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getMachineReadableFormatConfig(): array
+    {
+        return [
+            'keyProperty' => 'refName',
+            'refSeparatorPosition' => 'begin',
+            'refPropertyMapping' => $this->getFormatRefPropertyMapping(),
         ];
     }
 }

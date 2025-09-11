@@ -12,18 +12,68 @@ class Utils
      */
     public array $predefinedRefPropertyMappings = [
         'branch-list.default' => [
-            'refName' => 'refname:strip=0',
-            'upstream' => 'upstream:strip=0',
-            'track' => 'upstream:track',
-            'push' => 'push:strip=0',
-            'isCurrentBranch' => 'HEAD',
+            'refName' => '%(refname:strip=0)',
+            'upstream' => '%(upstream:strip=0)',
+            'track' => '%(upstream:track)',
+            'push' => '%(push:strip=0)',
+            'isCurrentBranch' => '%(HEAD)',
         ],
         'tag-list.default' => [
-            'refName' => 'refname:strip=0',
-            'objectType' => 'objecttype',
-            'objectName' => 'objectname',
-            'taggerDate' => 'taggerdate:iso',
-            'creatorDate' => 'creatordate:iso',
+            'refName' => '%(refname:strip=0)',
+            'objectType' => '%(objecttype)',
+            'objectName' => '%(objectname)',
+            'taggerDate' => '%(taggerdate:iso)',
+            'creatorDate' => '%(creatordate:iso)',
+        ],
+        // https://git-scm.com/docs/git-log#Documentation/git-log.txt-H
+        'log-list.default' => [
+            'commitHash' => '%H',
+            'commitHash.short' => '%h',
+            'treeHash' => '%T',
+            'treeHash.short' => '%t',
+            'parentHashes' => '%P',
+
+            'authorName' => '%an',
+            'authorName.mailMap' => '%aN',
+            'authorEmail' => '%ae',
+            'authorEmail.mailMap' => '%aE',
+            'authorDate' => '%ad',
+
+            'committerName' => '%cn',
+            'committerName.mailMap' => '%cN',
+            'committerEmail' => '%ce',
+            'committerEmail.mailMap' => '%cE',
+            'committerDate' => '%cd',
+
+            'commitNotes' => '%cN',
+
+            'refNames' => '%D',
+
+            'commitMessage.subject' => '%s',
+            'commitMessage.body' => '%b',
+            'commitMessage.full' => '%B',
+
+            // @todo GPG.
+            // - %GG
+            // - %G?
+            // - %GS
+            // - %GK
+            // - %GF
+            // - %GP
+            // - %GT
+            // - %gD
+            // - %gd
+            // - %gn
+            // - %gN
+            // - %ge
+            // - %gE
+            // - %gs
+
+            // @todo Other.
+            // - %(trailers[:<option>,...])
+
+            // @todo This is an ugly shortcut.
+            'nameStatus' => '',
         ],
     ];
 

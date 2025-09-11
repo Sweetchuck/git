@@ -25,6 +25,18 @@ trait OptionFormatTrait
         return $this;
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
+    protected function setPropertyFormat(array $properties): static
+    {
+        if (array_key_exists('refPropertyMapping', $properties)) {
+            $this->setFormatRefPropertyMapping($properties['refPropertyMapping']);
+        }
+
+        return $this;
+    }
+
     protected ?FormatHandlerInterface $formatHandler = null;
 
     public function getFormatHandler(): FormatHandlerInterface
@@ -62,12 +74,16 @@ trait OptionFormatTrait
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
+    abstract protected function getMachineReadableFormatConfig(): array;
+
     protected function preGetCliCommandFormat(): static
     {
-        $refPropertyMapping = $this->getFormatRefPropertyMapping();
         $format = $this
             ->getFormatHandler()
-            ->createMachineReadableFormatDefinition($refPropertyMapping);
+            ->createMachineReadableFormatDefinition($this->getMachineReadableFormatConfig());
 
         $this->properties['commandOptions']['format']['value'] = $format['value'];
         $this->properties['commandOptions']['format']['definition'] = $format['definition'];

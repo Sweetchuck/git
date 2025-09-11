@@ -76,11 +76,8 @@ class GetTags extends CliCommandBase
             ->setPropertyContains($properties)
             ->setPropertyPointsAt($properties)
             ->setPropertySort($properties)
-            ->setPropertyIgnoreCase($properties);
-
-        if (array_key_exists('format', $properties)) {
-            $this->setFormatRefPropertyMapping($properties['format']);
-        }
+            ->setPropertyIgnoreCase($properties)
+            ->setPropertyFormat($properties);
 
         if (array_key_exists('paths', $properties)) {
             $this->setPaths($properties['paths']);
@@ -116,6 +113,18 @@ class GetTags extends CliCommandBase
         return [
             'definition' => $this->properties['commandOptions']['format']['definition'],
             'assetKey' => 'tags',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getMachineReadableFormatConfig(): array
+    {
+        return [
+            'keyProperty' => 'refName',
+            'refSeparatorPosition' => 'begin',
+            'refPropertyMapping' => $this->getFormatRefPropertyMapping(),
         ];
     }
 }

@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Tests\Helper\DummyUniqueIdGenerator;
 
@@ -17,7 +16,7 @@ use Sweetchuck\Git\Tests\Helper\DummyUniqueIdGenerator;
 class GetBranchesTest extends CommandTestBase
 {
 
-    protected function createCommand(): CliCommandInterface
+    protected function createCommand(): GetBranches
     {
         $uniqueIdGenerator = new DummyUniqueIdGenerator();
         $command = new GetBranches();
@@ -31,18 +30,17 @@ class GetBranchesTest extends CommandTestBase
      */
     public static function casesGetCliCommand(): array
     {
-        $defaultFormat = '--format=';
-        $defaultFormat .= implode(
-            'ß',
+        $expectedFormatDefault = '--format=';
+        $expectedFormatDefault .= implode(
+            '',
             [
-                'refName %(refname:strip=0)',
-                'upstream %(upstream:strip=0)',
-                'track %(upstream:track)',
-                'push %(push:strip=0)',
-                'isCurrentBranch %(HEAD)',
+                'ärefName=%(refname:strip=0)',
+                'ßupstream=%(upstream:strip=0)',
+                'ßtrack=%(upstream:track)',
+                'ßpush=%(push:strip=0)',
+                'ßisCurrentBranch=%(HEAD)',
             ],
         );
-        $defaultFormat .= 'ä';
 
         return [
             'basic' => [
@@ -50,7 +48,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [],
             ],
@@ -59,7 +57,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => null,
@@ -71,7 +69,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--color',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => true,
@@ -83,7 +81,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--no-color',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => false,
@@ -95,7 +93,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--color=always',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => 'always',
@@ -107,7 +105,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--color=auto',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => 'auto',
@@ -119,7 +117,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--color=never',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => 'never',
@@ -130,7 +128,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'all' => null,
@@ -142,7 +140,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--all',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'all' => true,
@@ -153,7 +151,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'merged' => [],
@@ -168,7 +166,7 @@ class GetBranchesTest extends CommandTestBase
                     '--no-merged=b',
                     '--merged=d',
                     '--no-merged=e',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'merged' => [
@@ -185,7 +183,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'contains' => [],
@@ -200,7 +198,7 @@ class GetBranchesTest extends CommandTestBase
                     '--contains=h2',
                     '--no-contains=h3',
                     '--contains=h4',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'contains' => [
@@ -216,7 +214,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'pointsAt' => null,
@@ -228,7 +226,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--no-points-at',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'pointsAt' => false,
@@ -240,7 +238,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--points-at=my-hash',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'pointsAt' => 'my-hash',
@@ -251,7 +249,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'remotes' => null,
@@ -263,7 +261,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--remotes',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'remotes' => true,
@@ -274,7 +272,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'sort' => [],
@@ -287,7 +285,7 @@ class GetBranchesTest extends CommandTestBase
                     '--list',
                     '--sort=a',
                     '--sort=c',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'sort' => [
@@ -302,7 +300,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'ignoreCase' => null,
@@ -314,7 +312,7 @@ class GetBranchesTest extends CommandTestBase
                     'branch',
                     '--list',
                     '--ignore-case',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'ignoreCase' => true,
@@ -325,7 +323,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'paths' => [],
@@ -336,7 +334,7 @@ class GetBranchesTest extends CommandTestBase
                     'git',
                     'branch',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                     '--',
                     'a',
                     'c',
@@ -368,12 +366,25 @@ class GetBranchesTest extends CommandTestBase
                                 'push.short' => 'upstream/1.x',
                                 'refName' => 'refs/heads/1.x',
                                 'refName.short' => '1.x',
-                                'track' => '[ahead 1, behind 1]',
+                                'track' => '[ahead 1, behind 2]',
                                 'track.ahead' => 1,
-                                'track.behind' => 1,
+                                'track.behind' => 2,
                                 'track.gone' => false,
                                 'upstream' => 'refs/remotes/upstream/1.x',
                                 'upstream.short' => 'upstream/1.x',
+                            ],
+                            'refs/heads/2.x' => [
+                                'isCurrentBranch' => false,
+                                'push' => 'refs/remotes/upstream/2.x',
+                                'push.short' => 'upstream/2.x',
+                                'refName' => 'refs/heads/2.x',
+                                'refName.short' => '2.x',
+                                'track' => '[ahead 3, behind 4]',
+                                'track.ahead' => 3,
+                                'track.behind' => 4,
+                                'track.gone' => false,
+                                'upstream' => 'refs/remotes/upstream/2.x',
+                                'upstream.short' => 'upstream/2.x',
                             ],
                         ],
                         'currentBranch' => 'refs/heads/1.x',
@@ -385,8 +396,17 @@ class GetBranchesTest extends CommandTestBase
                         'stdOutput' => implode(
                             '',
                             [
-                                // phpcs:ignore
-                                'refName refs/heads/1.xßupstream refs/remotes/upstream/1.xßtrack [ahead 1, behind 1]ßpush refs/remotes/upstream/1.xßisCurrentBranch *ä',
+                                'ärefName=refs/heads/1.x',
+                                'ßupstream=refs/remotes/upstream/1.x',
+                                'ßtrack=[ahead 1, behind 2]',
+                                'ßpush=refs/remotes/upstream/1.x',
+                                'ßisCurrentBranch=*',
+                                "\n",
+                                "ärefName=refs/heads/2.x",
+                                'ßupstream=refs/remotes/upstream/2.x',
+                                'ßtrack=[ahead 3, behind 4]',
+                                'ßpush=refs/remotes/upstream/2.x',
+                                'ßisCurrentBranch=',
                             ],
                         ),
                     ],

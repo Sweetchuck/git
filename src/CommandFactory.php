@@ -12,6 +12,7 @@ use Sweetchuck\Git\Command\CreateTag;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
+use Sweetchuck\Git\Command\GetCommits;
 use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
 use Sweetchuck\Git\Command\GetFileContent;
@@ -249,6 +250,14 @@ class CommandFactory implements CommandFactoryInterface
     public function createGetStatus(): GetStatus
     {
         $command = new GetStatus();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createGetCommits(): GetCommits
+    {
+        $command = new GetCommits();
         $this->prepareCommand($command);
 
         return $command;

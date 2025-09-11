@@ -7,8 +7,12 @@ namespace Sweetchuck\Git;
 /**
  * Represents the status of a file in a Git repository.
  *
- * These statuses are returned by the `git status --porcelain` command,
- * or the `git ls-files -t`
+ * These statuses are returned by the following commands:
+ * - `git status --porcelain`
+ * - `git ls-files -t`
+ * - `git log --name-status`
+ *
+ * @todo Separate Enum for "status" and "ls-files" and "log".
  */
 enum FileStatus: string
 {
@@ -58,6 +62,15 @@ enum FileStatus: string
     case ResolveUndo = 'U';
 
     /**
+     * "T" is never returned by any of the Git output.
+     *
+     * @see \Sweetchuck\Git\OutcomeParser\FormatParser::parseNameStatus
+     */
+    case Renamed = 'T';
+
+    case Changed = 'X';
+
+    /**
      * Checks if a status code represents a tracked file.
      *
      * @return bool
@@ -94,5 +107,14 @@ enum FileStatus: string
             ],
             true,
         );
+    }
+
+    public static function fromLogNameStatus(string $letter): self
+    {
+        return match ($letter) {
+            'R' => self::Renamed,
+            'M' => self::Changed,
+            default => self::from($letter),
+        };
     }
 }

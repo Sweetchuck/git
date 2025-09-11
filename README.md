@@ -45,6 +45,10 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git diff --name-status` (without `--cached`)
   * ✔ `git grep`
   * 🛠 `git log`
+    * ✔ `git log - GetCommits`
+    * 🛠 `git log ? --full-diff`
+    * 🛠 `git log ? -L<start>,<end>:<file>`
+    * 🛠 `git log ? -L:<funcname>:<file>`
   * 🛠 `git show`
     * ✔ `git show [ref]:<filePath>` (src/Command/GetFileContent.php)
   * ✔ `git status`
@@ -61,6 +65,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * 🛠 `git merge`
   * 🛠 `git rebase`
   * 🛠 `git reset`
+  * 🛠 `git checkout`
   * ✔ `git switch`
   * ✔ `git tag CREATE`
   * ✔ `git tag --list --verbose`

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\OutcomeParser;
 
+use Sweetchuck\Git\FileStatus;
 use Sweetchuck\Git\OutcomeParserInterface;
 
 class FormatParser implements OutcomeParserInterface
@@ -29,67 +30,102 @@ class FormatParser implements OutcomeParserInterface
      */
     public function parseStdOutput(string $stdOutput, array $definition): array
     {
-        if (!trim($stdOutput)) {
-            return [];
-        }
-
-        if (!str_ends_with($stdOutput, "\n")) {
-            $stdOutput .= "\n";
-        }
-
         $asset = [];
-        $refs = explode("{$definition['refSeparator']}\n", $stdOutput);
-        foreach ($refs as $refProperties) {
-            if ($refProperties === '') {
+        $rawRefsList = $this->splitRefs($definition, $stdOutput);
+        foreach ($rawRefsList as $rawRef) {
+            if (trim($rawRef) === '') {
                 continue;
             }
 
-            $ref = [];
-            $refProperties = explode($definition['propertySeparator'], $refProperties);
-            foreach ($refProperties as $property) {
-                [$key, $value] = explode($definition['keyValueSeparator'], $property, 2);
-                $ref[$key] = $value === ''
+            $refKeyValuePairs = [];
+            $rawProperties = explode($definition['propertySeparator'], $rawRef);
+            foreach ($rawProperties as $rawProperty) {
+                [$propertyName, $propertyValue] = explode($definition['keyValueSeparator'], $rawProperty, 2);
+                $refKeyValuePairs[$propertyName] = $propertyValue === ''
                     ? null
-                    : $value;
+                    : $propertyValue;
             }
 
-            $this->processRefProperties($ref, $definition);
+            $this->processRefProperties($refKeyValuePairs, $definition);
 
-            ksort($ref);
+            ksort($refKeyValuePairs);
 
-            $key = (string) $ref[$definition['key']];
-            $asset[$key] = $ref;
+            $propertyName = (string) $refKeyValuePairs[$definition['keyProperty']];
+            $asset[$propertyName] = $refKeyValuePairs;
         }
 
         return $asset;
     }
 
     /**
-     * @param array<string, mixed> $ref
+     * @param array<string, mixed> $definition
+     * @param string $stdOutput
+     *
+     * @return array<string>
+     */
+    protected function splitRefs(array $definition, string $stdOutput): array
+    {
+        if (!trim($stdOutput)) {
+            return [];
+        }
+
+        if ($definition['refSeparatorPosition'] === 'begin'
+            && str_starts_with($stdOutput, $definition['refSeparator'])
+        ) {
+            $stdOutput = substr($stdOutput, strlen($definition['refSeparator']));
+        }
+
+        if ($definition['refSeparatorPosition'] === 'end'
+            && str_ends_with($stdOutput, $definition['refSeparator'])
+        ) {
+            $stdOutput = substr($stdOutput, 0, strlen($definition['refSeparator']) * -1);
+        }
+
+        if (!str_ends_with($stdOutput, "\n")) {
+            $stdOutput .= "\n";
+        }
+
+        return array_map(
+            static fn (string $rawRef) => trim($rawRef, "\n\r"),
+            explode($definition['refSeparator'], $stdOutput),
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $refKeyValuePairs
      * @param array<string, mixed> $definition
      */
-    protected function processRefProperties(array &$ref, array $definition): static
+    protected function processRefProperties(array &$refKeyValuePairs, array $definition): static
     {
-        foreach ($definition['refPropertyMapping'] as $propertyName => $fieldName) {
-            switch ($fieldName) {
-                case 'refname':
-                case 'refname:strip=0':
-                case 'push':
-                case 'push:strip=0':
-                case 'upstream':
-                case 'upstream:strip=0':
-                    $this->processRefPropertiesRefName($propertyName, $ref);
+        foreach ($definition['refPropertyMapping'] as $propertyName => $placeholder) {
+            switch ($placeholder) {
+                case '%(refname)':
+                case '%(refname:strip=0)':
+                case '%(push)':
+                case '%(push:strip=0)':
+                case '%(upstream)':
+                case '%(upstream:strip=0)':
+                    $this->processRefPropertiesRefName($propertyName, $refKeyValuePairs);
                     break;
 
-                case 'HEAD':
-                    $this->processRefPropertiesHead($propertyName, $ref);
+                case '%(HEAD)':
+                    $this->processRefPropertiesHead($propertyName, $refKeyValuePairs);
                     break;
 
-                case 'upstream:track':
-                case 'upstream:track,nobracket':
-                    $this->processRefPropertiesUpstreamTrack($propertyName, $ref);
+                case '%(upstream:track)':
+                case '%(upstream:track,nobracket)':
+                    $this->processRefPropertiesUpstreamTrack($propertyName, $refKeyValuePairs);
+                    break;
+
+                case '%(P)':
+                    $this->processRefPropertiesCommitHashes($propertyName, $refKeyValuePairs);
                     break;
             }
+        }
+
+        if (isset($refKeyValuePairs['nameStatus'])) {
+            // @todo Do not use the human-readable property name as condition.
+            $refKeyValuePairs['nameStatus'] = $this->parseNameStatus($refKeyValuePairs['nameStatus']);
         }
 
         return $this;
@@ -146,5 +182,53 @@ class FormatParser implements OutcomeParserInterface
         }
 
         $ref += $additions;
+    }
+
+    /**
+     * @param array<string, mixed> $ref
+     */
+    protected function processRefPropertiesCommitHashes(string $key, array &$ref): void
+    {
+        $value = trim((string) $ref[$key]);
+        $ref[$key] = $value === ''
+            ? []
+            : explode(' ', $value);
+    }
+
+    /**
+     * @phpstan-return array<string, array{filePath: string, status: \Sweetchuck\Git\FileStatus}>
+     *
+     * @todo Track file renames.
+     */
+    protected function parseNameStatus(string $text): array
+    {
+        $text = trim($text);
+        if ($text === '') {
+            return [];
+        }
+
+        $parts = explode("\x00", $text);
+        $result = [];
+        while ($parts) {
+            $statusLetter = array_shift($parts);
+            $filePath = array_shift($parts);
+            if (str_starts_with($statusLetter, 'R')) {
+                $result[$filePath] = [
+                    'status' => FileStatus::Renamed,
+                    'filePath' => array_shift($parts),
+                    'oldFilePath' => $filePath,
+                    'percent' => (int) mb_substr($statusLetter, 1),
+                ];
+
+                continue;
+            }
+
+            $result[$filePath] = [
+                'status' => FileStatus::fromLogNameStatus($statusLetter),
+                'filePath' => $filePath,
+            ];
+        }
+
+        return $result;
     }
 }

@@ -81,6 +81,24 @@ class Repository
     }
 
     /**
+     * @param array<string, mixed> $properties
+     *
+     * @return null|array<string, string>
+     */
+    public function getCommits(array $properties = []): ?array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createGetCommits()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $result->artifacts;
+    }
+
+    /**
      * Get a list of changed files in the repository.
      *
      * @param array<string, mixed> $properties

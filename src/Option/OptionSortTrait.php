@@ -42,6 +42,7 @@ trait OptionSortTrait
 
     /**
      * @param array<string, bool> $value
+     *
      */
     public function setSort(array $value): static
     {

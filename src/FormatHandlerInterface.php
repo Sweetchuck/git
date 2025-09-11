@@ -12,9 +12,9 @@ interface FormatHandlerInterface
     public function setUniqueIdGenerator(?callable $uniqueIdGenerator): static;
 
     /**
-     * @param array<string, mixed> $refPropertyMapping
+     * @param array<string, mixed> $config
      *
      * @return array<string, mixed>
      */
-    public function createMachineReadableFormatDefinition(?array $refPropertyMapping): array;
+    public function createMachineReadableFormatDefinition(array $config): array;
 }

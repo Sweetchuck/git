@@ -34,29 +34,32 @@ class FormatHandlerTest extends TestBase
             'basic' => [
                 'expected' => [
                     'value' => implode(
-                        '&',
+                        '',
                         [
-                            'myProp01 %(my.prop.01)',
-                            'myProp02 %(my.prop.02)',
-                            'refName %(refname:strip=0)',
+                            '|refName=%(refname:strip=0)',
+                            '&myProp01=%(my.prop.01)',
+                            '&myProp02=%(my.prop.02)',
                         ],
-                    ) . '|',
+                    ),
                     'definition' => [
-                        'key' => 'refName',
+                        'refPropertyMapping' => [
+                            'refName' => '%(refname:strip=0)',
+                            'myProp01' => '%(my.prop.01)',
+                            'myProp02' => '%(my.prop.02)',
+                        ],
+                        'keyProperty' => 'refName',
+                        'refSeparatorPosition' => 'begin',
+                        'keyValueSeparator' => '=',
                         'refSeparator' => '|',
                         'propertySeparator' => '&',
-                        'keyValueSeparator' => ' ',
-                        'refPropertyMapping' => [
-                            'myProp01' => 'my.prop.01',
-                            'myProp02' => 'my.prop.02',
-                            'refName' => 'refname:strip=0',
-                        ],
-
                     ],
                 ],
-                'refPropertyMapping' => [
-                    'myProp01' => 'my.prop.01',
-                    'myProp02' => 'my.prop.02',
+                'config' => [
+                    'refPropertyMapping' => [
+                        'refName' => '%(refname:strip=0)',
+                        'myProp01' => '%(my.prop.01)',
+                        'myProp02' => '%(my.prop.02)',
+                    ],
                 ],
             ],
         ];
@@ -64,11 +67,11 @@ class FormatHandlerTest extends TestBase
 
     /**
      * @param array<string, mixed> $expected
-     * @param array<string, mixed> $refPropertyMapping
+     * @param array<string, mixed> $config
      */
     #[Test]
     #[DataProvider('casesCreateMachineReadableFormatDefinition')]
-    public function testCreateMachineReadableFormatDefinition(array $expected, array $refPropertyMapping): void
+    public function testCreateMachineReadableFormatDefinition(array $expected, array $config): void
     {
         $uniqueIds = ['|', '&'];
         $uniqueIdGenerator = function () use (&$uniqueIds): string {
@@ -81,6 +84,6 @@ class FormatHandlerTest extends TestBase
         $formatHandler = new FormatHandler();
         $formatHandler->setUniqueIdGenerator($uniqueIdGenerator);
 
-        static::assertSame($expected, $formatHandler->createMachineReadableFormatDefinition($refPropertyMapping));
+        static::assertSame($expected, $formatHandler->createMachineReadableFormatDefinition($config));
     }
 }

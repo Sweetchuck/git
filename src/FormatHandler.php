@@ -42,9 +42,9 @@ class FormatHandler implements FormatHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function createMachineReadableFormatDefinition(?array $refPropertyMapping): array
+    public function createMachineReadableFormatDefinition(array $config): array
     {
-        if ($refPropertyMapping === null) {
+        if (empty($config['refPropertyMapping'])) {
             return [
                 'value' => null,
                 'definition' => null,
@@ -53,29 +53,36 @@ class FormatHandler implements FormatHandlerInterface
 
         $uniqueIdGenerator = $this->getFinalUniqueIdGenerator();
 
-        $refPropertyMapping += [
-            'refName' => 'refname:strip=0'
+        $config += [
+            'keyProperty' => 'refName',
+            'refSeparatorPosition' => 'begin',
+            'keyValueSeparator' => '=',
         ];
 
-        $definition = [
-            'key' => 'refName',
-            'refSeparator' => $uniqueIdGenerator(),
-            'propertySeparator' => $uniqueIdGenerator(),
-            'keyValueSeparator' => ' ',
-            'refPropertyMapping' => $refPropertyMapping,
-        ];
-
-        $format = [];
-        foreach ($refPropertyMapping as $key => $pattern) {
-            $format[$key] = "{$key}{$definition['keyValueSeparator']}%($pattern)";
+        if (!array_key_exists('refSeparator', $config)) {
+            $config['refSeparator'] = $uniqueIdGenerator();
         }
 
-        $value = implode($definition['propertySeparator'], $format);
-        $value .= $definition['refSeparator'];
+        if (!array_key_exists('propertySeparator', $config)) {
+            $config['propertySeparator'] = $uniqueIdGenerator();
+        }
+
+        $format = [];
+        foreach ($config['refPropertyMapping'] as $key => $pattern) {
+            $format[] = "$key{$config['keyValueSeparator']}$pattern";
+        }
+
+        $prefix = $config['refSeparatorPosition'] === 'begin'
+            ? $config['refSeparator']
+            : '';
+        $suffix = $config['refSeparatorPosition'] === 'end'
+            ? $config['refSeparator']
+            : '';
+        $value = $prefix . implode($config['propertySeparator'], $format) .  $suffix;
 
         return [
             'value' => $value,
-            'definition' => $definition,
+            'definition' => $config,
         ];
     }
 }

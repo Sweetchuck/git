@@ -31,18 +31,17 @@ class GetTagsTest extends CommandTestBase
      */
     public static function casesGetCliCommand(): array
     {
-        $defaultFormat = '--format=';
-        $defaultFormat .= implode(
-            'ß',
+        $expectedFormatDefault = '--format=';
+        $expectedFormatDefault .= implode(
+            '',
             [
-                'refName %(refname:strip=0)',
-                'objectType %(objecttype)',
-                'objectName %(objectname)',
-                'taggerDate %(taggerdate:iso)',
-                'creatorDate %(creatordate:iso)',
+                'ärefName=%(refname:strip=0)',
+                'ßobjectType=%(objecttype)',
+                'ßobjectName=%(objectname)',
+                'ßtaggerDate=%(taggerdate:iso)',
+                'ßcreatorDate=%(creatordate:iso)',
             ],
         );
-        $defaultFormat .= 'ä';
 
         return [
             'basic' => [
@@ -50,7 +49,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [],
             ],
@@ -59,7 +58,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => null,
@@ -71,7 +70,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--color',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => true,
@@ -83,7 +82,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--no-color',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => false,
@@ -95,7 +94,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--color=always',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => 'always',
@@ -107,7 +106,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--color=auto',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => 'auto',
@@ -119,7 +118,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--color=never',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'color' => 'never',
@@ -130,7 +129,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'merged' => [],
@@ -145,7 +144,7 @@ class GetTagsTest extends CommandTestBase
                     '--no-merged=b',
                     '--merged=d',
                     '--no-merged=e',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'merged' => [
@@ -162,7 +161,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'contains' => [],
@@ -177,7 +176,7 @@ class GetTagsTest extends CommandTestBase
                     '--contains=h2',
                     '--no-contains=h3',
                     '--contains=h4',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'contains' => [
@@ -193,7 +192,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'pointsAt' => null,
@@ -205,7 +204,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--no-points-at',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'pointsAt' => false,
@@ -217,7 +216,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--points-at=my-hash',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'pointsAt' => 'my-hash',
@@ -228,7 +227,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'sort' => [],
@@ -241,7 +240,7 @@ class GetTagsTest extends CommandTestBase
                     '--list',
                     '--sort=a',
                     '--sort=c',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'sort' => [
@@ -256,7 +255,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'ignoreCase' => null,
@@ -268,7 +267,7 @@ class GetTagsTest extends CommandTestBase
                     'tag',
                     '--list',
                     '--ignore-case',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'ignoreCase' => true,
@@ -279,7 +278,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'paths' => [],
@@ -290,7 +289,7 @@ class GetTagsTest extends CommandTestBase
                     'git',
                     'tag',
                     '--list',
-                    $defaultFormat,
+                    $expectedFormatDefault,
                     '--',
                     'a',
                     'c',
@@ -333,8 +332,11 @@ class GetTagsTest extends CommandTestBase
                         'stdOutput' => implode(
                             '',
                             [
-                                // phpcs:ignore
-                                'refName refs/tags/v1.2.3ßobjectType commitßobjectName 1234567890123456789012345678901234567890ßtaggerDate ßcreatorDate 2025-03-22 18:00:34 +0100ä',
+                                'ärefName=refs/tags/v1.2.3',
+                                'ßobjectType=commit',
+                                'ßobjectName=1234567890123456789012345678901234567890',
+                                'ßtaggerDate=',
+                                'ßcreatorDate=2025-03-22 18:00:34 +0100',
                             ],
                         ),
                     ],

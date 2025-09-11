@@ -10,6 +10,7 @@ use Sweetchuck\Git\Command\CreateTag;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
+use Sweetchuck\Git\Command\GetCommits;
 use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
 use Sweetchuck\Git\Command\GetFileContent;
@@ -101,6 +102,8 @@ interface CommandFactoryInterface
      * Represents the "git status" command.
      */
     public function createGetStatus(): GetStatus;
+
+    public function createGetCommits(): GetCommits;
 
     /**
      * Represents the "git ls-files" command.
