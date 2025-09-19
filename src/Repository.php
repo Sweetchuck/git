@@ -461,6 +461,25 @@ class Repository
 
         return $this;
     }
+
+    /**
+     * @param array<string, mixed> $properties
+     *   - add: Boolean.
+     *   - name: The name of the remote.
+     *   - branch: The name of the branch.
+     */
+    public function setRemoteBranches(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createSetRemoteBranches()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
     // endregion
 
     // region config

@@ -29,6 +29,7 @@ use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
 use Sweetchuck\Git\Command\RestoreFiles;
 use Sweetchuck\Git\Command\SetConfig;
+use Sweetchuck\Git\Command\SetRemoteBranches;
 use Sweetchuck\Git\Command\StageFiles;
 use Sweetchuck\Git\Command\SwitchBranch;
 use Sweetchuck\Git\Command\UnsetConfig;
@@ -169,6 +170,15 @@ class CommandFactory implements CommandFactoryInterface
 
         return $command;
     }
+
+    public function createSetRemoteBranches(): SetRemoteBranches
+    {
+        $command = new SetRemoteBranches();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
     // endregion
 
     // region branch

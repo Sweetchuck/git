@@ -29,6 +29,7 @@ use Sweetchuck\Git\Command\RestoreFiles;
 use Sweetchuck\Git\Command\SetBranchUpstream;
 use Sweetchuck\Git\Command\SetConfig;
 use Sweetchuck\Git\Command\CommitStagedFiles;
+use Sweetchuck\Git\Command\SetRemoteBranches;
 use Sweetchuck\Git\Command\StageFiles;
 use Sweetchuck\Git\Command\SwitchBranch;
 use Sweetchuck\Git\Command\UnsetConfig;
@@ -74,6 +75,8 @@ interface CommandFactoryInterface
     public function createRemoveRemote(): RemoveRemote;
 
     public function createPruneRemote(): PruneRemote;
+
+    public function createSetRemoteBranches(): SetRemoteBranches;
     // endregion
 
     // region branch
