@@ -5,8 +5,13 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git;
 
 use Sweetchuck\Git\Command\AddRemote;
+use Sweetchuck\Git\Command\AddRemoteFetchUrl;
+use Sweetchuck\Git\Command\AddRemotePushUrl;
+use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
 use Sweetchuck\Git\Command\CreateTag;
+use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
+use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
@@ -15,6 +20,8 @@ use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
 use Sweetchuck\Git\Command\GetFileContent;
 use Sweetchuck\Git\Command\GetFiles;
+use Sweetchuck\Git\Command\GetRemoteFetchUrls;
+use Sweetchuck\Git\Command\GetRemotePushUrls;
 use Sweetchuck\Git\Command\GetRemotes;
 use Sweetchuck\Git\Command\GetStagedFiles;
 use Sweetchuck\Git\Command\GetStatus;
@@ -30,6 +37,8 @@ use Sweetchuck\Git\Command\SetBranchUpstream;
 use Sweetchuck\Git\Command\SetConfig;
 use Sweetchuck\Git\Command\CommitStagedFiles;
 use Sweetchuck\Git\Command\SetRemoteBranches;
+use Sweetchuck\Git\Command\SetRemoteFetchUrl;
+use Sweetchuck\Git\Command\SetRemotePushUrl;
 use Sweetchuck\Git\Command\StageFiles;
 use Sweetchuck\Git\Command\SwitchBranch;
 use Sweetchuck\Git\Command\UnsetConfig;
@@ -46,6 +55,15 @@ interface CommandFactoryInterface
 
     public function setProcessFactory(?ProcessFactoryInterface $processFactory): static;
     // endregion
+
+    /**
+     * @phpstan-template T of \Sweetchuck\Git\Command\CliCommandInterface
+     *
+     * @phpstan-param class-string<T> $class
+     *
+     * @phpstan-return T
+     */
+    public function createCommand(string $class): CliCommandInterface;
 
     // region start
     public function createInitRepository(): InitRepository;
@@ -64,6 +82,7 @@ interface CommandFactoryInterface
     // endregion
 
     // region remote
+    // region remote CRUD
     public function createGetRemotes(): GetRemotes;
 
     public function createAddRemote(): AddRemote;
@@ -73,6 +92,25 @@ interface CommandFactoryInterface
     public function createUpdateRemote(): UpdateRemote;
 
     public function createRemoveRemote(): RemoveRemote;
+    // endregion
+
+    // region remote URL CRUD
+    public function createGetRemoteFetchUrls(): GetRemoteFetchUrls;
+
+    public function createGetRemotePushUrls(): GetRemotePushUrls;
+
+    public function createSetRemoteFetchUrl(): SetRemoteFetchUrl;
+
+    public function createSetRemotePushUrl(): SetRemotePushUrl;
+
+    public function createAddRemoteFetchUrl(): AddRemoteFetchUrl;
+
+    public function createAddRemotePushUrl(): AddRemotePushUrl;
+
+    public function createDeleteRemoteFetchUrl(): DeleteRemoteFetchUrl;
+
+    public function createDeleteRemotePushUrl(): DeleteRemotePushUrl;
+    // endregion
 
     public function createPruneRemote(): PruneRemote;
 

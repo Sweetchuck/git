@@ -5,10 +5,14 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git;
 
 use Sweetchuck\Git\Command\AddRemote;
+use Sweetchuck\Git\Command\AddRemoteFetchUrl;
+use Sweetchuck\Git\Command\AddRemotePushUrl;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
 use Sweetchuck\Git\Command\CommitStagedFiles;
 use Sweetchuck\Git\Command\CreateTag;
+use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
+use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
@@ -17,6 +21,8 @@ use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
 use Sweetchuck\Git\Command\GetFileContent;
 use Sweetchuck\Git\Command\GetFiles;
+use Sweetchuck\Git\Command\GetRemoteFetchUrls;
+use Sweetchuck\Git\Command\GetRemotePushUrls;
 use Sweetchuck\Git\Command\GetRemotes;
 use Sweetchuck\Git\Command\GetStagedFiles;
 use Sweetchuck\Git\Command\GetStatus;
@@ -30,6 +36,8 @@ use Sweetchuck\Git\Command\RenameRemote;
 use Sweetchuck\Git\Command\RestoreFiles;
 use Sweetchuck\Git\Command\SetConfig;
 use Sweetchuck\Git\Command\SetRemoteBranches;
+use Sweetchuck\Git\Command\SetRemoteFetchUrl;
+use Sweetchuck\Git\Command\SetRemotePushUrl;
 use Sweetchuck\Git\Command\StageFiles;
 use Sweetchuck\Git\Command\SwitchBranch;
 use Sweetchuck\Git\Command\UnsetConfig;
@@ -68,6 +76,17 @@ class CommandFactory implements CommandFactoryInterface
         $command->setProcessFactory($this->getProcessFactory());
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createCommand(string $class): CliCommandInterface
+    {
+        $command = new $class();
+        $this->prepareCommand($command);
+
+        return $command;
     }
 
     // region start
@@ -179,6 +198,71 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    // region remote get-set-url
+    public function createGetRemoteFetchUrls(): GetRemoteFetchUrls
+    {
+        $command = new GetRemoteFetchUrls();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createGetRemotePushUrls(): GetRemotePushUrls
+    {
+        $command = new GetRemotePushUrls();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createSetRemoteFetchUrl(): SetRemoteFetchUrl
+    {
+        $command = new SetRemoteFetchUrl();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createSetRemotePushUrl(): SetRemotePushUrl
+    {
+        $command = new SetRemotePushUrl();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createAddRemoteFetchUrl(): AddRemoteFetchUrl
+    {
+        $command = new AddRemoteFetchUrl();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createAddRemotePushUrl(): AddRemotePushUrl
+    {
+        $command = new AddRemotePushUrl();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createDeleteRemoteFetchUrl(): DeleteRemoteFetchUrl
+    {
+        $command = new DeleteRemoteFetchUrl();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createDeleteRemotePushUrl(): DeleteRemotePushUrl
+    {
+        $command = new DeleteRemotePushUrl();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+    // endregion
     // endregion
 
     // region branch

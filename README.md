@@ -78,11 +78,11 @@ Using these commands instead of directly calling `\exec()` offers several advant
     * ✔ `git remote rename`
     * ✔ `git remote remove`
     * ✔ `git remote update`
+    * ✔ `git remote get-url` Fetch, Push
+    * ✔ `git remote set-url` Set, Add, Delete
     * ✔ `git remote prune`
-    * 🛠 `git remote set-head`
     * ✔ `git remote set-branches`
-    * 🛠 `git remote get-url`
-    * 🛠 `git remote set-url`
+    * 🛠 `git remote set-head`
     * 🛠 `git remote show`
   * 🛠 `git fetch`
   * 🛠 `git pull`

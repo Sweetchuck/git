@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git;
 
+use Sweetchuck\Git\Command\CliCommandInterface;
+
 /**
  * @phpstan-import-type SweetchuckGitCommandAddRemoteProperties from \Sweetchuck\Git\Phpstan
  */
@@ -60,6 +62,24 @@ class Repository
         $this->isBare = true;
 
         return $this;
+    }
+
+    /**
+     * @phpstan-template T of \Sweetchuck\Git\Command\CliCommandInterface
+     *
+     * @phpstan-param class-string<T> $class
+     *
+     * @phpstan-return T
+     */
+    public function command(string $class): CliCommandInterface
+    {
+        $properties = [];
+        $this->populateCommonProperties($properties);
+
+        return $this
+            ->commandFactory
+            ->createCommand($class)
+            ->setProperties($properties);
     }
 
     /**
@@ -330,6 +350,7 @@ class Repository
     // endregion
 
     // region remote
+    // region remote CRUD
     /**
      * @param array<string, mixed> $properties
      *
@@ -419,6 +440,166 @@ class Repository
     }
 
     /**
+     * Remove a remote from the repository.
+     *
+     * @param array<string, mixed> $properties
+     *   Properties for the RemoveRemote command.
+     *   Required keys:
+     *   - name: The name of the remote to remove.
+     */
+    public function removeRemote(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createRemoveRemote()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+    // endregion
+
+    // region remote get-url
+    /**
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string>
+     */
+    public function getRemoteFetchUrls(array $properties): array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createGetRemoteFetchUrls()
+            ->setProperties($properties)
+            ->execute();
+
+        $this->assertOutcome($result, [0]);
+
+        return $result->artifacts['urls'] ?? [];
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string>
+     */
+    public function getRemotePushUrls(array $properties): array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createGetRemotePushUrls()
+            ->setProperties($properties)
+            ->execute();
+
+        $this->assertOutcome($result, [0]);
+
+        return $result->artifacts['urls'] ?? [];
+    }
+    // endregion
+
+    // region remote set-url
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function setRemoteFetchUrl(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createSetRemoteFetchUrl()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function addRemoteFetchUrl(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createAddRemoteFetchUrl()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function addRemotePushUrl(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createAddRemotePushUrl()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function setRemotePushUrl(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createSetRemotePushUrl()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function deleteRemoteFetchUrl(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createDeleteRemoteFetchUrl()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function deleteRemotePushUrl(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createDeleteRemotePushUrl()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+    // endregion
+
+    /**
      * Prune a remote by removing stale remote-tracking branches.
      *
      * @param array<string, mixed> $properties
@@ -434,27 +615,6 @@ class Repository
             ->populateCommonProperties($properties)
             ->commandFactory
             ->createPruneRemote()
-            ->setProperties($properties)
-            ->execute();
-        $this->assertOutcome($result, [0]);
-
-        return $this;
-    }
-
-    /**
-     * Remove a remote from the repository.
-     *
-     * @param array<string, mixed> $properties
-     *   Properties for the RemoveRemote command.
-     *   Required keys:
-     *   - name: The name of the remote to remove.
-     */
-    public function removeRemote(array $properties): static
-    {
-        $result = $this
-            ->populateCommonProperties($properties)
-            ->commandFactory
-            ->createRemoveRemote()
             ->setProperties($properties)
             ->execute();
         $this->assertOutcome($result, [0]);
