@@ -12,7 +12,7 @@ class GetBranchesParser extends FormatParser
         string $stdOutput,
         string $stdError,
         array $options = [],
-    ): array {
+    ): ?array {
         $options += [
             'assetKey' => 'branches',
         ];

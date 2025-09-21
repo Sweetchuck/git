@@ -7,6 +7,7 @@ namespace Sweetchuck\Git;
 use Sweetchuck\Git\Command\AddRemote;
 use Sweetchuck\Git\Command\AddRemoteFetchUrl;
 use Sweetchuck\Git\Command\AddRemotePushUrl;
+use Sweetchuck\Git\Command\CheckAttr;
 use Sweetchuck\Git\Command\CheckIgnore;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
@@ -314,4 +315,9 @@ interface CommandFactoryInterface
      * Represents the "git check-ignore" command.
      */
     public function createCheckIgnore(): CheckIgnore;
+
+    /**
+     * Represents the "git check-attr" command.
+     */
+    public function createCheckAttr(): CheckAttr;
 }

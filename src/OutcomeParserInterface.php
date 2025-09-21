@@ -10,7 +10,7 @@ interface OutcomeParserInterface
     /**
      * @param array<string, mixed> $options
      *
-     * @return array<string, mixed>
+     * @return null|array<string, mixed>
      */
     public function parse(
         int $exitCode,

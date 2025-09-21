@@ -7,6 +7,7 @@ namespace Sweetchuck\Git;
 use Sweetchuck\Git\Command\AddRemote;
 use Sweetchuck\Git\Command\AddRemoteFetchUrl;
 use Sweetchuck\Git\Command\AddRemotePushUrl;
+use Sweetchuck\Git\Command\CheckAttr;
 use Sweetchuck\Git\Command\CheckIgnore;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
@@ -608,6 +609,17 @@ class CommandFactory implements CommandFactoryInterface
     public function createCheckIgnore(): CheckIgnore
     {
         $command = new CheckIgnore();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createCheckAttr(): CheckAttr
+    {
+        $command = new CheckAttr();
         $this->prepareCommand($command);
 
         return $command;

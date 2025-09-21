@@ -17,7 +17,7 @@ class FormatParser implements OutcomeParserInterface
         string $stdOutput,
         string $stdError,
         array $options = [],
-    ): array {
+    ): ?array {
         return [
             $options['assetKey'] => $this->parseStdOutput($stdOutput, $options['definition']),
         ];

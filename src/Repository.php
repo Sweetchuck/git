@@ -996,6 +996,24 @@ class Repository
     }
 
     /**
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string, mixed>
+     */
+    public function checkAttr(array $properties = []): array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createCheckAttr()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $result->artifacts;
+    }
+
+    /**
      * @param array<int<0, 255>> $allowedExitCodes
      */
     protected function assertOutcome(

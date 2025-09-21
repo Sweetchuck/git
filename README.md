@@ -55,7 +55,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git status`
   * ✔ `git ls-files`
   * ✔ `git check-ignore`
-  * 🛠 `git check-attr`
+  * ✔ `git check-attr`
 * grow, mark and tweak your common history
   * 🛠 `git backfill`
   * ✔ `git branch CREATE`

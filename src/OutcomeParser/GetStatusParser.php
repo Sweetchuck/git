@@ -16,7 +16,7 @@ class GetStatusParser implements OutcomeParserInterface
         string $stdOutput,
         string $stdError,
         array $options = [],
-    ): array {
+    ): ?array {
         if ($exitCode || !trim($stdOutput)) {
             return [];
         }

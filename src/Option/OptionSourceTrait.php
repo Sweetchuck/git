@@ -13,7 +13,7 @@ trait OptionSourceTrait
     protected function initPropertySource(): static
     {
         $this->properties['commandOptions']['source'] = [
-            'type' => 'value:string-required',
+            'type' => 'value:false:string-required',
             'value' => null,
         ];
 
@@ -32,12 +32,12 @@ trait OptionSourceTrait
         return $this;
     }
 
-    public function getSource(): ?string
+    public function getSource(): null|false|string
     {
         return $this->properties['commandOptions']['source']['value'];
     }
 
-    public function setSource(?string $value): static
+    public function setSource(null|false|string $value): static
     {
         $this->properties['commandOptions']['source']['value'] = $value;
 
