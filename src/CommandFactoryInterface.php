@@ -13,6 +13,7 @@ use Sweetchuck\Git\Command\CloneRepository;
 use Sweetchuck\Git\Command\CreateTag;
 use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
 use Sweetchuck\Git\Command\DeleteRemotePushUrl;
+use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
@@ -31,6 +32,7 @@ use Sweetchuck\Git\Command\GrepFiles;
 use Sweetchuck\Git\Command\InitRepository;
 use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
+use Sweetchuck\Git\Command\ReadSymbolicRef;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
 use Sweetchuck\Git\Command\RestoreFiles;
@@ -48,6 +50,7 @@ use Sweetchuck\Git\Command\DeleteBranch;
 use Sweetchuck\Git\Command\CreateBranch;
 use Sweetchuck\Git\Command\MoveBranch;
 use Sweetchuck\Git\Command\RemoveFiles;
+use Sweetchuck\Git\Command\UpsertSymbolicRef;
 
 interface CommandFactoryInterface
 {
@@ -228,6 +231,23 @@ interface CommandFactoryInterface
      * Represents the "git tag --delete" command.
      */
     public function createDeleteTag(): DeleteTag;
+    // endregion
+
+    // region symbolic-ref
+    /**
+     * Represents the "git symbolic-ref <name>" command.
+     */
+    public function createReadSymbolicRef(): ReadSymbolicRef;
+
+    /**
+     * Represents the "git symbolic-ref <name> <pointsTo>" command.
+     */
+    public function createUpsertSymbolicRef(): UpsertSymbolicRef;
+
+    /**
+     * Represents the "git symbolic-ref --delete <name>" command.
+     */
+    public function createDeleteSymbolicRef(): DeleteSymbolicRef;
     // endregion
 
     /**

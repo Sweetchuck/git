@@ -38,19 +38,25 @@ class CommandTestBase extends TestBase
                         ));
                     }
 
-                    if (isset($step['expectedOutput'])) {
-                        if ($step['expectedOutput'] === '') {
-                            static::assertSame(
-                                $step['expectedOutput'],
-                                trim($process->getOutput()),
-                                sprintf('Command "%s" output mismatch', $command)
-                            );
-                        } else {
-                            static::assertStringContainsString(
-                                $step['expectedOutput'],
-                                trim($process->getOutput()),
-                                sprintf('Command "%s" output mismatch', $command)
-                            );
+                    foreach (['expectedOutput', 'expectedError'] as $key) {
+                        $output = $key === 'expectedOutput' ?
+                            $process->getOutput()
+                            : $process->getErrorOutput();
+
+                        if (isset($step[$key])) {
+                            if ($step[$key] === '') {
+                                static::assertSame(
+                                    $step[$key],
+                                    trim($output),
+                                    sprintf('Command "%s" %s mismatch', $command, $key)
+                                );
+                            } else {
+                                static::assertStringContainsString(
+                                    $step[$key],
+                                    trim($output),
+                                    sprintf('Command "%s" %s mismatch', $command, $key)
+                                );
+                            }
                         }
                     }
                     break;

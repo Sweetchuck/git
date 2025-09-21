@@ -55,6 +55,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git status`
   * ✔ `git ls-files`
   * ✔ `git check-ignore`
+  * 🛠 `git check-attr`
 * grow, mark and tweak your common history
   * 🛠 `git backfill`
   * ✔ `git branch CREATE`
@@ -67,6 +68,9 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * 🛠 `git rebase`
   * 🛠 `git reset`
   * 🛠 `git checkout`
+  * ✔ `git symbolic-ref          <name> <ref>` UpsertSymbolicRef
+  * ✔ `git symbolic-ref          <name>`       ReadSymbolicRef
+  * ✔ `git symbolic-ref --delete <name>`       DeleteSymbolicRef
   * ✔ `git switch`
   * ✔ `git tag CREATE`
   * ✔ `git tag --list --verbose`

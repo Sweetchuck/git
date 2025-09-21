@@ -14,6 +14,7 @@ use Sweetchuck\Git\Command\CommitStagedFiles;
 use Sweetchuck\Git\Command\CreateTag;
 use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
 use Sweetchuck\Git\Command\DeleteRemotePushUrl;
+use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
@@ -32,6 +33,7 @@ use Sweetchuck\Git\Command\GrepFiles;
 use Sweetchuck\Git\Command\InitRepository;
 use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
+use Sweetchuck\Git\Command\ReadSymbolicRef;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
 use Sweetchuck\Git\Command\RestoreFiles;
@@ -48,6 +50,7 @@ use Sweetchuck\Git\Command\CreateBranch;
 use Sweetchuck\Git\Command\MoveBranch;
 use Sweetchuck\Git\Command\SetBranchUpstream;
 use Sweetchuck\Git\Command\RemoveFiles;
+use Sweetchuck\Git\Command\UpsertSymbolicRef;
 
 /**
  * @todo Central place for "new FooCommand();"
@@ -426,6 +429,41 @@ class CommandFactory implements CommandFactoryInterface
     public function createDeleteTag(): DeleteTag
     {
         $command = new DeleteTag();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+    // endregion
+
+    // region symbolic-ref
+    /**
+     * {@inheritdoc}
+     */
+    public function createReadSymbolicRef(): ReadSymbolicRef
+    {
+        $command = new ReadSymbolicRef();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createUpsertSymbolicRef(): UpsertSymbolicRef
+    {
+        $command = new UpsertSymbolicRef();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createDeleteSymbolicRef(): DeleteSymbolicRef
+    {
+        $command = new DeleteSymbolicRef();
         $this->prepareCommand($command);
 
         return $command;

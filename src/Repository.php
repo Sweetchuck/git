@@ -65,11 +65,11 @@ class Repository
     }
 
     /**
-     * @phpstan-template T of \Sweetchuck\Git\Command\CliCommandInterface
+     * @phpstan-template TCommandClass of \Sweetchuck\Git\Command\CliCommandInterface
      *
-     * @phpstan-param class-string<T> $class
+     * @phpstan-param class-string<TCommandClass> $class
      *
-     * @phpstan-return T
+     * @phpstan-return TCommandClass
      */
     public function command(string $class): CliCommandInterface
     {
@@ -343,6 +343,58 @@ class Repository
             ->setProperties($properties)
             ->execute();
 
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+    // endregion
+
+    // region symbolic-ref
+    /**
+     * @param array<string, mixed> $properties
+     *
+     * @return null|array<string, mixed>
+     */
+    public function readSymbolicRef(array $properties = []): ?array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createReadSymbolicRef()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $result->artifacts;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function upsertSymbolicRef(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createUpsertSymbolicRef()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function deleteSymbolicRef(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createDeleteSymbolicRef()
+            ->setProperties($properties)
+            ->execute();
         $this->assertOutcome($result, [0]);
 
         return $this;
