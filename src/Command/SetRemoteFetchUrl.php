@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Command;
 
+/**
+ * Represents the "git remote set-url <remoteName> <url> [oldUrl]" command.
+ */
 class SetRemoteFetchUrl extends AddRemoteFetchUrl
 {
     protected function initProperties(): static

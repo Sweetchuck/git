@@ -7,6 +7,7 @@ namespace Sweetchuck\Git;
 use Sweetchuck\Git\Command\AddRemote;
 use Sweetchuck\Git\Command\AddRemoteFetchUrl;
 use Sweetchuck\Git\Command\AddRemotePushUrl;
+use Sweetchuck\Git\Command\CheckIgnore;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
 use Sweetchuck\Git\Command\CreateTag;
@@ -57,85 +58,175 @@ interface CommandFactoryInterface
     // endregion
 
     /**
-     * @phpstan-template T of \Sweetchuck\Git\Command\CliCommandInterface
+     * @phpstan-template TCommandClass of \Sweetchuck\Git\Command\CliCommandInterface
      *
-     * @phpstan-param class-string<T> $class
+     * @phpstan-param class-string<TCommandClass> $class
      *
-     * @phpstan-return T
+     * @phpstan-return TCommandClass
      */
     public function createCommand(string $class): CliCommandInterface;
 
     // region start
+    /**
+     * Represents the "git init" command.
+     */
     public function createInitRepository(): InitRepository;
 
+    /**
+     * Represents the "git clone" command.
+     */
     public function createCloneRepository(): CloneRepository;
     // endregion
 
     // region config
+    /**
+     * Represents the "git config unset" command.
+     */
     public function createUnsetConfig(): UnsetConfig;
 
+    /**
+     * Represents the "git config list" command.
+     */
     public function createGetConfigMultiple(): GetConfigMultiple;
 
+    /**
+     * Represents the "git config set" command.
+     */
     public function createSetConfig(): SetConfig;
 
+    /**
+     * Represents the "git config get" command.
+     */
     public function createGetConfigSingle(): GetConfigSingle;
     // endregion
 
     // region remote
     // region remote CRUD
+    /**
+     * Represents the "git remote --verbose" command.
+     */
     public function createGetRemotes(): GetRemotes;
 
+    /**
+     * Represents the "git remote add" command.
+     */
     public function createAddRemote(): AddRemote;
 
+    /**
+     * Represents the "git remote rename" command.
+     */
     public function createRenameRemote(): RenameRemote;
 
+    /**
+     * Represents the "git remote update" command.
+     */
     public function createUpdateRemote(): UpdateRemote;
 
+    /**
+     * Represents the "git remote remove" command.
+     */
     public function createRemoveRemote(): RemoveRemote;
     // endregion
 
     // region remote URL CRUD
+    /**
+     * Represents the "git remote get-url --all <remoteName>" command.
+     */
     public function createGetRemoteFetchUrls(): GetRemoteFetchUrls;
 
+    /**
+     * Represents the "git remote get-url --push --all <remoteName>" command.
+     */
     public function createGetRemotePushUrls(): GetRemotePushUrls;
 
+    /**
+     * Represents the "git remote set-url <remoteName> <url> [oldUrl]" command.
+     */
     public function createSetRemoteFetchUrl(): SetRemoteFetchUrl;
 
+    /**
+     * Represents the "git remote set-url --push" command.
+     */
     public function createSetRemotePushUrl(): SetRemotePushUrl;
 
+    /**
+     * Represents the "git remote set-url --add" command.
+     */
     public function createAddRemoteFetchUrl(): AddRemoteFetchUrl;
 
+    /**
+     * Represents the "git remote set-url --push --add" command.
+     */
     public function createAddRemotePushUrl(): AddRemotePushUrl;
 
+    /**
+     * Represents the "git remote set-url --delete" command.
+     */
     public function createDeleteRemoteFetchUrl(): DeleteRemoteFetchUrl;
 
+    /**
+     * Represents the "git remote set-url --push --delete" command.
+     */
     public function createDeleteRemotePushUrl(): DeleteRemotePushUrl;
     // endregion
 
+    /**
+     * Represents the "git remote prune" command.
+     */
     public function createPruneRemote(): PruneRemote;
 
+    /**
+     * Represents the "git remote set-branches" command.
+     */
     public function createSetRemoteBranches(): SetRemoteBranches;
     // endregion
 
     // region branch
+    /**
+     * Represents the "git branch --verbose" command.
+     */
     public function createGetBranches(): GetBranches;
 
+    /**
+     * Represents the "git branch <branch-name>" command.
+     */
     public function createCreateBranch(): CreateBranch;
 
+    /**
+     * Represents the "git branch --move" command.
+     */
     public function createMoveBranch(): MoveBranch;
 
+    /**
+     * Represents the "git branch --set-upstream-to" command.
+     */
     public function createSetBranchUpstream(): SetBranchUpstream;
 
+    /**
+     * Represents the "git branch --delete" command.
+     */
     public function createDeleteBranch(): DeleteBranch;
     // endregion
 
+    /**
+     * Represents the "git switch" command.
+     */
     public function createSwitchBranch(): SwitchBranch;
 
     // region tag
+    /**
+     * Represents the "git tag --verbose" command.
+     */
     public function createGetTags(): GetTags;
 
+    /**
+     * Represents the "git tag <my-tag-01>" command.
+     */
     public function createCreateTag(): CreateTag;
 
+    /**
+     * Represents the "git tag --delete" command.
+     */
     public function createDeleteTag(): DeleteTag;
     // endregion
 
@@ -144,6 +235,9 @@ interface CommandFactoryInterface
      */
     public function createGetStatus(): GetStatus;
 
+    /**
+     * Represents the "git log" command.
+     */
     public function createGetCommits(): GetCommits;
 
     /**
@@ -156,6 +250,9 @@ interface CommandFactoryInterface
      */
     public function createGetFileContent(): GetFileContent;
 
+    /**
+     * Represents the "git diff --name-only --cached" command.
+     */
     public function createGetChangedFiles(): GetChangedFiles;
 
     /**
@@ -192,4 +289,9 @@ interface CommandFactoryInterface
      * Represents the "git grep" command.
      */
     public function createGrepFiles(): GrepFiles;
+
+    /**
+     * Represents the "git check-ignore" command.
+     */
+    public function createCheckIgnore(): CheckIgnore;
 }

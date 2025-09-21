@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Command;
 
+/**
+ * Represents the "git remote set-url --delete" command.
+ */
 class DeleteRemoteFetchUrl extends AddRemoteFetchUrl
 {
     protected function initProperties(): static

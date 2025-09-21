@@ -26,7 +26,7 @@ abstract class TestBase extends UnitTestBase
     #[Test]
     #[DataProvider('casesParse')]
     public function testParse(
-        array $expected,
+        ?array $expected,
         int $exitCode,
         string $stdOutput,
         string $stdError = '',

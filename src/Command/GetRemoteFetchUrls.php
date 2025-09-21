@@ -7,6 +7,9 @@ namespace Sweetchuck\Git\Command;
 use Sweetchuck\Git\OutcomeParser\LinesParser;
 use Sweetchuck\Git\OutcomeParserInterface;
 
+/**
+ * Represents the "git remote get-url --all <remoteName>" command.
+ */
 class GetRemoteFetchUrls extends CliCommandBase
 {
     protected function initProperties(): static

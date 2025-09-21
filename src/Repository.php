@@ -926,6 +926,24 @@ class Repository
     }
 
     /**
+     * @param array<string, mixed> $properties
+     *
+     * @return array<string, mixed>
+     */
+    public function checkIgnore(array $properties = []): array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createCheckIgnore()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0, 1]);
+
+        return $result->artifacts;
+    }
+
+    /**
      * @param array<int<0, 255>> $allowedExitCodes
      */
     protected function assertOutcome(

@@ -7,6 +7,7 @@ namespace Sweetchuck\Git;
 use Sweetchuck\Git\Command\AddRemote;
 use Sweetchuck\Git\Command\AddRemoteFetchUrl;
 use Sweetchuck\Git\Command\AddRemotePushUrl;
+use Sweetchuck\Git\Command\CheckIgnore;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
 use Sweetchuck\Git\Command\CommitStagedFiles;
@@ -90,6 +91,9 @@ class CommandFactory implements CommandFactoryInterface
     }
 
     // region start
+    /**
+     * {@inheritdoc}
+     */
     public function createInitRepository(): InitRepository
     {
         $command = new InitRepository();
@@ -98,6 +102,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createCloneRepository(): CloneRepository
     {
         $command = new CloneRepository();
@@ -108,6 +115,9 @@ class CommandFactory implements CommandFactoryInterface
     // endregion
 
     // region config
+    /**
+     * {@inheritdoc}
+     */
     public function createUnsetConfig(): UnsetConfig
     {
         $command = new UnsetConfig();
@@ -116,6 +126,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetConfigMultiple(): GetConfigMultiple
     {
         $command = new GetConfigMultiple();
@@ -124,6 +137,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createSetConfig(): SetConfig
     {
         $command = new SetConfig();
@@ -132,6 +148,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetConfigSingle(): GetConfigSingle
     {
         $command = new GetConfigSingle();
@@ -142,6 +161,9 @@ class CommandFactory implements CommandFactoryInterface
     // endregion
 
     // region remote
+    /**
+     * {@inheritdoc}
+     */
     public function createGetRemotes(): GetRemotes
     {
         $command = new GetRemotes();
@@ -150,6 +172,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createAddRemote(): AddRemote
     {
         $command = new AddRemote();
@@ -158,6 +183,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createRenameRemote(): RenameRemote
     {
         $command = new RenameRemote();
@@ -166,6 +194,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createUpdateRemote(): UpdateRemote
     {
         $command = new UpdateRemote();
@@ -174,6 +205,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createRemoveRemote(): RemoveRemote
     {
         $command = new RemoveRemote();
@@ -182,6 +216,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createPruneRemote(): PruneRemote
     {
         $command = new PruneRemote();
@@ -190,6 +227,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createSetRemoteBranches(): SetRemoteBranches
     {
         $command = new SetRemoteBranches();
@@ -199,6 +239,9 @@ class CommandFactory implements CommandFactoryInterface
     }
 
     // region remote get-set-url
+    /**
+     * {@inheritdoc}
+     */
     public function createGetRemoteFetchUrls(): GetRemoteFetchUrls
     {
         $command = new GetRemoteFetchUrls();
@@ -207,6 +250,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetRemotePushUrls(): GetRemotePushUrls
     {
         $command = new GetRemotePushUrls();
@@ -215,6 +261,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createSetRemoteFetchUrl(): SetRemoteFetchUrl
     {
         $command = new SetRemoteFetchUrl();
@@ -223,6 +272,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createSetRemotePushUrl(): SetRemotePushUrl
     {
         $command = new SetRemotePushUrl();
@@ -231,6 +283,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createAddRemoteFetchUrl(): AddRemoteFetchUrl
     {
         $command = new AddRemoteFetchUrl();
@@ -239,6 +294,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createAddRemotePushUrl(): AddRemotePushUrl
     {
         $command = new AddRemotePushUrl();
@@ -247,6 +305,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createDeleteRemoteFetchUrl(): DeleteRemoteFetchUrl
     {
         $command = new DeleteRemoteFetchUrl();
@@ -255,6 +316,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createDeleteRemotePushUrl(): DeleteRemotePushUrl
     {
         $command = new DeleteRemotePushUrl();
@@ -266,6 +330,9 @@ class CommandFactory implements CommandFactoryInterface
     // endregion
 
     // region branch
+    /**
+     * {@inheritdoc}
+     */
     public function createGetBranches(): GetBranches
     {
         $command = new GetBranches();
@@ -274,6 +341,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createCreateBranch(): CreateBranch
     {
         $command = new CreateBranch();
@@ -282,6 +352,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createMoveBranch(): MoveBranch
     {
         $command = new MoveBranch();
@@ -290,6 +363,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createSetBranchUpstream(): SetBranchUpstream
     {
         $command = new SetBranchUpstream();
@@ -298,6 +374,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createDeleteBranch(): DeleteBranch
     {
         $command = new DeleteBranch();
@@ -307,6 +386,9 @@ class CommandFactory implements CommandFactoryInterface
     }
     // endregion
 
+    /**
+     * {@inheritdoc}
+     */
     public function createSwitchBranch(): SwitchBranch
     {
         $command = new SwitchBranch();
@@ -316,6 +398,9 @@ class CommandFactory implements CommandFactoryInterface
     }
 
     // region tag
+    /**
+     * {@inheritdoc}
+     */
     public function createGetTags(): GetTags
     {
         $command = new GetTags();
@@ -324,6 +409,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createCreateTag(): CreateTag
     {
         $command = new CreateTag();
@@ -332,6 +420,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createDeleteTag(): DeleteTag
     {
         $command = new DeleteTag();
@@ -341,6 +432,9 @@ class CommandFactory implements CommandFactoryInterface
     }
     // endregion
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetStatus(): GetStatus
     {
         $command = new GetStatus();
@@ -349,6 +443,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetCommits(): GetCommits
     {
         $command = new GetCommits();
@@ -357,6 +454,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetFiles(): GetFiles
     {
         $command = new GetFiles();
@@ -365,6 +465,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetFileContent(): GetFileContent
     {
         $command = new GetFileContent();
@@ -373,6 +476,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetChangedFiles(): GetChangedFiles
     {
         $command = new GetChangedFiles();
@@ -381,6 +487,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createStageFiles(): StageFiles
     {
         $command = new StageFiles();
@@ -389,6 +498,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGetStagedFiles(): GetStagedFiles
     {
         $command = new GetStagedFiles();
@@ -397,6 +509,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createCommitStagedFiles(): CommitStagedFiles
     {
         $command = new CommitStagedFiles();
@@ -405,6 +520,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createMoveFiles(): MoveFiles
     {
         $command = new MoveFiles();
@@ -413,6 +531,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createRestoreFiles(): RestoreFiles
     {
         $command = new RestoreFiles();
@@ -421,6 +542,9 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createRemoveFiles(): RemoveFiles
     {
         $command = new RemoveFiles();
@@ -429,9 +553,23 @@ class CommandFactory implements CommandFactoryInterface
         return $command;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createGrepFiles(): GrepFiles
     {
         $command = new GrepFiles();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createCheckIgnore(): CheckIgnore
+    {
+        $command = new CheckIgnore();
         $this->prepareCommand($command);
 
         return $command;

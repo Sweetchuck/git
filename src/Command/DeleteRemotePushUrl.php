@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Command;
 
+/**
+ * Represents the "git remote set-url --push --delete" command.
+ */
 class DeleteRemotePushUrl extends AddRemotePushUrl
 {
     protected function initProperties(): static

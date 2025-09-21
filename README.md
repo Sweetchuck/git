@@ -54,7 +54,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
     * ✔ `git show [ref]:<filePath>` (src/Command/GetFileContent.php)
   * ✔ `git status`
   * ✔ `git ls-files`
-  * 🛠 `git check-ignore`
+  * ✔ `git check-ignore`
 * grow, mark and tweak your common history
   * 🛠 `git backfill`
   * ✔ `git branch CREATE`
