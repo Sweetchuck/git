@@ -12,7 +12,7 @@ trait OptionEditTrait
     protected function initPropertyEdit(): static
     {
         $this->properties['commandOptions']['edit'] = [
-            'type' => 'state:true',
+            'type' => 'state:bool',
             'state' => null,
         ];
 

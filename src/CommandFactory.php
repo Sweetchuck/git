@@ -17,6 +17,7 @@ use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
 use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
+use Sweetchuck\Git\Command\ExecuteMerge;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
 use Sweetchuck\Git\Command\GetCommits;
@@ -465,6 +466,16 @@ class CommandFactory implements CommandFactoryInterface
     public function createDeleteSymbolicRef(): DeleteSymbolicRef
     {
         $command = new DeleteSymbolicRef();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+    // endregion
+
+    // region merge
+    public function createExecuteMerge(): ExecuteMerge
+    {
+        $command = new ExecuteMerge();
         $this->prepareCommand($command);
 
         return $command;

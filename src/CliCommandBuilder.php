@@ -161,10 +161,18 @@ class CliCommandBuilder
                 $this->addOptionValueNamePattern($command, $optionName, $optionInfo);
                 break;
 
+            case 'value:name-mapping':
+                $this->addOptionValueNameMapping($command, $optionName, $optionInfo);
+                break;
+
             case 'value:expressions':
                 // - null:  omitted
                 // - "bar": -e 'bar'
                 $this->addOptionValueExpressions($command, $optionName, $optionInfo);
+                break;
+
+            case 'value:strategies':
+                $this->addOptionValueStrategies($command, $optionName, $optionInfo);
                 break;
 
             default:
@@ -496,6 +504,24 @@ class CliCommandBuilder
      * @param array<string> $command
      * @param array<string, mixed> $optionInfo
      */
+    protected function addOptionValueNameMapping(array &$command, string $optionName, array $optionInfo): static
+    {
+        if ($optionInfo['value'] === null) {
+            return $this;
+        }
+
+        $name = $optionInfo['mapping'][$optionInfo['value']] ?? null;
+        if (is_string($name)) {
+            $command[] = $name;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array<string> $command
+     * @param array<string, mixed> $optionInfo
+     */
     protected function addOptionValueExpressions(array &$command, string $optionName, array $optionInfo): static
     {
         if ($optionInfo['value'] === null) {
@@ -505,6 +531,24 @@ class CliCommandBuilder
         $command = array_merge(
             $command,
             $this->buildExpressionsArgs($optionInfo['value']),
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array<string> $command
+     * @param array<string, mixed> $optionInfo
+     */
+    protected function addOptionValueStrategies(array &$command, string $optionName, array $optionInfo): static
+    {
+        if (!$optionInfo['value']) {
+            return $this;
+        }
+
+        $command = array_merge(
+            $command,
+            $this->buildStrategiesArgs($optionInfo['value']),
         );
 
         return $this;
@@ -544,6 +588,53 @@ class CliCommandBuilder
             }
 
             $args = array_merge($args, $this->buildExpressionsArgs($value));
+        }
+
+        return $args;
+    }
+
+    /**
+     * @param array<array-key, mixed> $strategies
+     *
+     * @return array<string>
+     */
+    public function buildStrategiesArgs(array $strategies): array
+    {
+        $args = [];
+
+        $strategies = array_filter(
+            $strategies,
+            static function (array $strategy): bool {
+                return !array_key_exists('enabled', $strategy) || $strategy['enabled'];
+            },
+        );
+        $defaultWeights = array_keys($strategies);
+        foreach ($defaultWeights as $weight => $name) {
+            $strategies[$name]['name'] = $name;
+            $strategies[$name] += [
+                'weight' => $weight,
+                'options' => [],
+            ];
+        }
+
+        uasort(
+            $strategies,
+            static function (array $a, array $b): int {
+                return $a['weight'] <=> $b['weight'];
+            },
+        );
+
+        foreach ($strategies as $strategy) {
+            $args[] = sprintf('--strategy=%s', $strategy['name']);
+            foreach ($strategy['options'] as $optName => $optValue) {
+                if ($optValue === null) {
+                    continue;
+                }
+
+                $args[] = $optValue === true
+                    ? sprintf('--strategy-option=%s', $optName)
+                    : sprintf('--strategy-option=%s=%s', $optName, $optValue);
+            }
         }
 
         return $args;

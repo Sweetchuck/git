@@ -64,7 +64,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git branch --set-upstream-to`
   * ✔ `git branch --delete`
   * ✔ `git commit`
-  * 🛠 `git merge`
+  * ✔ `git merge`
   * 🛠 `git rebase`
   * 🛠 `git reset`
   * 🛠 `git checkout`
@@ -99,6 +99,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
 * other
   * ✔ `git --version`
   * ✔ `git --exec-path`
+  * 🛠 `git fmt-merge-msg`
   * 🛠 and a lot of other commands
 
 

@@ -689,6 +689,46 @@ class CliCommandBuilderTest extends TestCase
                     ],
                 ],
             ],
+            'merge strategies' => [
+                'expected' => [
+                    'git',
+                    'merge',
+                    '--strategy=octopus',
+                    '--strategy=ort',
+                    '--strategy-option=my-true',
+                    '--strategy-option=my-int=42',
+                    '--strategy-option=my-float=42.56',
+                    '--strategy-option=my-string=okay',
+                    '--strategy=resolve',
+                ],
+                'properties' => [
+                    'command' => ['merge'],
+                    'commandOptions' => [
+                        'strategies' => [
+                            'type' => 'value:strategies',
+                            'value' => [
+                                'ort' => [
+                                    'weight' => 2,
+                                    'options' => [
+                                        'ignore-me' => null,
+                                        'my-true' => true,
+                                        'my-int' => 42,
+                                        'my-float' => 42.56,
+                                        'my-string' => 'okay',
+                                    ],
+                                ],
+                                'octopus' => [
+                                    'weight' => 1,
+                                ],
+                                'subtree' => [
+                                    'enabled' => false,
+                                ],
+                                'resolve' => [],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

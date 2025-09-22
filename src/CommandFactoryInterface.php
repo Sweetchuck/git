@@ -16,6 +16,7 @@ use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
 use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
+use Sweetchuck\Git\Command\ExecuteMerge;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
 use Sweetchuck\Git\Command\GetCommits;
@@ -249,6 +250,10 @@ interface CommandFactoryInterface
      * Represents the "git symbolic-ref --delete <name>" command.
      */
     public function createDeleteSymbolicRef(): DeleteSymbolicRef;
+    // endregion
+
+    // region merge
+    public function createExecuteMerge(): ExecuteMerge;
     // endregion
 
     /**

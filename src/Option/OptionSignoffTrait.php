@@ -12,7 +12,7 @@ trait OptionSignoffTrait
     protected function initPropertySignoff(): static
     {
         $this->properties['commandOptions']['signoff'] = [
-            'type' => 'state:true',
+            'type' => 'state:bool',
             'short' => '-s',
             'name' => '--signoff',
             'state' => null,

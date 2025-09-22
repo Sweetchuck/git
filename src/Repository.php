@@ -401,6 +401,24 @@ class Repository
     }
     // endregion
 
+    // region merge
+    /**
+     * @param array<string, mixed> $properties
+     */
+    public function executeMerge(array $properties): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createExecuteMerge()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+    // endregion
+
     // region remote
     // region remote CRUD
     /**
@@ -1026,24 +1044,7 @@ class Repository
             return;
         }
 
-        throw new \RuntimeException(sprintf(
-            <<<'TEXT'
-                --== command ==--
-                %s
-
-                Exit code: %d
-
-                --== stdOutput ==--
-                %s
-
-                --== stdError ==--:
-                %s
-                TEXT,
-            $result->process->getCommandLine(),
-            $result->process->getExitCode(),
-            $result->process->getOutput(),
-            $result->process->getErrorOutput(),
-        ));
+        throw new CliCommandExecutionException($result);
     }
 
     /**
