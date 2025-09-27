@@ -13,7 +13,6 @@ trait OptionServerOptionTrait
     {
         $this->properties['commandOptions']['serverOption'] = [
             'type' => 'value:multi:false-string',
-            'name' => '--server-option',
             'value' => null,
         ];
 

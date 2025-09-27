@@ -13,7 +13,6 @@ trait OptionAuthorTrait
     {
         $this->properties['commandOptions']['author'] = [
             'type' => 'value:string-required',
-            'name' => '--author',
             'value' => null,
         ];
 

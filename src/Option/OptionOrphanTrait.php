@@ -13,7 +13,6 @@ trait OptionOrphanTrait
     {
         $this->properties['commandOptions']['orphan'] = [
             'type' => 'state:true',
-            'name' => '--orphan',
             'state' => null,
         ];
 

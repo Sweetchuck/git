@@ -13,7 +13,6 @@ trait OptionDetachTrait
     {
         $this->properties['commandOptions']['detach'] = [
             'type' => 'state:true',
-            'name' => '--detach',
             'state' => null,
         ];
 

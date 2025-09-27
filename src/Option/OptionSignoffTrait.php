@@ -14,7 +14,6 @@ trait OptionSignoffTrait
         $this->properties['commandOptions']['signoff'] = [
             'type' => 'state:bool',
             'short' => '-s',
-            'name' => '--signoff',
             'state' => null,
         ];
 

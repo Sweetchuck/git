@@ -13,7 +13,6 @@ trait OptionSkipTrait
     {
         $this->properties['commandOptions']['skip'] = [
             'type' => 'value:string-required',
-            'name' => '--skip',
             'value' => null,
         ];
 

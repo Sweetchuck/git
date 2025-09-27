@@ -13,7 +13,6 @@ trait OptionNoVerifyTrait
     {
         $this->properties['commandOptions']['noVerify'] = [
             'type' => 'state:true',
-            'name' => '--no-verify',
             'state' => null,
         ];
 

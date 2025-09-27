@@ -35,6 +35,7 @@ use Sweetchuck\Git\Command\GrepFiles;
 use Sweetchuck\Git\Command\InitRepository;
 use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
+use Sweetchuck\Git\Command\PushRefs;
 use Sweetchuck\Git\Command\ReadSymbolicRef;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
@@ -631,6 +632,17 @@ class CommandFactory implements CommandFactoryInterface
     public function createCheckAttr(): CheckAttr
     {
         $command = new CheckAttr();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createPushRefs(): PushRefs
+    {
+        $command = new PushRefs();
         $this->prepareCommand($command);
 
         return $command;

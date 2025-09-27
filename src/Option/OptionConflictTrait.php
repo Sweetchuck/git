@@ -13,7 +13,6 @@ trait OptionConflictTrait
     {
         $this->properties['commandOptions']['conflict'] = [
             'type' => 'value:false:string-required',
-            'name' => '--conflict',
             'value' => null,
         ];
 

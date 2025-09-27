@@ -13,7 +13,6 @@ trait OptionCachedTrait
     {
         $this->properties['commandOptions']['cached'] = [
             'type' => 'state:true',
-            'name' => '--cached',
             'state' => null,
         ];
 

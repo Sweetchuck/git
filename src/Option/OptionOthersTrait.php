@@ -13,7 +13,6 @@ trait OptionOthersTrait
     {
         $this->properties['commandOptions']['others'] = [
             'type' => 'state:true',
-            'name' => '--others',
             'state' => null,
         ];
 

@@ -13,7 +13,6 @@ trait OptionReferenceIfAbleTrait
     {
         $this->properties['commandOptions']['referenceIfAble'] = [
             'type' => 'value:false:string-required',
-            'name' => '--reference-if-able',
             'value' => null,
         ];
 

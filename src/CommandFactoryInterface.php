@@ -34,6 +34,7 @@ use Sweetchuck\Git\Command\GrepFiles;
 use Sweetchuck\Git\Command\InitRepository;
 use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
+use Sweetchuck\Git\Command\PushRefs;
 use Sweetchuck\Git\Command\ReadSymbolicRef;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
@@ -325,4 +326,9 @@ interface CommandFactoryInterface
      * Represents the "git check-attr" command.
      */
     public function createCheckAttr(): CheckAttr;
+
+    /**
+     * Represents the "git push" command.
+     */
+    public function createPushRefs(): PushRefs;
 }

@@ -13,7 +13,6 @@ trait OptionDeletedTrait
     {
         $this->properties['commandOptions']['deleted'] = [
             'type' => 'state:true',
-            'name' => '--deleted',
             'state' => null,
         ];
 

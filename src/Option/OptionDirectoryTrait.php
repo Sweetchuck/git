@@ -13,7 +13,6 @@ trait OptionDirectoryTrait
     {
         $this->properties['commandOptions']['directory'] = [
             'type' => 'state:true',
-            'name' => '--directory',
             'state' => null,
         ];
 

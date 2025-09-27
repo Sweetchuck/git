@@ -13,7 +13,6 @@ trait OptionInitialBranchTrait
     {
         $this->properties['commandOptions']['initialBranch'] = [
             'type' => 'value:string-required',
-            'name' => '--initial-branch',
             'value' => null,
         ];
 

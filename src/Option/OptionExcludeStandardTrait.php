@@ -13,7 +13,6 @@ trait OptionExcludeStandardTrait
     {
         $this->properties['commandOptions']['excludeStandard'] = [
             'type' => 'state:bool',
-            'name' => '--exclude-standard',
             'state' => null,
         ];
 

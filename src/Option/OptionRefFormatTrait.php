@@ -13,7 +13,6 @@ trait OptionRefFormatTrait
     {
         $this->properties['commandOptions']['refFormat'] = [
             'type' => 'value:false:string-required',
-            'name' => '--ref-format',
             'value' => null,
         ];
 

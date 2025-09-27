@@ -13,7 +13,6 @@ trait OptionRecurseSubmodulesTrait
     {
         $this->properties['commandOptions']['recurseSubmodules'] = [
             'type' => 'value:multi:false-string',
-            'name' => '--recurse-submodules',
             'value' => null,
         ];
 

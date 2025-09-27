@@ -13,7 +13,6 @@ trait OptionModifiedTrait
     {
         $this->properties['commandOptions']['modified'] = [
             'type' => 'state:true',
-            'name' => '--modified',
             'state' => null,
         ];
 

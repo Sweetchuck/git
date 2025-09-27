@@ -13,7 +13,6 @@ trait OptionSinceTrait
     {
         $this->properties['commandOptions']['since'] = [
             'type' => 'value:string-required',
-            'name' => '--since',
             'value' => null,
         ];
 

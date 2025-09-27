@@ -13,7 +13,6 @@ trait OptionResolveUndoTrait
     {
         $this->properties['commandOptions']['resolveUndo'] = [
             'type' => 'state:true',
-            'name' => '--resolve-undo',
             'state' => null,
         ];
 

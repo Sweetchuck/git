@@ -13,7 +13,6 @@ trait OptionNoWarnEmbeddedRepoTrait
     {
         $this->properties['commandOptions']['noWarnEmbeddedRepo'] = [
             'type' => 'state:true',
-            'name' => '--no-warn-embedded-repo',
             'state' => null,
         ];
 

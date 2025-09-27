@@ -13,7 +13,6 @@ trait OptionStageTrait
     {
         $this->properties['commandOptions']['stage'] = [
             'type' => 'state:true',
-            'name' => '--stage',
             'state' => null,
         ];
 

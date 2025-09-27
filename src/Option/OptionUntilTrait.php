@@ -13,7 +13,6 @@ trait OptionUntilTrait
     {
         $this->properties['commandOptions']['until'] = [
             'type' => 'value:string-required',
-            'name' => '--until',
             'value' => null,
         ];
 

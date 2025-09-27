@@ -14,7 +14,6 @@ trait OptionAnnotateTrait
         $this->properties['commandOptions']['annotate'] = [
             'type' => 'state:true',
             'short' => '-a',
-            'name' => '--annotate',
             'state' => null,
         ];
 

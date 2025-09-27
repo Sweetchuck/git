@@ -13,7 +13,6 @@ trait OptionIgnoreRemovalTrait
     {
         $this->properties['commandOptions']['ignoreRemoval'] = [
             'type' => 'state:true',
-            'name' => '--ignore-removal',
             'state' => null,
         ];
 

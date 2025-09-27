@@ -13,7 +13,6 @@ trait OptionUnmergedTrait
     {
         $this->properties['commandOptions']['unmerged'] = [
             'type' => 'state:true',
-            'name' => '--unmerged',
             'state' => null,
         ];
 

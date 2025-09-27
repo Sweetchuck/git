@@ -13,7 +13,6 @@ trait OptionMergeBaseTrait
     {
         $this->properties['commandOptions']['mergeBase'] = [
             'type' => 'state:true',
-            'name' => '--merge-base',
             'state' => null,
         ];
 

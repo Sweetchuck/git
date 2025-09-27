@@ -14,7 +14,6 @@ trait OptionRemoteSubmodulesTrait
     {
         $this->properties['commandOptions']['remoteSubmodules'] = [
             'type' => 'state:bool',
-            'name' => '--remote-submodules',
             'state' => null,
         ];
 

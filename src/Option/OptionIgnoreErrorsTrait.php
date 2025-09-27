@@ -13,7 +13,6 @@ trait OptionIgnoreErrorsTrait
     {
         $this->properties['commandOptions']['ignoreErrors'] = [
             'type' => 'state:true',
-            'name' => '--ignore-errors',
             'state' => null,
         ];
 

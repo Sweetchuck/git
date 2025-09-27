@@ -13,7 +13,6 @@ trait OptionIntentToAddTrait
     {
         $this->properties['commandOptions']['intentToAdd'] = [
             'type' => 'state:true',
-            'name' => '--intent-to-add',
             'state' => null,
         ];
 

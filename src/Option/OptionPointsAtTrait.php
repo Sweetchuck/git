@@ -14,8 +14,6 @@ trait OptionPointsAtTrait
     {
         $this->properties['commandOptions']['pointsAt'] = [
             'type' => 'value:true-false:string',
-            'name' => '--points-at',
-            'name-no' => '--no-points-at',
             'value' => null,
         ];
 

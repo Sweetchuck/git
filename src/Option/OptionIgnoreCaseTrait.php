@@ -14,8 +14,6 @@ trait OptionIgnoreCaseTrait
     {
         $this->properties['commandOptions']['ignoreCase'] = [
             'type' => 'state:bool',
-            'name' => '--ignore-case',
-            'name-no' => '--no-ignore-case',
             'state' => null,
         ];
 

@@ -14,7 +14,6 @@ trait OptionSignTrait
         $this->properties['commandOptions']['sign'] = [
             'type' => 'state:true',
             'short' => '-s',
-            'name' => '--sign',
             'state' => null,
         ];
 

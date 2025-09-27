@@ -13,7 +13,6 @@ trait OptionIgnoreMissingTrait
     {
         $this->properties['commandOptions']['ignoreMissing'] = [
             'type' => 'state:true',
-            'name' => '--ignore-missing',
             'state' => null,
         ];
 

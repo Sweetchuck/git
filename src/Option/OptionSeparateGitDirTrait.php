@@ -14,7 +14,6 @@ trait OptionSeparateGitDirTrait
     {
         $this->properties['commandOptions']['separateGitDir'] = [
             'type' => 'value:false:string-required',
-            'name' => '--separate-git-dir',
             'value' => null,
         ];
 

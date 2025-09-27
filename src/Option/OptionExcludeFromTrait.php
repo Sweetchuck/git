@@ -14,7 +14,6 @@ trait OptionExcludeFromTrait
     {
         $this->properties['commandOptions']['excludeFrom'] = [
             'type' => 'value:string-multiple',
-            'name' => '--exclude-from',
             'value' => [],
         ];
 

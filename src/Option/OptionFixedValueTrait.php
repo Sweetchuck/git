@@ -14,7 +14,6 @@ trait OptionFixedValueTrait
     {
         $this->properties['commandOptions']['fixedValue'] = [
             'type' => 'state:bool',
-            'name' => '--fixed-value',
             'state' => null,
         ];
 

@@ -13,7 +13,6 @@ trait OptionNoSignTrait
     {
         $this->properties['commandOptions']['noSign'] = [
             'type' => 'state:true',
-            'name' => '--no-sign',
             'state' => null,
         ];
 

@@ -13,7 +13,6 @@ trait OptionChmodTrait
     {
         $this->properties['commandOptions']['chmod'] = [
             'type' => 'value:false:string-required',
-            'name' => '--chmod',
             'value' => null,
         ];
 

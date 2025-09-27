@@ -13,7 +13,6 @@ trait OptionObjectFormatTrait
     {
         $this->properties['commandOptions']['objectFormat'] = [
             'type' => 'value:string-required',
-            'name' => '--object-format',
             'value' => null,
         ];
 

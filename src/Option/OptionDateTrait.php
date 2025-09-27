@@ -13,7 +13,6 @@ trait OptionDateTrait
     {
         $this->properties['commandOptions']['date'] = [
             'type' => 'value:string-required',
-            'name' => '--date',
             'value' => null,
         ];
 

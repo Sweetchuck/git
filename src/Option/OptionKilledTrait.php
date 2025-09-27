@@ -13,7 +13,6 @@ trait OptionKilledTrait
     {
         $this->properties['commandOptions']['killed'] = [
             'type' => 'state:true',
-            'name' => '--killed',
             'state' => null,
         ];
 

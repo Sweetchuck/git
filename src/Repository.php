@@ -1032,6 +1032,22 @@ class Repository
     }
 
     /**
+     * @param array<string, mixed> $properties
+     */
+    public function pushRefs(array $properties = []): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createPushRefs()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
      * @param array<int<0, 255>> $allowedExitCodes
      */
     protected function assertOutcome(

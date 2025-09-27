@@ -14,7 +14,6 @@ trait OptionLocalUserTrait
         $this->properties['commandOptions']['localUser'] = [
             'type' => 'value:string-required',
             'short' => '-u',
-            'name' => '--local-user',
             'value' => null,
         ];
 

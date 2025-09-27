@@ -13,7 +13,6 @@ trait OptionAmendTrait
     {
         $this->properties['commandOptions']['amend'] = [
             'type' => 'state:true',
-            'name' => '--amend',
             'state' => null,
         ];
 

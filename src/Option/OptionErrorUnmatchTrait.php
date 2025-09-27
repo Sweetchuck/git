@@ -13,7 +13,6 @@ trait OptionErrorUnmatchTrait
     {
         $this->properties['commandOptions']['errorUnmatch'] = [
             'type' => 'state:true',
-            'name' => '--error-unmatch',
             'state' => null,
         ];
 

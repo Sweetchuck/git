@@ -13,7 +13,6 @@ trait OptionCommitterTrait
     {
         $this->properties['commandOptions']['committer'] = [
             'type' => 'value:string-required',
-            'name' => '--committer',
             'value' => null,
         ];
 

@@ -13,7 +13,6 @@ trait OptionNoIndexTrait
     {
         $this->properties['commandOptions']['noIndex'] = [
             'type' => 'state:true',
-            'name' => '--no-index',
             'state' => null,
         ];
 

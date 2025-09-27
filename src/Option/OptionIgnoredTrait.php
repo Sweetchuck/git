@@ -13,7 +13,6 @@ trait OptionIgnoredTrait
     {
         $this->properties['commandOptions']['ignored'] = [
             'type' => 'state:true',
-            'name' => '--ignored',
             'state' => null,
         ];
 

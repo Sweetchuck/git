@@ -13,7 +13,6 @@ trait OptionNoEmptyDirectoryTrait
     {
         $this->properties['commandOptions']['noEmptyDirectory'] = [
             'type' => 'state:true',
-            'name' => '--no-empty-directory',
             'state' => null,
         ];
 
