@@ -18,6 +18,7 @@ use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\ExecuteMerge;
+use Sweetchuck\Git\Command\FetchRefs;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
 use Sweetchuck\Git\Command\GetCommits;
@@ -632,6 +633,17 @@ class CommandFactory implements CommandFactoryInterface
     public function createCheckAttr(): CheckAttr
     {
         $command = new CheckAttr();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createFetchRefs(): FetchRefs
+    {
+        $command = new FetchRefs();
         $this->prepareCommand($command);
 
         return $command;

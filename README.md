@@ -88,7 +88,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
     * ✔ `git remote set-branches`
     * 🛠 `git remote set-head`
     * 🛠 `git remote show`
-  * 🛠 `git fetch`
+  * ✔ `git fetch`
   * 🛠 `git pull`
   * ✔ `git push`
 * config

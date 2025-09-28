@@ -17,6 +17,7 @@ use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\ExecuteMerge;
+use Sweetchuck\Git\Command\FetchRefs;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
 use Sweetchuck\Git\Command\GetCommits;
@@ -326,6 +327,11 @@ interface CommandFactoryInterface
      * Represents the "git check-attr" command.
      */
     public function createCheckAttr(): CheckAttr;
+
+    /**
+     * Represents the "git fetch" command.
+     */
+    public function createFetchRefs(): FetchRefs;
 
     /**
      * Represents the "git push" command.
