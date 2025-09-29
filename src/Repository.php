@@ -1034,6 +1034,22 @@ class Repository
     /**
      * @param array<string, mixed> $properties
      */
+    public function pullRefs(array $properties = []): static
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createPullRefs()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     */
     public function fetchRefs(array $properties = []): static
     {
         $result = $this

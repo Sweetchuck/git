@@ -43,8 +43,14 @@ trait OptionFastForwardTrait
         return $this->properties['commandOptions']['fastForward']['value'];
     }
 
-    public function setFastForward(null|string $value): static
+    public function setFastForward(null|bool|string $value): static
     {
+        if ($value === true) {
+            $value = 'yes';
+        } elseif ($value === false) {
+            $value = 'no';
+        }
+
         $this->properties['commandOptions']['fastForward']['value'] = $value;
 
         return $this;

@@ -89,7 +89,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
     * 🛠 `git remote set-head`
     * 🛠 `git remote show`
   * ✔ `git fetch`
-  * 🛠 `git pull`
+  * ✔ `git pull`
   * ✔ `git push`
 * config
   * ✔ `git config list`
