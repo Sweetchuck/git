@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git;
 
+use Sweetchuck\Git\Command\AbortMerge;
+use Sweetchuck\Git\Command\AbortRebase;
 use Sweetchuck\Git\Command\AddRemote;
 use Sweetchuck\Git\Command\AddRemoteFetchUrl;
 use Sweetchuck\Git\Command\AddRemotePushUrl;
@@ -11,12 +13,15 @@ use Sweetchuck\Git\Command\CheckAttr;
 use Sweetchuck\Git\Command\CheckIgnore;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
+use Sweetchuck\Git\Command\ContinueMerge;
+use Sweetchuck\Git\Command\ContinueRebase;
 use Sweetchuck\Git\Command\CreateTag;
 use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
 use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\ExecuteMerge;
+use Sweetchuck\Git\Command\ExecuteRebase;
 use Sweetchuck\Git\Command\FetchRefs;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
@@ -37,6 +42,8 @@ use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
 use Sweetchuck\Git\Command\PullRefs;
 use Sweetchuck\Git\Command\PushRefs;
+use Sweetchuck\Git\Command\QuitMerge;
+use Sweetchuck\Git\Command\QuitRebase;
 use Sweetchuck\Git\Command\ReadSymbolicRef;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
@@ -257,6 +264,22 @@ interface CommandFactoryInterface
 
     // region merge
     public function createExecuteMerge(): ExecuteMerge;
+
+    public function createContinueMerge(): ContinueMerge;
+
+    public function createQuitMerge(): QuitMerge;
+
+    public function createAbortMerge(): AbortMerge;
+    // endregion
+
+    // region rebase
+    public function createExecuteRebase(): ExecuteRebase;
+
+    public function createContinueRebase(): ContinueRebase;
+
+    public function createQuitRebase(): QuitRebase;
+
+    public function createAbortRebase(): AbortRebase;
     // endregion
 
     /**

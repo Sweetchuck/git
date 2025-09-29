@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
-use Sweetchuck\Git\Cleanup;
-
 /**
  * @property array<string, mixed> $properties
  */

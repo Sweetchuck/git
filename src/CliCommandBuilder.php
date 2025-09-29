@@ -142,6 +142,12 @@ class CliCommandBuilder
                 $this->addOptionValueMultiple($command, $optionName, $optionInfo);
                 break;
 
+            case 'array<TId, TValue>':
+                // - null: omitted
+                // - array<TId, TValue>: --foo=value-1 --foo=value-2
+                $this->addOptionArrayIdValue($command, $optionName, $optionInfo);
+                break;
+
             case 'value:map':
                 // - null:          omitted
                 // - array<string, string>: --foo='key1=value1' --foo='key2=value2'
@@ -433,6 +439,30 @@ class CliCommandBuilder
         $name = $optionInfo['name'] ?? "--$optionName";
         $isLong = str_starts_with($name, '--');
         foreach ($values as $value) {
+            if ($isLong) {
+                $command[] = "$name=$value";
+            } else {
+                $command[] = "$name";
+                $command[] = "$value";
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array<string> $command
+     * @param array<string, mixed> $optionInfo
+     */
+    protected function addOptionArrayIdValue(array &$command, string $optionName, array $optionInfo): static
+    {
+        if ($optionInfo['value'] === null) {
+            return $this;
+        }
+
+        $name = $optionInfo['name'] ?? "--$optionName";
+        $isLong = str_starts_with($name, '--');
+        foreach ($optionInfo['value'] as $value) {
             if ($isLong) {
                 $command[] = "$name=$value";
             } else {

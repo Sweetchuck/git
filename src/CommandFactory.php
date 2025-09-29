@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git;
 
+use Sweetchuck\Git\Command\AbortMerge;
+use Sweetchuck\Git\Command\AbortRebase;
 use Sweetchuck\Git\Command\AddRemote;
 use Sweetchuck\Git\Command\AddRemoteFetchUrl;
 use Sweetchuck\Git\Command\AddRemotePushUrl;
@@ -12,12 +14,15 @@ use Sweetchuck\Git\Command\CheckIgnore;
 use Sweetchuck\Git\Command\CliCommandInterface;
 use Sweetchuck\Git\Command\CloneRepository;
 use Sweetchuck\Git\Command\CommitStagedFiles;
+use Sweetchuck\Git\Command\ContinueMerge;
+use Sweetchuck\Git\Command\ContinueRebase;
 use Sweetchuck\Git\Command\CreateTag;
 use Sweetchuck\Git\Command\DeleteRemoteFetchUrl;
 use Sweetchuck\Git\Command\DeleteRemotePushUrl;
 use Sweetchuck\Git\Command\DeleteSymbolicRef;
 use Sweetchuck\Git\Command\DeleteTag;
 use Sweetchuck\Git\Command\ExecuteMerge;
+use Sweetchuck\Git\Command\ExecuteRebase;
 use Sweetchuck\Git\Command\FetchRefs;
 use Sweetchuck\Git\Command\GetBranches;
 use Sweetchuck\Git\Command\GetChangedFiles;
@@ -38,6 +43,8 @@ use Sweetchuck\Git\Command\MoveFiles;
 use Sweetchuck\Git\Command\PruneRemote;
 use Sweetchuck\Git\Command\PullRefs;
 use Sweetchuck\Git\Command\PushRefs;
+use Sweetchuck\Git\Command\QuitMerge;
+use Sweetchuck\Git\Command\QuitRebase;
 use Sweetchuck\Git\Command\ReadSymbolicRef;
 use Sweetchuck\Git\Command\RemoveRemote;
 use Sweetchuck\Git\Command\RenameRemote;
@@ -479,6 +486,64 @@ class CommandFactory implements CommandFactoryInterface
     public function createExecuteMerge(): ExecuteMerge
     {
         $command = new ExecuteMerge();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createContinueMerge(): ContinueMerge
+    {
+        $command = new ContinueMerge();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createQuitMerge(): QuitMerge
+    {
+        $command = new QuitMerge();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createAbortMerge(): AbortMerge
+    {
+        $command = new AbortMerge();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+    // endregion
+
+    // region rebase
+    public function createExecuteRebase(): ExecuteRebase
+    {
+        $command = new ExecuteRebase();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createContinueRebase(): ContinueRebase
+    {
+        $command = new ContinueRebase();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createQuitRebase(): QuitRebase
+    {
+        $command = new QuitRebase();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createAbortRebase(): AbortRebase
+    {
+        $command = new AbortRebase();
         $this->prepareCommand($command);
 
         return $command;
