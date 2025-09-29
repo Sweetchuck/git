@@ -66,7 +66,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git commit`
   * ✔ `git merge`
   * ✔ `git rebase`
-  * 🛠 `git reset`
+  * ✔ `git reset`
   * 🛠 `git checkout`
   * ✔ `git symbolic-ref          <name> <ref>` UpsertSymbolicRef
   * ✔ `git symbolic-ref          <name>`       ReadSymbolicRef
