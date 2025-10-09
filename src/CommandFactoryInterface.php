@@ -28,8 +28,10 @@ use Sweetchuck\Git\Command\GetChangedFiles;
 use Sweetchuck\Git\Command\GetCommits;
 use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
+use Sweetchuck\Git\Command\GetExecPath;
 use Sweetchuck\Git\Command\GetFileContent;
-use Sweetchuck\Git\Command\GetFiles;
+use Sweetchuck\Git\Command\GetFilesInTree;
+use Sweetchuck\Git\Command\GetFilesInWorkingCopy;
 use Sweetchuck\Git\Command\GetRemoteFetchUrls;
 use Sweetchuck\Git\Command\GetRemotePushUrls;
 use Sweetchuck\Git\Command\GetRemotes;
@@ -295,7 +297,9 @@ interface CommandFactoryInterface
     /**
      * Represents the "git ls-files" command.
      */
-    public function createGetFiles(): GetFiles;
+    public function createGetFilesInWorkingCopy(): GetFilesInWorkingCopy;
+
+    public function createGetFilesInTree(): GetFilesInTree;
 
     /**
      * Represents the "git show [ref]:<filePath>" command.

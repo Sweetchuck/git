@@ -120,6 +120,10 @@ class FormatParser implements OutcomeParserInterface
                 case '%(P)':
                     $this->processRefPropertiesCommitHashes($propertyName, $refKeyValuePairs);
                     break;
+
+                case '%(objectsize)':
+                    $this->processRefPropertiesObjectSize($propertyName, $refKeyValuePairs);
+                    break;
             }
         }
 
@@ -193,6 +197,17 @@ class FormatParser implements OutcomeParserInterface
         $ref[$key] = $value === ''
             ? []
             : explode(' ', $value);
+    }
+
+    /**
+     * @param array<string, mixed> $ref
+     */
+    protected function processRefPropertiesObjectSize(string $key, array &$ref): void
+    {
+        settype(
+            $ref[$key],
+            $ref[$key] === '-' ? 'null' : 'integer',
+        );
     }
 
     /**

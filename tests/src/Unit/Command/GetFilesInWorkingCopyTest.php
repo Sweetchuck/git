@@ -7,18 +7,18 @@ namespace Sweetchuck\Git\Tests\Unit\Command;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use Sweetchuck\Git\Command\GetFiles;
+use Sweetchuck\Git\Command\GetFilesInWorkingCopy;
 use PHPUnit\Framework\Attributes\Group;
 use Sweetchuck\Git\FileStatus;
 
-#[CoversClass(GetFiles::class)]
+#[CoversClass(GetFilesInWorkingCopy::class)]
 #[Group('command-git-ls-files')]
-class GetFilesTest extends CommandTestBase
+class GetFilesInWorkingCopyTest extends CommandTestBase
 {
 
-    protected function createCommand(): GetFiles
+    protected function createCommand(): GetFilesInWorkingCopy
     {
-        return new GetFiles();
+        return new GetFilesInWorkingCopy();
     }
 
     public static function casesGetCliCommand(): array

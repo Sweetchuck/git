@@ -26,7 +26,7 @@ class GetCommitsTest extends CommandTestBase
         $initStepGitInitCommon = [
             'type' => 'exec',
             'command' => <<<'SHELL'
-                git init {{ dirSafe }} \
+                git init --initial-branch="main" {{ dirSafe }} \
                 && cd {{ dirSafe }} \
                 && git config user.email "test@example.com" \
                 && git config user.name "Test User"
@@ -65,11 +65,11 @@ class GetCommitsTest extends CommandTestBase
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add README.md',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit --message="Initial commit"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git add README.md \
+                            && git commit --message='Initial commit'
+                            SHELL,
                     ],
                 ],
                 'properties' => [],
@@ -100,11 +100,11 @@ class GetCommitsTest extends CommandTestBase
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add README.md',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit -m "Initial commit"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git add README.md \
+                            && git commit --message='Initial commit'
+                            SHELL,
                     ],
                     [
                         'type' => 'createFile',
@@ -113,11 +113,11 @@ class GetCommitsTest extends CommandTestBase
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add file.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit -m "Second commit"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git add file.txt \
+                            && git commit --message='Second commit'
+                            SHELL,
                     ],
                 ],
                 'properties' => [],

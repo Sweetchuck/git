@@ -54,6 +54,24 @@ class FormatParserTest extends TestCase
             'assetKey' => 'commits',
         ];
 
+        $lsTreeOptions = [
+            'definition' => [
+                'keyProperty' => 'path',
+                'refSeparatorPosition' => 'after',
+                'refSeparator' => "\0",
+                'propertySeparator' => '|',
+                'keyValueSeparator' => '=',
+                'refPropertyMapping' => [
+                    'path' => '%(path)',
+                    'objectMode' => '%(objectmode)',
+                    'objectType' => '%(objecttype)',
+                    'objectName' => '%(objectname)',
+                    'objectSize' => '%(objectsize)',
+                ],
+            ],
+            'assetKey' => 'paths',
+        ];
+
         // @todo Add more cases.
         // - FilePath contains spaces
         // - FilePath ends with spaces.
@@ -232,6 +250,56 @@ class FormatParserTest extends TestCase
                     ],
                 ),
                 'options' => $logOptions,
+            ],
+            'git-ls-tree.multiple' => [
+                'expected' => [
+                    'paths' => [
+                        'a.php' => [
+                            'objectMode' => '100644',
+                            'objectName' => 'name01',
+                            'objectSize' => 21,
+                            'objectType' => 'blob',
+                            'path' => 'a.php',
+                        ],
+                        'b.php' => [
+                            'objectMode' => '100644',
+                            'objectName' => 'name02',
+                            'objectSize' => 42,
+                            'objectType' => 'blob',
+                            'path' => 'b.php',
+                        ],
+                        'src' => [
+                            'objectMode' => '100755',
+                            'objectName' => 'name03',
+                            'objectSize' => null,
+                            'objectType' => 'tree',
+                            'path' => 'src',
+                        ],
+                    ],
+                ],
+                'stdOutput' => implode(
+                    '',
+                    [
+                        'path=a.php',
+                        '|objectMode=100644',
+                        '|objectType=blob',
+                        '|objectName=name01',
+                        '|objectSize=21',
+                        "\0",
+                        'path=b.php',
+                        '|objectMode=100644',
+                        '|objectType=blob',
+                        '|objectName=name02',
+                        '|objectSize=42',
+                        "\0",
+                        'path=src',
+                        '|objectMode=100755',
+                        '|objectType=tree',
+                        '|objectName=name03',
+                        '|objectSize=-',
+                    ],
+                ),
+                'options' => $lsTreeOptions,
             ],
         ];
     }

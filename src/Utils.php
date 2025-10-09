@@ -75,6 +75,13 @@ class Utils
             // @todo This is an ugly shortcut.
             'nameStatus' => '',
         ],
+        'ls-tree.default' => [
+            'path' => '%(path)',
+            'objectMode' => '%(objectmode)',
+            'objectType' => '%(objecttype)',
+            'objectName' => '%(objectname)',
+            'objectSize' => '%(objectsize)',
+        ],
     ];
 
     /**

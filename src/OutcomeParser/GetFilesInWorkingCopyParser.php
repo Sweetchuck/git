@@ -7,7 +7,10 @@ namespace Sweetchuck\Git\OutcomeParser;
 use Sweetchuck\Git\FileStatus;
 use Sweetchuck\Git\OutcomeParserInterface;
 
-class GetFilesParser implements OutcomeParserInterface
+/**
+ * @todo Rename "path" to "filePath". Should be consistent with other parsers.
+ */
+class GetFilesInWorkingCopyParser implements OutcomeParserInterface
 {
     /**
      * Parses the output of "git ls-files" command with -t and -z options.

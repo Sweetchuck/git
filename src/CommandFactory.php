@@ -30,7 +30,8 @@ use Sweetchuck\Git\Command\GetCommits;
 use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
 use Sweetchuck\Git\Command\GetFileContent;
-use Sweetchuck\Git\Command\GetFiles;
+use Sweetchuck\Git\Command\GetFilesInTree;
+use Sweetchuck\Git\Command\GetFilesInWorkingCopy;
 use Sweetchuck\Git\Command\GetRemoteFetchUrls;
 use Sweetchuck\Git\Command\GetRemotePushUrls;
 use Sweetchuck\Git\Command\GetRemotes;
@@ -575,9 +576,17 @@ class CommandFactory implements CommandFactoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createGetFiles(): GetFiles
+    public function createGetFilesInWorkingCopy(): GetFilesInWorkingCopy
     {
-        $command = new GetFiles();
+        $command = new GetFilesInWorkingCopy();
+        $this->prepareCommand($command);
+
+        return $command;
+    }
+
+    public function createGetFilesInTree(): GetFilesInTree
+    {
+        $command = new GetFilesInTree();
         $this->prepareCommand($command);
 
         return $command;

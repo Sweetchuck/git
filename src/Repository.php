@@ -933,12 +933,31 @@ class Repository
      * @return ?array<string, mixed>
      *   An array of files, or null if the command failed.
      */
-    public function getFiles(array $properties = []): ?array
+    public function getFilesInWorkingCopy(array $properties = []): ?array
     {
         $result = $this
             ->populateCommonProperties($properties)
             ->commandFactory
-            ->createGetFiles()
+            ->createGetFilesInWorkingCopy()
+            ->setProperties($properties)
+            ->execute();
+        $this->assertOutcome($result, [0]);
+
+        return $result->artifacts;
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     *
+     * @return ?array<string, mixed>
+     *   An array of files, or null if the command failed.
+     */
+    public function getFilesInTree(array $properties = []): ?array
+    {
+        $result = $this
+            ->populateCommonProperties($properties)
+            ->commandFactory
+            ->createGetFilesInTree()
             ->setProperties($properties)
             ->execute();
         $this->assertOutcome($result, [0]);

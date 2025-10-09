@@ -24,7 +24,11 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git mv`
   * ✔ `git restore`
   * ✔ `git rm`
-  * 🛠 `git apply`
+  * 🛠 `git apply -- <paths>`
+  * 🛠 `git apply --stat`
+  * 🛠 `git apply --numstat`
+  * 🛠 `git apply --sumary`
+  * 🛠 `git apply --check`
   * 🛠 `git stash`
     * 🛠 `git stash list`
     * 🛠 `git stash show`
@@ -41,6 +45,15 @@ Using these commands instead of directly calling `\exec()` offers several advant
     * 🛠 `git stash import`
 * examine the history and state
   * 🛠 `git bisect`
+  * 🛠 `git diff-tree --patch`
+  * 🛠 `git diff-tree --stat`
+  * 🛠 `git diff-tree --compact-summary`
+  * 🛠 `git diff-tree --numstat`
+  * 🛠 `git diff-tree --shortstat`
+  * 🛠 `git diff-tree --dirstat`
+  * 🛠 `git diff-tree --summary`
+  * 🛠 `git diff-tree -S<pattern>`
+  * 🛠 `git diff-tree -G<pattern>`
   * 🛠 `git diff`
   * ✔ `git diff --name-status --cached`
   * ✔ `git diff --name-status` (without `--cached`)
@@ -54,6 +67,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
     * ✔ `git show [ref]:<filePath>` (src/Command/GetFileContent.php)
   * ✔ `git status`
   * ✔ `git ls-files`
+  * ✔ `git ls-tree`
   * ✔ `git check-ignore`
   * ✔ `git check-attr`
 * grow, mark and tweak your common history

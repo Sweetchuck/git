@@ -10,16 +10,16 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Sweetchuck\Git\Command\CliCommandBase;
 use Sweetchuck\Git\Command\CommandBase;
-use Sweetchuck\Git\Command\GetFiles;
+use Sweetchuck\Git\Command\GetFilesInWorkingCopy;
 use Sweetchuck\Git\FileStatus;
-use Sweetchuck\Git\OutcomeParser\GetFilesParser;
+use Sweetchuck\Git\OutcomeParser\GetFilesInWorkingCopyParser;
 
-#[CoversClass(GetFiles::class)]
+#[CoversClass(GetFilesInWorkingCopy::class)]
 #[CoversClass(CliCommandBase::class)]
 #[CoversClass(CommandBase::class)]
-#[CoversClass(GetFilesParser::class)]
+#[CoversClass(GetFilesInWorkingCopyParser::class)]
 #[Group('command-git-ls-files')]
-class GetFilesTest extends CommandTestBase
+class GetFilesInWorkingCopyTest extends CommandTestBase
 {
 
     /**
@@ -322,7 +322,7 @@ class GetFilesTest extends CommandTestBase
         $properties['workingDirectory'] = $projectDir;
         $this->executeSteps($projectDir, $initSteps);
 
-        $command = new GetFiles();
+        $command = new GetFilesInWorkingCopy();
         $command->setProperties($properties);
         $result = $command->execute();
 

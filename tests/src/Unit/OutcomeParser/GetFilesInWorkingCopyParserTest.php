@@ -8,15 +8,15 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Sweetchuck\Git\FileStatus;
-use Sweetchuck\Git\OutcomeParser\GetFilesParser;
+use Sweetchuck\Git\OutcomeParser\GetFilesInWorkingCopyParser;
 use Sweetchuck\Git\Tests\Unit\TestBase;
 
-#[CoversClass(GetFilesParser::class)]
-class GetFilesParserTest extends TestBase
+#[CoversClass(GetFilesInWorkingCopyParser::class)]
+class GetFilesInWorkingCopyParserTest extends TestBase
 {
-    protected function createParser(): GetFilesParser
+    protected function createParser(): GetFilesInWorkingCopyParser
     {
-        return new GetFilesParser();
+        return new GetFilesInWorkingCopyParser();
     }
 
     /**

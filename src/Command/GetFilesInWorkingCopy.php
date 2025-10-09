@@ -24,13 +24,15 @@ use Sweetchuck\Git\Option\OptionSparseTrait;
 use Sweetchuck\Git\Option\OptionStageTrait;
 use Sweetchuck\Git\Option\OptionUnmergedTrait;
 use Sweetchuck\Git\Option\OptionWithTreeTrait;
-use Sweetchuck\Git\OutcomeParser\GetFilesParser;
+use Sweetchuck\Git\OutcomeParser\GetFilesInWorkingCopyParser;
 use Sweetchuck\Git\OutcomeParserInterface;
 
 /**
  * Represents the "git ls-files" command.
+ *
+ * @todo Use "--format".
  */
-class GetFiles extends CliCommandBase
+class GetFilesInWorkingCopy extends CliCommandBase
 {
 
     use OptionCachedTrait;
@@ -131,6 +133,6 @@ class GetFiles extends CliCommandBase
 
     protected function getDefaultOutcomeParser(): ?OutcomeParserInterface
     {
-        return new GetFilesParser();
+        return new GetFilesInWorkingCopyParser();
     }
 }
