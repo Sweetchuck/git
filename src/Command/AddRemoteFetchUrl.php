@@ -15,15 +15,15 @@ class AddRemoteFetchUrl extends CliCommandBase
 
         $this->properties['command'] = ['remote', 'set-url'];
         $this->properties['commandOptions']['push'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
         $this->properties['commandOptions']['add'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['delete'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
 

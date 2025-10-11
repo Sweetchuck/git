@@ -19,7 +19,7 @@ class DeleteTag extends CliCommandBase
 
         $this->properties['command'] = ['tag'];
         $this->properties['commandOptions']['delete'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
 

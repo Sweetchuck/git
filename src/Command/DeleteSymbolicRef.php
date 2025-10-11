@@ -15,7 +15,7 @@ class DeleteSymbolicRef extends CliCommandBase
 
         $this->properties['command'] = ['symbolic-ref'];
         $this->properties['commandOptions']['delete'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
 

@@ -25,6 +25,16 @@ class GetFileContentTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'basic-file-content' => [
                 'expected' => [
@@ -33,10 +43,7 @@ class GetFileContentTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                   $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/test-file.txt',
@@ -63,10 +70,7 @@ class GetFileContentTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/staged-file.txt',
@@ -91,10 +95,7 @@ class GetFileContentTest extends CommandTestBase
                     'exitCode' => 128,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && git commit --allow-empty -m "Empty commit"',
@@ -110,10 +111,7 @@ class GetFileContentTest extends CommandTestBase
                     'exitCode' => 128,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/test-file.txt',

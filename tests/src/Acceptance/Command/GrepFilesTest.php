@@ -35,7 +35,7 @@ class GrepFilesTest extends CommandTestBase
         $initStepGitInitCommon = [
             'type' => 'exec',
             'command' => <<<'SHELL'
-                git init {{ dirSafe }} \
+                git init --initial-branch="main" {{ dirSafe }} \
                 && cd {{ dirSafe }} \
                 && git config user.email "test@example.com" \
                 && git config user.name "Test User"

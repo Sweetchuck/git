@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionShallowSubmodulesTrait
     protected function initPropertyShallowSubmodules(): static
     {
         $this->properties['commandOptions']['shallowSubmodules'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
 

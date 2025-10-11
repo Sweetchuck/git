@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionFileTrait
     protected function initPropertyFile(): static
     {
         $this->properties['commandOptions']['file'] = [
-            'type' => 'value:true-false:string',
+            'type' => CommandOptionType::ValueTrueFalseString,
             'value' => null,
         ];
 

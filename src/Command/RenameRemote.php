@@ -16,7 +16,7 @@ class RenameRemote extends CliCommandBase
         $this->properties['command'] = ['remote', 'rename'];
 
         $this->properties['commandOptions']['progress'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => false,
         ];
 

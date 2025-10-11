@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionIgnoreCaseTrait
     protected function initPropertyIgnoreCase(): static
     {
         $this->properties['commandOptions']['ignoreCase'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
 

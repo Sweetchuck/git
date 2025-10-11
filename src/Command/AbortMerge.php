@@ -12,7 +12,7 @@ class AbortMerge extends CliCommandBase
         parent::initProperties();
         $this->properties['command'] = ['merge'];
         $this->properties['commandOptions']['abort'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 

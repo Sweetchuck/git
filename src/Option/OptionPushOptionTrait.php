@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionPushOptionTrait
     protected function initPropertyPushOption(): static
     {
         $this->properties['commandOptions']['pushOption'] = [
-            'type' => 'state:string-required:multi',
+            'type' => CommandOptionType::StateStringRequiredMulti,
             'value' => [],
         ];
 

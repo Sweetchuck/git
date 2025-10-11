@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,11 +14,11 @@ trait OptionForceWithLeaseTrait
     protected function initPropertyForceWithLease(): static
     {
         $this->properties['commandOptions']['forceWithLease'] = [
-            'type' => 'value:true-false:string',
+            'type' => CommandOptionType::ValueTrueFalseString,
             'value' => null,
         ];
         $this->properties['commandOptions']['forceIfIncludes'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
 

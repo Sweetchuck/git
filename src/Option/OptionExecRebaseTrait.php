@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionExecRebaseTrait
     protected function initPropertyExec(): static
     {
         $this->properties['commandOptions']['exec'] = [
-            'type' => 'array<TId, TValue>',
+            'type' => CommandOptionType::ArrayString,
             'value' => null,
         ];
 

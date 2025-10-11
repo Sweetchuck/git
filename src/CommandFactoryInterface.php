@@ -28,7 +28,6 @@ use Sweetchuck\Git\Command\GetChangedFiles;
 use Sweetchuck\Git\Command\GetCommits;
 use Sweetchuck\Git\Command\GetConfigMultiple;
 use Sweetchuck\Git\Command\GetConfigSingle;
-use Sweetchuck\Git\Command\GetExecPath;
 use Sweetchuck\Git\Command\GetFileContent;
 use Sweetchuck\Git\Command\GetFilesInTree;
 use Sweetchuck\Git\Command\GetFilesInWorkingCopy;

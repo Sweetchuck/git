@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionGentlyTrait
     protected function initPropertyGently(): static
     {
         $this->properties['commandOptions']['gently'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'name' => '--soft',
             'name-no' => '--hard',
             'state' => null,

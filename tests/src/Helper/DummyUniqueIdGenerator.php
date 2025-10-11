@@ -11,14 +11,13 @@ class DummyUniqueIdGenerator
      * @var array<string>
      */
     public array $ids = [
+        'Đ',
+        '¶',
+        '®',
+        '€',
+        '÷',
         '×',
         '¤',
-        'Ä',
-        '®',
-        'Đ',
-        '€',
-        'ß',
-        'ä',
     ];
 
     public function __invoke(): string

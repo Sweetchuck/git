@@ -28,8 +28,8 @@ class GetCommitsTest extends CommandTestBase
             'command' => <<<'SHELL'
                 git init --initial-branch="main" {{ dirSafe }} \
                 && cd {{ dirSafe }} \
-                && git config user.email "test@example.com" \
-                && git config user.name "Test User"
+                && git config --local user.email "test@example.com" \
+                && git config --local user.name "Test User"
                 SHELL,
         ];
 

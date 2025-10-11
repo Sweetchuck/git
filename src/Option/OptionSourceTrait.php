@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionSourceTrait
     protected function initPropertySource(): static
     {
         $this->properties['commandOptions']['source'] = [
-            'type' => 'value:false:string-required',
+            'type' => CommandOptionType::ValueFalseStringRequired,
             'value' => null,
         ];
 

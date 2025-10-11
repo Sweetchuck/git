@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionCommitTrait
     protected function initPropertyCommit(): static
     {
         $this->properties['commandOptions']['commit'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
 

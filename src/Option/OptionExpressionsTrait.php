@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionExpressionsTrait
     protected function initPropertyExpressions(): static
     {
         $this->properties['commandOptions']['expressions'] = [
-            'type' => 'value:expressions',
+            'type' => CommandOptionType::ValueExpressions,
             'value' => null,
         ];
 

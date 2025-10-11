@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionSignTrait
     protected function initPropertySign(): static
     {
         $this->properties['commandOptions']['sign'] = [
-            'type' => 'state:true',
+            'type' => CommandOptionType::StateTrue,
             'short' => '-s',
             'state' => null,
         ];

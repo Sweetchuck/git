@@ -75,6 +75,17 @@ class Utils
             // @todo This is an ugly shortcut.
             'nameStatus' => '',
         ],
+        'ls-files.default' => [
+            'objectName' => '%(objectname)',
+            'objectMode' => '%(objectmode)',
+            'objectType' => '%(objecttype)',
+            'stage' => '%(stage)',
+            'eolInfoIndex' => '%(eolinfo:index)',
+            'eolInfoWorkTree' => '%(eolinfo:worktree)',
+            'eolAttributes' => '%(eolattr)',
+            'objectSize' => '%(objectsize)',
+            'path' => '%(path)',
+        ],
         'ls-tree.default' => [
             'path' => '%(path)',
             'objectMode' => '%(objectmode)',

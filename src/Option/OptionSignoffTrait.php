@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionSignoffTrait
     protected function initPropertySignoff(): static
     {
         $this->properties['commandOptions']['signoff'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'short' => '-s',
             'state' => null,
         ];

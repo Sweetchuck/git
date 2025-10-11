@@ -15,7 +15,7 @@ class ContinueRebase extends CliCommandBase
         parent::initProperties();
         $this->properties['command'] = ['rebase'];
         $this->properties['commandOptions']['continue'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 

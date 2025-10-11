@@ -17,7 +17,7 @@ class GetExecPath extends CliCommandBase
     {
         parent::initProperties();
         $this->properties['globalOptions']['execPath'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '--exec-path',
             'state' => true,
         ];

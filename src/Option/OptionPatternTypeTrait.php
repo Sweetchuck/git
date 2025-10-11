@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionPatternTypeTrait
     protected function initPropertyPatternType(): static
     {
         $this->properties['commandOptions']['patternType'] = [
-            'type' => 'value:name-pattern',
+            'type' => CommandOptionType::ValueNamePattern,
             'pattern' => '--{{ value }}-regexp',
             'value' => null,
         ];

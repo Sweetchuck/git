@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionReferenceIfAbleTrait
     protected function initPropertyReferenceIfAble(): static
     {
         $this->properties['commandOptions']['referenceIfAble'] = [
-            'type' => 'value:false:string-required',
+            'type' => CommandOptionType::ValueFalseStringRequired,
             'value' => null,
         ];
 

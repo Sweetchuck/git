@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git\Command;
 
 use Sweetchuck\Git\Argument\ArgumentPathsTrait;
+use Sweetchuck\Git\CommandOptionType;
 use Sweetchuck\Git\Option\OptionFormatTrait;
 use Sweetchuck\Git\Option\OptionRecursiveTrait;
 use Sweetchuck\Git\Option\OptionShowTreeEntriesTrait;
@@ -43,7 +44,7 @@ class GetFilesInTree extends CliCommandBase
         $this->properties['commandArguments'][0] = null;
 
         $this->properties['commandOptions']['null'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'name' => '-z',
             'state' => true,
         ];

@@ -24,24 +24,23 @@ class SwitchBranchTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'basic-switch-to-existing-branch' => [
                 'expected' => [
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -76,18 +75,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -124,18 +112,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -186,18 +163,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -251,18 +217,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -299,18 +254,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -356,18 +300,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -404,18 +337,7 @@ class SwitchBranchTest extends CommandTestBase
                     'exitCode' => 128,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',

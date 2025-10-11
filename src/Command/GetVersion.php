@@ -17,7 +17,7 @@ class GetVersion extends CliCommandBase
     {
         parent::initProperties();
         $this->properties['globalOptions']['version'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
 

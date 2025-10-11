@@ -19,7 +19,7 @@ class SetBranchUpstream extends CliCommandBase
 
         $this->properties['command'] = ['branch'];
         $this->properties['commandOptions']['setUpstreamTo'] = [
-            'type' => 'value:string-required',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
             'name' => '--set-upstream-to',
             'value' => null,
         ];

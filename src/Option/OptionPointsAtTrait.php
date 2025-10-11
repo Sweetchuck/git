@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionPointsAtTrait
     protected function initPropertyPointsAt(): static
     {
         $this->properties['commandOptions']['pointsAt'] = [
-            'type' => 'value:true-false:string',
+            'type' => CommandOptionType::ValueTrueFalseString,
             'value' => null,
         ];
 

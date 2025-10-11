@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionRenormalizeTrait
     protected function initPropertyRenormalize(): static
     {
         $this->properties['commandOptions']['renormalize'] = [
-            'type' => 'state:true',
+            'type' => CommandOptionType::StateTrue,
             'state' => null,
         ];
 

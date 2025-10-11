@@ -24,32 +24,32 @@ class GetStatus extends CliCommandBase
 
         $this->properties['command'] = ['status'];
         $this->properties['commandOptions']['porcelain'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['NUL'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '-z',
             'state' => true,
         ];
         $this->properties['commandOptions']['renames'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
         $this->properties['commandOptions']['find-renames'] = [
-            'type' => 'value:string-optional',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringOptional,
             'value' => null,
         ];
         $this->properties['commandOptions']['ignored'] = [
-            'type' => 'value:string-optional',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringOptional,
             'value' => null,
         ];
         $this->properties['commandOptions']['untracked-files'] = [
-            'type' => 'value:string-optional',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringOptional,
             'value' => null,
         ];
         $this->properties['commandOptions']['ignore-submodules'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
 

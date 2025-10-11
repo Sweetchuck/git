@@ -47,7 +47,7 @@ class GetTags extends CliCommandBase
 
         $this->properties['command'] = ['tag'];
         $this->properties['commandOptions']['list'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this

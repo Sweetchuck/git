@@ -19,12 +19,18 @@ class MoveFilesTest extends CommandTestBase
     public function testMoveFile(): void
     {
         $dir = $this->createTempDirectory();
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
 
         $this->executeSteps($dir, [
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git init',
-            ],
+            $initStepGitInitCommon,
             [
                 'type' => 'createFile',
                 'path' => '{{ dir }}/original.txt',
@@ -54,12 +60,18 @@ class MoveFilesTest extends CommandTestBase
     public function testMoveFileWithForce(): void
     {
         $dir = $this->createTempDirectory();
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
 
         $this->executeSteps($dir, [
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git init',
-            ],
+            $initStepGitInitCommon,
             [
                 'type' => 'createFile',
                 'path' => '{{ dir }}/source.txt',
@@ -105,12 +117,18 @@ class MoveFilesTest extends CommandTestBase
     public function testMoveMultipleFilesToDirectory(): void
     {
         $dir = $this->createTempDirectory();
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
 
         $this->executeSteps($dir, [
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git init',
-            ],
+            $initStepGitInitCommon,
             [
                 'type' => 'createFile',
                 'path' => '{{ dir }}/file1.txt',

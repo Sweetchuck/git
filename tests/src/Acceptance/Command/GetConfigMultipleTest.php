@@ -32,15 +32,12 @@ class GetConfigMultipleTest extends CommandTestBase
         $initSteps = [
             [
                 'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git init',
-            ],
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git config --local user.name "Test User"',
-            ],
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git config --local user.email "test@example.com"',
+                'command' => <<<'SHELL'
+                    git init --initial-branch="main" {{ dirSafe }} \
+                    && cd {{ dirSafe }} \
+                    && git config --local user.email 'test@example.com' \
+                    && git config --local user.name  'Test User'
+                    SHELL,
             ],
             [
                 'type' => 'exec',
@@ -120,19 +117,19 @@ class GetConfigMultipleTest extends CommandTestBase
                             'value.raw' => 'true',
                             'value' => true,
                         ],
-                        'user.name' => [
-                            'scope' => 'local',
-                            'origin' => 'file:.git/config',
-                            'name' => 'user.name',
-                            'value.raw' => 'Test User',
-                            'value' => 'Test User',
-                        ],
                         'user.email' => [
                             'scope' => 'local',
                             'origin' => 'file:.git/config',
                             'name' => 'user.email',
                             'value.raw' => 'test@example.com',
                             'value' => 'test@example.com',
+                        ],
+                        'user.name' => [
+                            'scope' => 'local',
+                            'origin' => 'file:.git/config',
+                            'name' => 'user.name',
+                            'value.raw' => 'Test User',
+                            'value' => 'Test User',
                         ],
                         'alias.st' => [
                             'scope' => 'local',

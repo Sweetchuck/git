@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
 use Sweetchuck\Git\FastForward;
 
 /**
@@ -14,7 +15,7 @@ trait OptionFastForwardTrait
     protected function initPropertyFastForward(): static
     {
         $this->properties['commandOptions']['fastForward'] = [
-            'type' => 'value:name-mapping',
+            'type' => CommandOptionType::ValueNameMapping,
             'mapping' => [
                 'no' => '--no-ff',
                 'yes' => '--ff',

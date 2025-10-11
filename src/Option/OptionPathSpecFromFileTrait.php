@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,12 +14,12 @@ trait OptionPathSpecFromFileTrait
     protected function initPropertyPathSpecFromFile(): static
     {
         $this->properties['commandOptions']['pathSpecFromFile'] = [
-            'type' => 'value:false:string-required',
+            'type' => CommandOptionType::ValueFalseStringRequired,
             'name' => '--pathspec-from-file',
             'value' => null,
         ];
         $this->properties['commandOptions']['pathSpecFileNul'] = [
-            'type' => 'state:true',
+            'type' => CommandOptionType::StateTrue,
             'name' => '--pathspec-file-nul',
             'state' => null,
         ];

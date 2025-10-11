@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionMergedTrait
     protected function initPropertyMerged(): static
     {
         $this->properties['commandOptions']['merged'] = [
-            'type' => 'state:string-required:multi',
+            'type' => CommandOptionType::StateStringRequiredMulti,
             'value' => [],
         ];
 

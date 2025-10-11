@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionIntoNameTrait
     protected function initPropertyIntoName(): static
     {
         $this->properties['commandOptions']['intoName'] = [
-            'type' => 'value:string-required',
+            'type' => CommandOptionType::ValueStringRequired,
             'value' => null,
         ];
 

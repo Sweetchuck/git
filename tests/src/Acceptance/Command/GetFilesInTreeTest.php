@@ -21,27 +21,22 @@ use Sweetchuck\Git\OutcomeParser\FormatParser;
 #[Group('command-git-ls-tree')]
 class GetFilesInTreeTest extends CommandTestBase
 {
-    /**
-     * Helper method to create expectation for string values that can vary.
-     */
-    protected static function expectString(): string
-    {
-        return '__EXPECT_STRING__';
-    }
-
-    /**
-     * Helper method to create expectation for int values that can vary.
-     */
-    protected static function expectInt(): string
-    {
-        return '__EXPECT_INT__';
-    }
 
     /**
      * @return array<string, mixed>
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'empty-tree' => [
                 'expected' => [
@@ -50,10 +45,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && git commit --allow-empty -m "Initial empty commit"',
@@ -85,10 +77,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file1.txt',
@@ -141,10 +130,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/root-file.txt',
@@ -213,10 +199,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/root-file.txt',
@@ -270,10 +253,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && mkdir include exclude',
@@ -318,10 +298,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/main-file.txt',
@@ -376,10 +353,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/script.sh',
@@ -424,10 +398,7 @@ class GetFilesInTreeTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && mkdir src docs tests',

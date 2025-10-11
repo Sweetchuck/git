@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  * @property \Sweetchuck\Git\Utils $utils
@@ -14,19 +16,19 @@ trait OptionConfigScopeTrait
     protected function initPropertyConfigScope(): static
     {
         $this->properties['commandOptions']['global'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
         $this->properties['commandOptions']['system'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
         $this->properties['commandOptions']['local'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
         $this->properties['commandOptions']['worktree'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'state' => null,
         ];
 

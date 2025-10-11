@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git;
 
 use Sweetchuck\Git\Command\CliCommandInterface;
+use Sweetchuck\Git\Command\GetCommits;
+use Sweetchuck\Git\Command\GetStatus;
 
 /**
  * @phpstan-import-type SweetchuckGitCommandAddRemoteProperties from \Sweetchuck\Git\Phpstan
@@ -83,18 +85,30 @@ class Repository
     }
 
     /**
+     * @phpstan-template TCommandClass of \Sweetchuck\Git\Command\CliCommandInterface
+     *
+     * @phpstan-param class-string<TCommandClass> $class
+     * @phpstan-param array<string, mixed> $properties
+     */
+    public function executeCommand(string $class, array $properties = []): CommandResult
+    {
+        $this->populateCommonProperties($properties);
+
+        return $this
+            ->commandFactory
+            ->createCommand($class)
+            ->setProperties($properties)
+            ->execute();
+    }
+
+    /**
      * @param array<string, mixed> $properties
      *
      * @return null|array<string, string>
      */
     public function getStatus(array $properties = []): ?array
     {
-        $result = $this
-            ->populateCommonProperties($properties)
-            ->commandFactory
-            ->createGetStatus()
-            ->setProperties($properties)
-            ->execute();
+        $result = $this->executeCommand(GetStatus::class, $properties);
         $this->assertOutcome($result, [0]);
 
         return $result->artifacts;
@@ -107,12 +121,7 @@ class Repository
      */
     public function getCommits(array $properties = []): ?array
     {
-        $result = $this
-            ->populateCommonProperties($properties)
-            ->commandFactory
-            ->createGetCommits()
-            ->setProperties($properties)
-            ->execute();
+        $result = $this->executeCommand(GetCommits::class, $properties);
         $this->assertOutcome($result, [0]);
 
         return $result->artifacts;

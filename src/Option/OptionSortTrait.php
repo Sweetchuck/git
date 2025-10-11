@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionSortTrait
     public function initPropertySort(): static
     {
         $this->properties['commandOptions']['sort'] = [
-            'type' => 'value:string-multiple',
+            'type' => CommandOptionType::ValueStringMultiple,
             'value' => [],
         ];
 

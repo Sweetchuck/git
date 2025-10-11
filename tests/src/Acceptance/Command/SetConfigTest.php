@@ -24,11 +24,14 @@ class SetConfigTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
-        $initSteps = [
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git init',
-            ],
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
         ];
 
         return [
@@ -46,7 +49,9 @@ class SetConfigTest extends CommandTestBase
                         ],
                     ],
                 ],
-                'initSteps' => $initSteps,
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                ],
                 'properties' => [
                     'configName' => 'user.name',
                     'configValue' => 'Test User',
@@ -69,7 +74,9 @@ class SetConfigTest extends CommandTestBase
                         ],
                     ],
                 ],
-                'initSteps' => $initSteps,
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                ],
                 'properties' => [
                     'configName' => 'core.fileMode',
                     'configValue' => false,
@@ -99,15 +106,16 @@ class SetConfigTest extends CommandTestBase
                         ],
                     ],
                 ],
-                'initSteps' => array_merge(
-                    $initSteps,
+                'initSteps' => [
+                    $initStepGitInitCommon,
                     [
-                        [
-                            'type' => 'exec',
-                            'command' => 'cd {{ dirSafe }} && git config --local foo.bar "value1"',
-                        ],
+                        'type' => 'exec',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git config --local 'foo.bar' 'value1'
+                            SHELL,
                     ],
-                ),
+                ],
                 'properties' => [
                     'configScope' => [
                         'local' => true,

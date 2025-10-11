@@ -52,20 +52,20 @@ class GetCommits extends CliCommandBase
 
         $this->properties['command'] = ['log'];
         $this->properties['commandOptions']['null'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '-z',
             'state' => true,
         ];
         $this->properties['commandOptions']['color'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => false,
         ];
         $this->properties['commandOptions']['date'] = [
-            'type' => 'value:string-required',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
             'value' => 'iso',
         ];
         $this->properties['commandOptions']['nameStatus'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         // @todo <revision-range>

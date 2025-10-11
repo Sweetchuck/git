@@ -28,21 +28,21 @@ class GetConfigMultiple extends CliCommandBase
             'list',
         ];
         $this->properties['commandOptions']['null'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['showScope'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '--show-scope',
             'state' => true,
         ];
         $this->properties['commandOptions']['showOrigin'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '--show-origin',
             'state' => true,
         ];
         $this->properties['commandOptions']['showNames'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '--show-names',
             'state' => true,
         ];

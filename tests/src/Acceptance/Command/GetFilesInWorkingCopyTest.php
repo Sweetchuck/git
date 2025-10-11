@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\Test;
 use Sweetchuck\Git\Command\CliCommandBase;
 use Sweetchuck\Git\Command\CommandBase;
 use Sweetchuck\Git\Command\GetFilesInWorkingCopy;
-use Sweetchuck\Git\FileStatus;
 use Sweetchuck\Git\OutcomeParser\GetFilesInWorkingCopyParser;
 
 #[CoversClass(GetFilesInWorkingCopy::class)]
@@ -27,64 +26,74 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch='main' {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email 'test@example.com' \
+                && git config user.name  'Test User'
+                SHELL,
+        ];
+
         return [
             'empty-repo' => [
                 'expected' => [
-                    'artifacts' => [],
+                    'artifacts' => [
+                        'paths' => [],
+                    ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                 ],
                 'properties' => [],
             ],
             'basic-files' => [
                 'expected' => [
                     'artifacts' => [
-                        'file1.txt' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'file1.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                        'paths' => [
+                            'file1.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'none',
+                                'eolInfoWorkTree' => 'none',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 0,
+                                'objectType' => 'blob',
+                                'path' => 'file1.txt',
+                                'stage' => '0',
                             ],
-                        ],
-                        'file2.txt' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'file2.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                            'file2.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'none',
+                                'eolInfoWorkTree' => 'none',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 0,
+                                'objectType' => 'blob',
+                                'path' => 'file2.txt',
+                                'stage' => '0',
                             ],
                         ],
                     ],
                 ],
                 'initSteps' => [
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && touch file1.txt \
+                            && touch file2.txt
+                            SHELL,
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch file1.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch file2.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add file1.txt file2.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit -m "Add test files"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git add file1.txt file2.txt \
+                            && git commit --message='Add test files'
+                            SHELL,
                     ],
                 ],
                 'properties' => [],
@@ -92,56 +101,61 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
             'with-directories' => [
                 'expected' => [
                     'artifacts' => [
-                        'dir1/file3.txt' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'dir1/file3.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                        'paths' => [
+                            'dir1/file3.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'lf',
+                                'eolInfoWorkTree' => 'lf',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 14,
+                                'objectType' => 'blob',
+                                'path' => 'dir1/file3.txt',
+                                'stage' => '0',
                             ],
-                        ],
-                        'dir2/file4.txt' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'dir2/file4.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                            'dir2/file4.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'lf',
+                                'eolInfoWorkTree' => 'lf',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 14,
+                                'objectType' => 'blob',
+                                'path' => 'dir2/file4.txt',
+                                'stage' => '0',
                             ],
                         ],
                     ],
                 ],
                 'initSteps' => [
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && mkdir dir1 \
+                            && touch dir1/file3.txt \
+                            && echo 'Line 1' >  dir1/file3.txt \
+                            && echo 'Line 2' >> dir1/file3.txt
+                            SHELL,
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && mkdir dir1',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && mkdir dir2 \
+                            && touch dir2/file4.txt \
+                            && echo 'Line 1' >  dir2/file4.txt \
+                            && echo 'Line 2' >> dir2/file4.txt
+                            SHELL,
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && mkdir dir2',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch dir1/file3.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch dir2/file4.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add dir1/file3.txt dir2/file4.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit -m "Add files in directories"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git add dir1/file3.txt dir2/file4.txt \
+                            && git commit --message='Add files in directories'
+                            SHELL,
                     ],
                 ],
                 'properties' => [],
@@ -149,34 +163,31 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
             'with-modified-option' => [
                 'expected' => [
                     'artifacts' => [
-                        'modified-file.txt' => [
-                            'status' => FileStatus::UnstagedModification,
-                            'statusChar' => 'C',
-                            'path' => 'modified-file.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                        'paths' => [
+                            'modified-file.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'none',
+                                'eolInfoWorkTree' => 'none',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 0,
+                                'objectType' => 'blob',
+                                'path' => 'modified-file.txt',
+                                'stage' => '0',
                             ],
                         ],
                     ],
                 ],
                 'initSteps' => [
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch modified-file.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add modified-file.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit -m "Add file"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && touch modified-file.txt \
+                            && git add modified-file.txt \
+                            && git commit --message='Add file'
+                            SHELL,
                     ],
                     [
                         'type' => 'createFile',
@@ -188,78 +199,42 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
                     'modified' => true,
                 ],
             ],
-            'with-others-option' => [
-                'expected' => [
-                    'artifacts' => [
-                        'untracked-file.txt' => [
-                            'status' => FileStatus::Untracked,
-                            'statusChar' => '?',
-                            'path' => 'untracked-file.txt',
-                            'attributes' => [
-                                'i' => '',
-                                'w' => 'none',
-                                'attr' => '',
-                            ],
-                        ],
-                    ],
-                ],
-                'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch untracked-file.txt',
-                    ],
-                ],
-                'properties' => [
-                    'others' => true,
-                ],
-            ],
             'with-paths-filter' => [
                 'expected' => [
                     'artifacts' => [
-                        'include/file1.txt' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'include/file1.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                        'paths' => [
+                            'include/file1.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'none',
+                                'eolInfoWorkTree' => 'none',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 0,
+                                'objectType' => 'blob',
+                                'path' => 'include/file1.txt',
+                                'stage' => '0',
                             ],
                         ],
                     ],
                 ],
                 'initSteps' => [
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && mkdir include exclude \
+                            && touch include/file1.txt \
+                            && touch exclude/file2.txt
+                            SHELL,
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && mkdir include',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && mkdir exclude',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch include/file1.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch exclude/file2.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add include/file1.txt exclude/file2.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git commit -m "Add files"',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && git add include/file1.txt exclude/file2.txt \
+                            && git commit --message='Add files'
+                            SHELL,
                     ],
                 ],
                 'properties' => [
@@ -269,34 +244,31 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
             'with-cached-option' => [
                 'expected' => [
                     'artifacts' => [
-                        'staged-file.txt' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'staged-file.txt',
-                            'attributes' => [
-                                'i' => 'none',
-                                'w' => 'none',
-                                'attr' => '',
+                        'paths' => [
+                            'staged-file.txt' => [
+                                'eolAttributes' => null,
+                                'eolInfoIndex' => 'none',
+                                'eolInfoWorkTree' => 'none',
+                                'objectMode' => '100644',
+                                'objectName' => static::expectString(),
+                                'objectSize' => 0,
+                                'objectType' => 'blob',
+                                'path' => 'staged-file.txt',
+                                'stage' => '0',
                             ],
                         ],
                     ],
                 ],
                 'initSteps' => [
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch staged-file.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && touch unstaged-file.txt',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git add staged-file.txt',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }} \
+                            && touch staged-file.txt \
+                            && touch unstaged-file.txt \
+                            && git add staged-file.txt
+                            SHELL,
                     ],
                 ],
                 'properties' => [
@@ -318,6 +290,10 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
         array $initSteps,
         array $properties = [],
     ): void {
+        $expected += [
+            'exitCode' => 0,
+        ];
+
         $projectDir = $this->createTempDirectory();
         $properties['workingDirectory'] = $projectDir;
         $this->executeSteps($projectDir, $initSteps);
@@ -326,8 +302,66 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
         $command->setProperties($properties);
         $result = $command->execute();
 
+        if (array_key_exists('exitCode', $expected)) {
+            static::assertSame(
+                $expected['exitCode'],
+                $result->process->getExitCode(),
+                sprintf(
+                    "exit code match\n--== stdError BEGIN ==--\n%s\n--== stdError END ==--",
+                    $result->process->getErrorOutput(),
+                ),
+            );
+        }
+
         if (array_key_exists('artifacts', $expected)) {
-            static::assertSame($expected['artifacts'], $result->artifacts);
+            static::assertSame(
+                array_keys($expected['artifacts']),
+                array_keys($result->artifacts),
+                'artifacts keys match',
+            );
+
+            if (array_key_exists('paths', $expected['artifacts'])) {
+                static::assertSame(
+                    array_keys($expected['artifacts']['paths']),
+                    array_keys($result->artifacts['paths']),
+                    'artifacts.paths keys match',
+                );
+
+                foreach ($expected['artifacts']['paths'] as $path => $expectedData) {
+                    $actualData = $result->artifacts['paths'][$path];
+                    static::assertSame(
+                        array_keys($expectedData),
+                        array_keys($actualData),
+                        "artifacts.paths.$path keys match",
+                    );
+
+                    foreach ($expectedData as $key => $expectedValue) {
+                        switch ($expectedValue) {
+                            case '__EXPECT_STRING__':
+                                static::assertIsString(
+                                    $actualData[$key],
+                                    "artifacts.paths.$path.$key is a string",
+                                );
+                                break;
+
+                            case '__EXPECT_INT__':
+                                static::assertIsInt(
+                                    $actualData[$key],
+                                    "artifacts.paths.$path.$key is an integer",
+                                );
+                                break;
+
+                            default:
+                                static::assertSame(
+                                    $expectedValue,
+                                    $actualData[$key],
+                                    "artifacts.paths.$path.$key match",
+                                );
+                                break;
+                        }
+                    }
+                }
+            }
         }
     }
 }

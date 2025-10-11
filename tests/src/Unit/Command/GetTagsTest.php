@@ -35,11 +35,11 @@ class GetTagsTest extends CommandTestBase
         $expectedFormatDefault .= implode(
             '',
             [
-                'ärefName=%(refname:strip=0)',
-                'ßobjectType=%(objecttype)',
-                'ßobjectName=%(objectname)',
-                'ßtaggerDate=%(taggerdate:iso)',
-                'ßcreatorDate=%(creatordate:iso)',
+                '¤refName=%(refname:strip=0)',
+                '×objectType=%(objecttype)',
+                '×objectName=%(objectname)',
+                '×taggerDate=%(taggerdate:iso)',
+                '×creatorDate=%(creatordate:iso)',
             ],
         );
 
@@ -332,11 +332,11 @@ class GetTagsTest extends CommandTestBase
                         'stdOutput' => implode(
                             '',
                             [
-                                'ärefName=refs/tags/v1.2.3',
-                                'ßobjectType=commit',
-                                'ßobjectName=1234567890123456789012345678901234567890',
-                                'ßtaggerDate=',
-                                'ßcreatorDate=2025-03-22 18:00:34 +0100',
+                                '¤refName=refs/tags/v1.2.3',
+                                '×objectType=commit',
+                                '×objectName=1234567890123456789012345678901234567890',
+                                '×taggerDate=',
+                                '×creatorDate=2025-03-22 18:00:34 +0100',
                             ],
                         ),
                     ],

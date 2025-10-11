@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionExecTrait
     protected function initPropertyExec(): static
     {
         $this->properties['commandOptions']['exec'] = [
-            'type' => 'value:false:string-required',
+            'type' => CommandOptionType::ValueFalseStringRequired,
             'value' => null,
         ];
 

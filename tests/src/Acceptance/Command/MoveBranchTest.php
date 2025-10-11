@@ -23,6 +23,16 @@ class MoveBranchTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'rename-current-branch' => [
                 'expected' => [
@@ -30,10 +40,7 @@ class MoveBranchTest extends CommandTestBase
                     'artifacts' => null,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -78,10 +85,7 @@ class MoveBranchTest extends CommandTestBase
                     'artifacts' => null,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -130,10 +134,7 @@ class MoveBranchTest extends CommandTestBase
                     'artifacts' => null,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -203,10 +204,7 @@ class MoveBranchTest extends CommandTestBase
                     'artifacts' => null,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -240,10 +238,7 @@ class MoveBranchTest extends CommandTestBase
                     'artifacts' => null,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="main" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',

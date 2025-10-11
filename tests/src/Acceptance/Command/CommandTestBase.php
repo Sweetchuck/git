@@ -9,6 +9,21 @@ use Symfony\Component\Process\Process;
 
 class CommandTestBase extends TestBase
 {
+    /**
+     * Helper method to create expectation for string values that can vary.
+     */
+    protected static function expectString(): string
+    {
+        return '__EXPECT_STRING__';
+    }
+
+    /**
+     * Helper method to create expectation for int values that can vary.
+     */
+    protected static function expectInt(): string
+    {
+        return '__EXPECT_INT__';
+    }
 
     /**
      * @param array<array<string, mixed>> $steps

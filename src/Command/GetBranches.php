@@ -51,7 +51,7 @@ class GetBranches extends CliCommandBase
 
         $this->properties['command'] = ['branch'];
         $this->properties['commandOptions']['list'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this

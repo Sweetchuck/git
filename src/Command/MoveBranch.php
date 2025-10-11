@@ -19,7 +19,7 @@ class MoveBranch extends CliCommandBase
 
         $this->properties['command'] = ['branch'];
         $this->properties['commandOptions']['move'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '--move',
             'state' => true,
         ];

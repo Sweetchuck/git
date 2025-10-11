@@ -33,7 +33,7 @@ class UnsetConfig extends CliCommandBase
             ->initPropertyAll();
 
         $this->properties['commandOptions']['value'] = [
-            'type' => 'state:bool:string-required',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBoolStringRequired,
             'state' => null,
             'value' => null,
         ];

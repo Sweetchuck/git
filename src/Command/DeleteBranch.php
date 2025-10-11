@@ -19,7 +19,7 @@ class DeleteBranch extends CliCommandBase
 
         $this->properties['command'] = ['branch'];
         $this->properties['commandOptions']['delete'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '--delete',
             'state' => true,
         ];

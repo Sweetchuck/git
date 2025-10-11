@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionTrackTrait
     protected function initPropertyTrack(): static
     {
         $this->properties['commandOptions']['track'] = [
-            'type' => 'value:multi:false-string',
+            'type' => CommandOptionType::ValueMultiFalseString,
             'value' => [],
         ];
 

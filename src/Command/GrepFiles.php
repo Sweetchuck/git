@@ -65,22 +65,22 @@ class GrepFiles extends CliCommandBase
         $this->properties['command'] = ['grep'];
 
         $this->properties['commandOptions']['color'] = [
-            'type' => 'value:string-required',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
             'value' => 'never',
         ];
 
         $this->properties['commandOptions']['null'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 
         $this->properties['commandOptions']['line'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 
         $this->properties['commandOptions']['column'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionContainsTrait
     protected function initPropertyContains(): static
     {
         $this->properties['commandOptions']['contains'] = [
-            'type' => 'state:string-required:multi',
+            'type' => CommandOptionType::StateStringRequiredMulti,
             'value' => [],
         ];
 

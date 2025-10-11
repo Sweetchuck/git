@@ -25,15 +25,22 @@ class GetConfigSingleTest extends CommandTestBase
 
     protected function setUp(): void
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         parent::setUp();
         $this->gitRepoDir = $this->createTempDirectory();
         $this->executeSteps(
             $this->gitRepoDir,
             [
-                [
-                    'type' => 'exec',
-                    'command' => 'cd {{ dirSafe }} && git init',
-                ],
+                $initStepGitInitCommon,
                 [
                     'type' => 'exec',
                     'command' => 'cd {{ dirSafe }} && git config --local user.name "Test User"',

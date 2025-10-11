@@ -27,19 +27,13 @@ class UnsetConfigTest extends CommandTestBase
         $initSteps = [
             [
                 'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git init',
-            ],
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git config --local g1.k1 "g01-k01-v01"',
-            ],
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git config --local g1.k2 "g01-k02-v01"',
-            ],
-            [
-                'type' => 'exec',
-                'command' => 'cd {{ dirSafe }} && git config --local --type "bool" g2.k1 true',
+                'command' => <<<'SHELL'
+                    cd {{ dirSafe }} \
+                    && git init \
+                    && git config --local g1.k1 'g01-k01-v01' \
+                    && git config --local g1.k2 'g01-k02-v01' \
+                    && git config --local --type 'bool' g2.k1 true
+                    SHELL,
             ],
         ];
 

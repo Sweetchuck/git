@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -13,7 +15,7 @@ trait OptionTreeEntriesWithoutChildrenTrait
     protected function initPropertyTreeEntriesWithoutChildren(): static
     {
         $this->properties['commandOptions']['treeEntriesWithoutChildren'] = [
-            'type' => 'state:true',
+            'type' => CommandOptionType::StateTrue,
             'name' => '-d',
             'state' => null,
         ];

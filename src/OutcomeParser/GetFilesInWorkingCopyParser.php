@@ -8,7 +8,7 @@ use Sweetchuck\Git\FileStatus;
 use Sweetchuck\Git\OutcomeParserInterface;
 
 /**
- * @todo Rename "path" to "filePath". Should be consistent with other parsers.
+ * @todo Remove. not used in "git ls-files".
  */
 class GetFilesInWorkingCopyParser implements OutcomeParserInterface
 {

@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Sweetchuck\Git\Command\GetFilesInWorkingCopy;
 use PHPUnit\Framework\Attributes\Group;
-use Sweetchuck\Git\FileStatus;
+use Sweetchuck\Git\Tests\Helper\DummyUniqueIdGenerator;
 
 #[CoversClass(GetFilesInWorkingCopy::class)]
 #[Group('command-git-ls-files')]
@@ -18,35 +18,80 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
 
     protected function createCommand(): GetFilesInWorkingCopy
     {
-        return new GetFilesInWorkingCopy();
+        $uniqueIdGenerator = new DummyUniqueIdGenerator();
+        $command = new GetFilesInWorkingCopy();
+        $command->getFormatHandler()->setUniqueIdGenerator($uniqueIdGenerator);
+
+        return $command;
     }
 
     public static function casesGetCliCommand(): array
     {
+        $expectedFormatDefault = '--format=';
+        $expectedFormatDefault .= implode(
+            '',
+            [
+                'objectName=%(objectname)',
+                '¤objectMode=%(objectmode)',
+                '¤objectType=%(objecttype)',
+                '¤stage=%(stage)',
+                '¤eolInfoIndex=%(eolinfo:index)',
+                '¤eolInfoWorkTree=%(eolinfo:worktree)',
+                '¤eolAttributes=%(eolattr)',
+                '¤objectSize=%(objectsize)',
+                '¤path=%(path)',
+            ],
+        );
+
         return [
-            'all in one' => [
+            'basic' => [
                 'expected' => [
                     'git',
                     'ls-files',
                     '-z',
-                    '-t',
-                    '--eol',
+                    $expectedFormatDefault,
+                ],
+                'properties' => [],
+            ],
+            'all-in-one:true' => [
+                'expected' => [
+                    'git',
+                    'ls-files',
+                    '-z',
                     '--cached',
                     '--deleted',
                     '--modified',
                     '--ignored',
+                    '--stage',
                     '--directory',
                     '--no-empty-directory',
+                    '--unmerged',
                     '--killed',
+                    '--resolve-undo',
+                    '--exclude-standard',
+                    '--error-unmatch',
+                    '--sparse',
+                    '--with-tree=my-tree-01',
+                    $expectedFormatDefault,
                 ],
                 'properties' => [
                     'cached' => true,
                     'deleted' => true,
                     'modified' => true,
                     'ignored' => true,
+                    'stage' => true,
                     'directory' => true,
                     'noEmptyDirectory' => true,
+                    'unmerged' => true,
                     'killed' => true,
+                    'resolveUndo' => true,
+                    'excludeStandard' => true,
+                    'errorUnmatch' => true,
+                    'sparse' => true,
+                    // exclude
+                    // excludeFrom
+                    // excludePerDirectory
+                    'withTree' => 'my-tree-01',
                 ],
             ],
         ];
@@ -60,7 +105,9 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
         return [
             'empty' => [
                 'expected' => [
-                    'artifacts' => [],
+                    'artifacts' => [
+                        'paths' => [],
+                    ],
                 ],
                 'properties' => [],
                 'processOutcomes' => [
@@ -72,34 +119,39 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
             'basic' => [
                 'expected' => [
                     'artifacts' => [
-                        'tracked.php' => [
-                            'status' => FileStatus::Tracked,
-                            'statusChar' => 'H',
-                            'path' => 'tracked.php',
-                            'attributes' => [
-                                'i' => 'lf',
-                                'w' => 'lf',
-                                'attr' => '',
+                        'paths' => [
+                            'tracked.php' => [
+                                'eolAttributes' => 'text eol=lf',
+                                'eolInfoIndex' => 'lf',
+                                'eolInfoWorkTree' => 'lf',
+                                'objectMode' => '100644',
+                                'objectName' => 'id01',
+                                'objectSize' => 42,
+                                'objectType' => 'blob',
+                                'path' => 'tracked.php',
+                                'stage' => '0',
                             ],
-                        ],
-                        'untracked.php' => [
-                            'status' => FileStatus::Untracked,
-                            'statusChar' => '?',
-                            'path' => 'untracked.php',
-                            'attributes' => [
-                                'i' => 'lf',
-                                'w' => 'lf',
-                                'attr' => '',
+                            'untracked.php' => [
+                                'eolAttributes' => 'text eol=lf',
+                                'eolInfoIndex' => 'lf',
+                                'eolInfoWorkTree' => 'lf',
+                                'objectMode' => '100644',
+                                'objectName' => 'id02',
+                                'objectSize' => 43,
+                                'objectType' => 'blob',
+                                'path' => 'untracked.php',
+                                'stage' => '0',
                             ],
-                        ],
-                        'unmerged.php' => [
-                            'status' => FileStatus::Unmerged,
-                            'statusChar' => 'M',
-                            'path' => 'unmerged.php',
-                            'attributes' => [
-                                'i' => 'lf',
-                                'w' => 'lf',
-                                'attr' => '',
+                            'unmerged.php' => [
+                                'eolAttributes' => 'text eol=lf',
+                                'eolInfoIndex' => 'lf',
+                                'eolInfoWorkTree' => 'lf',
+                                'objectMode' => '100644',
+                                'objectName' => 'id03',
+                                'objectSize' => 44,
+                                'objectType' => 'blob',
+                                'path' => 'unmerged.php',
+                                'stage' => '0',
                             ],
                         ],
                     ],
@@ -110,9 +162,36 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
                         'stdOutput' => implode(
                             '',
                             [
-                                "H i/lf    w/lf    attr/                 \ttracked.php\0",
-                                "? i/lf    w/lf    attr/                 \tuntracked.php\0",
-                                "M i/lf    w/lf    attr/                 \tunmerged.php\0",
+                                'objectName=id01',
+                                '¤objectMode=100644',
+                                '¤objectType=blob',
+                                '¤stage=0',
+                                '¤eolInfoIndex=lf',
+                                '¤eolInfoWorkTree=lf',
+                                '¤eolAttributes=text eol=lf',
+                                '¤objectSize=42',
+                                '¤path=tracked.php',
+                                "\0",
+                                'objectName=id02',
+                                '¤objectMode=100644',
+                                '¤objectType=blob',
+                                '¤stage=0',
+                                '¤eolInfoIndex=lf',
+                                '¤eolInfoWorkTree=lf',
+                                '¤eolAttributes=text eol=lf',
+                                '¤objectSize=43',
+                                '¤path=untracked.php',
+                                "\0",
+                                'objectName=id03',
+                                '¤objectMode=100644',
+                                '¤objectType=blob',
+                                '¤stage=0',
+                                '¤eolInfoIndex=lf',
+                                '¤eolInfoWorkTree=lf',
+                                '¤eolAttributes=text eol=lf',
+                                '¤objectSize=44',
+                                '¤path=unmerged.php',
+                                "\0",
                             ],
                         ),
                     ],

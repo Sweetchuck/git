@@ -24,24 +24,23 @@ class StageFilesTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'basic-single-file' => [
                 'expected' => [
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/README.md',
@@ -64,18 +63,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file1.txt',
@@ -118,18 +106,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/existing.txt',
@@ -171,18 +148,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/test.txt',
@@ -206,18 +172,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/intent.txt',
@@ -241,18 +196,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/tracked.txt',
@@ -294,18 +238,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/.gitignore',
@@ -338,18 +271,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/script.sh',
@@ -373,18 +295,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'mkdir -p {{ dirSafe }}/src/lib',
@@ -421,18 +332,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file1.txt',
@@ -489,18 +389,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 0,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                 ],
                 'properties' => [
                     'all' => true,
@@ -518,18 +407,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 128,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/refresh.txt',
@@ -547,18 +425,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 128,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/valid.txt',
@@ -605,18 +472,7 @@ class StageFilesTest extends CommandTestBase
                     'exitCode' => 128,
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.email "test@example.com"',
-                    ],
-                    [
-                        'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git config user.name "Test User"',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/combo.txt',

@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionServerOptionTrait
     protected function initPropertyServerOption(): static
     {
         $this->properties['commandOptions']['serverOption'] = [
-            'type' => 'value:multi:false-string',
+            'type' => CommandOptionType::ValueMultiFalseString,
             'value' => null,
         ];
 

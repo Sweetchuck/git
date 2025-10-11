@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionStrategiesTrait
     protected function initPropertyStrategies(): static
     {
         $this->properties['commandOptions']['strategies'] = [
-            'type' => 'value:strategies',
+            'type' => CommandOptionType::ValueStrategies,
             'value' => null,
         ];
 

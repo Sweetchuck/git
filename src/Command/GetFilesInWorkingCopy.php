@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git\Command;
 
 use Sweetchuck\Git\Argument\ArgumentPathsTrait;
+use Sweetchuck\Git\CommandOptionType;
 use Sweetchuck\Git\Option\OptionCachedTrait;
 use Sweetchuck\Git\Option\OptionDeletedTrait;
 use Sweetchuck\Git\Option\OptionDirectoryTrait;
@@ -13,6 +14,7 @@ use Sweetchuck\Git\Option\OptionExcludeFromTrait;
 use Sweetchuck\Git\Option\OptionExcludePerDirectoryTrait;
 use Sweetchuck\Git\Option\OptionExcludeStandardTrait;
 use Sweetchuck\Git\Option\OptionExcludeTrait;
+use Sweetchuck\Git\Option\OptionFormatTrait;
 use Sweetchuck\Git\Option\OptionIgnoredTrait;
 use Sweetchuck\Git\Option\OptionKilledTrait;
 use Sweetchuck\Git\Option\OptionModifiedTrait;
@@ -24,13 +26,12 @@ use Sweetchuck\Git\Option\OptionSparseTrait;
 use Sweetchuck\Git\Option\OptionStageTrait;
 use Sweetchuck\Git\Option\OptionUnmergedTrait;
 use Sweetchuck\Git\Option\OptionWithTreeTrait;
-use Sweetchuck\Git\OutcomeParser\GetFilesInWorkingCopyParser;
+use Sweetchuck\Git\OutcomeParser\FormatParser;
 use Sweetchuck\Git\OutcomeParserInterface;
+use Sweetchuck\Git\Utils;
 
 /**
  * Represents the "git ls-files" command.
- *
- * @todo Use "--format".
  */
 class GetFilesInWorkingCopy extends CliCommandBase
 {
@@ -54,7 +55,16 @@ class GetFilesInWorkingCopy extends CliCommandBase
     use OptionExcludeFromTrait;
     use OptionExcludePerDirectoryTrait;
     use OptionWithTreeTrait;
+    use OptionFormatTrait;
     use ArgumentPathsTrait;
+
+    protected Utils $utils;
+
+    public function __construct()
+    {
+        $this->utils = new Utils();
+        parent::__construct();
+    }
 
     protected function initProperties(): static
     {
@@ -63,17 +73,8 @@ class GetFilesInWorkingCopy extends CliCommandBase
         $this->properties['command'] = ['ls-files'];
 
         $this->properties['commandOptions']['-z'] = [
-            'type' => 'state:true',
+            'type' => CommandOptionType::StateTrue,
             'name' => '-z',
-            'state' => true,
-        ];
-        $this->properties['commandOptions']['-t'] = [
-            'type' => 'state:true',
-            'name' => '-t',
-            'state' => true,
-        ];
-        $this->properties['commandOptions']['eol'] = [
-            'type' => 'state:true',
             'state' => true,
         ];
 
@@ -96,7 +97,11 @@ class GetFilesInWorkingCopy extends CliCommandBase
             ->initPropertyExclude()
             ->initPropertyExcludeFrom()
             ->initPropertyExcludePerDirectory()
-            ->initPropertyWithTree();
+            ->initPropertyWithTree()
+            // @todo --format cannot be used with -s, -o, -k, -t, --resolve-undo, --deduplicate, --eol
+            // Optional --format or two separated command class for "git ls-files".
+            // The OutputParser has to be different.
+            ->initPropertyFormat();
 
         return $this;
     }
@@ -122,7 +127,8 @@ class GetFilesInWorkingCopy extends CliCommandBase
             ->setPropertyExclude($properties)
             ->setPropertyExcludeFrom($properties)
             ->setPropertyExcludePerDirectory($properties)
-            ->setPropertyWithTree($properties);
+            ->setPropertyWithTree($properties)
+            ->setPropertyFormat($properties);
 
         if (array_key_exists('paths', $properties)) {
             $this->setPaths($properties['paths']);
@@ -130,9 +136,46 @@ class GetFilesInWorkingCopy extends CliCommandBase
 
         return $this;
     }
+    protected function preGetCliCommand(): static
+    {
+        return parent::preGetCliCommand()
+            ->preGetCliCommandFormat();
+    }
 
     protected function getDefaultOutcomeParser(): ?OutcomeParserInterface
     {
-        return new GetFilesInWorkingCopyParser();
+        return new FormatParser();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultFormatRefPropertyMapping(): ?array
+    {
+        return $this->utils->predefinedRefPropertyMappings['ls-files.default'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getOutputParserOptions(): array
+    {
+        return [
+            'definition' => $this->properties['commandOptions']['format']['definition'],
+            'assetKey' => 'paths',
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getMachineReadableFormatConfig(): array
+    {
+        return [
+            'keyProperty' => 'path',
+            'refSeparatorPosition' => 'after',
+            'refSeparator' => "\0",
+            'refPropertyMapping' => $this->getFormatRefPropertyMapping(),
+        ];
     }
 }

@@ -19,7 +19,7 @@ class GetStagedFiles extends CliCommandBase
     use ArgumentPathsTrait;
     use OptionDiffFilterTrait;
 
-    //region utils
+    // region utils
     public function getUtils(): Utils
     {
         return $this->utils;
@@ -31,9 +31,9 @@ class GetStagedFiles extends CliCommandBase
 
         return $this;
     }
-    //endregion
+    // endregion
 
-    # region filePathStyle
+    // region filePathStyle
     protected FilePathStyle $filePathStyle = FilePathStyle::RelativeToTopLevel;
 
     public function getFilePathStyle(): FilePathStyle
@@ -53,7 +53,7 @@ class GetStagedFiles extends CliCommandBase
 
         return $this;
     }
-    # endregion
+    // endregion
 
     // region topLevel
     protected ?string $topLevel = null;
@@ -87,31 +87,31 @@ class GetStagedFiles extends CliCommandBase
         $this->properties['command'] = ['diff'];
 
         $this->properties['globalOptions']['pager'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => false,
         ];
 
         $this->properties['commandOptions']['color'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => false,
         ];
         $this->properties['commandOptions']['nameStatus'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['cached'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['null'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '-z',
             'state' => true,
         ];
 
         $this->initPropertyDiffFilter();
         $this->properties['commandOptions']['relative'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => null,
         ];
 

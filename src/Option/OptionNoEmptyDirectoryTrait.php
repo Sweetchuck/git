@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionNoEmptyDirectoryTrait
     protected function initPropertyNoEmptyDirectory(): static
     {
         $this->properties['commandOptions']['noEmptyDirectory'] = [
-            'type' => 'state:true',
+            'type' => CommandOptionType::StateTrue,
             'state' => null,
         ];
 

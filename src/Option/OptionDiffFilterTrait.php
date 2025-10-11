@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property \Sweetchuck\Git\Utils $utils
  * @property array<string, mixed> $properties
@@ -13,7 +15,7 @@ trait OptionDiffFilterTrait
     protected function initPropertyDiffFilter(): static
     {
         $this->properties['commandOptions']['diffFilter'] = [
-            'type' => 'value:string-required',
+            'type' => CommandOptionType::ValueStringRequired,
             'value' => '',
         ];
 

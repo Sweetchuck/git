@@ -12,7 +12,7 @@ class QuitMerge extends CliCommandBase
         parent::initProperties();
         $this->properties['command'] = ['merge'];
         $this->properties['commandOptions']['quit'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 

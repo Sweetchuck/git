@@ -31,15 +31,15 @@ class SetConfig extends CliCommandBase
             ->initPropertyAll();
 
         $this->properties['commandOptions']['append'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
         $this->properties['commandOptions']['type'] = [
-            'type' => 'value:string-required',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
             'value' => null,
         ];
         $this->properties['commandOptions']['comment'] = [
-            'type' => 'value:string-required',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
             'value' => null,
         ];
 

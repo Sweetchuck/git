@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
 use Sweetchuck\Git\FormatHandler;
 use Sweetchuck\Git\FormatHandlerInterface;
 
@@ -17,7 +18,7 @@ trait OptionFormatTrait
     protected function initPropertyFormat(): static
     {
         $this->properties['commandOptions']['format'] = [
-            'type' => 'value:string-required',
+            'type' => CommandOptionType::ValueStringRequired,
             'value' => null,
             'refPropertyMapping' => $this->getDefaultFormatRefPropertyMapping(),
         ];

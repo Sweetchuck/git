@@ -32,9 +32,9 @@ class GetCommitsTest extends CommandTestBase
      */
     public static function casesGetCliCommand(): array
     {
-        $expectedFormatDefault = '--format=ä';
+        $expectedFormatDefault = '--format=¤';
         $expectedFormatDefault .= implode(
-            'ß',
+            '×',
             [
                 'commitHash=%H',
                 'commitHash.short=%h',
@@ -336,15 +336,15 @@ class GetCommitsTest extends CommandTestBase
                         'stdOutput' => implode(
                             '',
                             [
-                                'äcommitHash=ch-01',
-                                'ßcommitMessage.subject=cmS-01',
-                                "ßnameStatus=\x00",
+                                '¤commitHash=ch-01',
+                                '×commitMessage.subject=cmS-01',
+                                "×nameStatus=\x00",
                                 "\n",
                                 "M\x00src/Option/OptionPathSpecFromFileTrait.php\x00",
                                 "\x00",
-                                'äcommitHash=ch-02',
-                                'ßcommitMessage.subject=cmS-02',
-                                "ßnameStatus=\x00",
+                                '¤commitHash=ch-02',
+                                '×commitMessage.subject=cmS-02',
+                                "×nameStatus=\x00",
                                 "\n",
                                 "\n",
                                 "A\x00src/Option/OptionIgnoreUnmatchTrait.php\x00",

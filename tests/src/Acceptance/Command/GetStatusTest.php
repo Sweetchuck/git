@@ -26,6 +26,16 @@ class GetStatusTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'no-commits-clean' => [
                 'expected' => [
@@ -46,10 +56,7 @@ class GetStatusTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',

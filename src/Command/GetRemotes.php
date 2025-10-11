@@ -21,7 +21,7 @@ class GetRemotes extends CliCommandBase
 
         $this->properties['command'] = ['remote'];
         $this->properties['commandOptions']['verbose'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 

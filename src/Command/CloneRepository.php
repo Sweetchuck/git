@@ -82,11 +82,11 @@ class CloneRepository extends CliCommandBase
         $this->properties['command'] = ['clone'];
 
         $this->properties['commandOptions']['progress'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => false,
         ];
         $this->properties['commandOptions']['config'] = [
-            'type' => 'value:map',
+            'type' => \Sweetchuck\Git\CommandOptionType::ValueMap,
             'value' => [],
         ];
         $this

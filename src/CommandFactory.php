@@ -112,10 +112,7 @@ class CommandFactory implements CommandFactoryInterface
      */
     public function createInitRepository(): InitRepository
     {
-        $command = new InitRepository();
-        $this->prepareCommand($command);
-
-        return $command;
+        return $this->createCommand(InitRepository::class);
     }
 
     /**

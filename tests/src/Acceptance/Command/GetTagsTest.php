@@ -23,6 +23,16 @@ class GetTagsTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'empty-repo' => [
                 'expected' => [
@@ -51,10 +61,7 @@ class GetTagsTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="1.x" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -108,10 +115,7 @@ class GetTagsTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="1.x" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -185,10 +189,7 @@ class GetTagsTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="1.x" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',
@@ -274,10 +275,7 @@ class GetTagsTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch="1.x" {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'cd {{ dirSafe }} && touch README.md',

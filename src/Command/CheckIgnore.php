@@ -20,11 +20,11 @@ class CheckIgnore extends CliCommandBase
 
         $this->properties['command'] = ['check-ignore'];
         $this->properties['commandOptions']['verbose'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['nonMatching'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
 

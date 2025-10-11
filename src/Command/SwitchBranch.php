@@ -150,7 +150,7 @@ class SwitchBranch extends CliCommandBase
         $createMethod = $this->getCreateMethod();
         if ($createMethod !== null) {
             $properties['commandOptions']['create'] = [
-                'type' => 'value:string-required',
+                'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
                 'name' => match ($createMethod) {
                     'force' => '--force-create',
                     default => '--create',

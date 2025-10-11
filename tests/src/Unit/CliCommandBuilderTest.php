@@ -7,8 +7,9 @@ namespace Sweetchuck\Git\Tests\Unit;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use Sweetchuck\Git\CliCommandBuilder;
 use PHPUnit\Framework\TestCase;
+use Sweetchuck\Git\CliCommandBuilder;
+use Sweetchuck\Git\CommandOptionType;
 
 #[CoversClass(CliCommandBuilder::class)]
 class CliCommandBuilderTest extends TestCase
@@ -26,7 +27,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:true',
+                            'type' => CommandOptionType::StateTrue,
                             'state' => null
                         ],
                     ],
@@ -38,7 +39,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:true',
+                            'type' => CommandOptionType::StateTrue,
                             'state' => true
                         ],
                     ],
@@ -50,7 +51,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => null
                         ],
                     ],
@@ -62,7 +63,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => true
                         ],
                     ],
@@ -74,7 +75,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => false
                         ],
                     ],
@@ -86,7 +87,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => true,
                             'name' => '--custom-foo'
                         ],
@@ -99,7 +100,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => false,
                             'name-no' => '--custom-no-foo'
                         ],
@@ -112,11 +113,11 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => true
                         ],
                         'bar' => [
-                            'type' => 'state:bool',
+                            'type' => CommandOptionType::StateBool,
                             'state' => false
                         ],
                     ],
@@ -128,7 +129,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:false',
+                            'type' => CommandOptionType::StateFalse,
                             'state' => null
                         ],
                     ],
@@ -140,7 +141,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:false',
+                            'type' => CommandOptionType::StateFalse,
                             'state' => false
                         ],
                     ],
@@ -152,7 +153,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-optional',
+                            'type' => CommandOptionType::StateBoolStringOptional,
                             'state' => null,
                             'value' => null
                         ],
@@ -165,7 +166,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-optional',
+                            'type' => CommandOptionType::StateBoolStringOptional,
                             'state' => true,
                             'value' => null
                         ],
@@ -178,7 +179,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-optional',
+                            'type' => CommandOptionType::StateBoolStringOptional,
                             'state' => false,
                             'value' => null
                         ],
@@ -191,7 +192,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-optional',
+                            'type' => CommandOptionType::StateBoolStringOptional,
                             'state' => true,
                             'value' => 'bar'
                         ],
@@ -204,7 +205,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-optional',
+                            'type' => CommandOptionType::StateBoolStringOptional,
                             'state' => false,
                             'value' => 'bar'
                         ],
@@ -217,7 +218,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-required',
+                            'type' => CommandOptionType::StateBoolStringRequired,
                             'state' => true,
                             'value' => 'bar'
                         ],
@@ -230,7 +231,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:bool:string-required',
+                            'type' => CommandOptionType::StateBoolStringRequired,
                             'state' => false,
                             'value' => 'bar'
                         ],
@@ -243,7 +244,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:string-required:multi',
+                            'type' => CommandOptionType::StateStringRequiredMulti,
                             'value' => [
                                 'value1' => true,
                                 'value2' => false,
@@ -259,7 +260,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'state:string-required:multi',
+                            'type' => CommandOptionType::StateStringRequiredMulti,
                             'name' => '-n',
                             'name-no' => '-N',
                             'value' => [
@@ -277,7 +278,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:true-false:string',
+                            'type' => CommandOptionType::ValueTrueFalseString,
                             'value' => null
                         ],
                     ],
@@ -289,7 +290,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:true-false:string',
+                            'type' => CommandOptionType::ValueTrueFalseString,
                             'value' => true
                         ],
                     ],
@@ -301,7 +302,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:true-false:string',
+                            'type' => CommandOptionType::ValueTrueFalseString,
                             'value' => false
                         ],
                     ],
@@ -313,7 +314,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:true-false:string',
+                            'type' => CommandOptionType::ValueTrueFalseString,
                             'value' => 'bar'
                         ],
                     ],
@@ -325,7 +326,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-optional',
+                            'type' => CommandOptionType::ValueStringOptional,
                             'value' => null
                         ],
                     ],
@@ -337,7 +338,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-optional',
+                            'type' => CommandOptionType::ValueStringOptional,
                             'value' => ''
                         ],
                     ],
@@ -349,7 +350,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-optional',
+                            'type' => CommandOptionType::ValueStringOptional,
                             'value' => 'bar'
                         ],
                     ],
@@ -361,7 +362,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-required',
+                            'type' => CommandOptionType::ValueStringRequired,
                             'value' => null
                         ],
                     ],
@@ -373,7 +374,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-required',
+                            'type' => CommandOptionType::ValueStringRequired,
                             'value' => ''
                         ],
                     ],
@@ -385,7 +386,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-required',
+                            'type' => CommandOptionType::ValueStringRequired,
                             'value' => 'bar'
                         ],
                     ],
@@ -397,7 +398,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'serverOption' => [
-                            'type' => 'value:multi:false-string',
+                            'type' => CommandOptionType::ValueMultiFalseString,
                             'name' => '--server-option',
                             'value' => null,
                         ],
@@ -410,7 +411,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'serverOption' => [
-                            'type' => 'value:multi:false-string',
+                            'type' => CommandOptionType::ValueMultiFalseString,
                             'value' => [false, 'value1', 'value2'],
                         ],
                     ],
@@ -422,7 +423,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:string-multiple',
+                            'type' => CommandOptionType::ValueStringMultiple,
                             'value' => [
                                 'value1' => true,
                                 'value2' => true,
@@ -438,7 +439,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'foo' => [
-                            'type' => 'value:map',
+                            'type' => CommandOptionType::ValueMap,
                             'value' => [
                                 'key1' => 'value1',
                                 'key2' => 'value2',
@@ -453,7 +454,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'ipv' => [
-                            'type' => 'state:name-suffix',
+                            'type' => CommandOptionType::StateNameSuffix,
                             'state' => true,
                             'value' => null,
                         ],
@@ -466,7 +467,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'ipv' => [
-                            'type' => 'state:name-suffix',
+                            'type' => CommandOptionType::StateNameSuffix,
                             'state' => true,
                             'value' => '4',
                         ],
@@ -479,7 +480,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:name-pattern',
+                            'type' => CommandOptionType::ValueNamePattern,
                             'pattern' => '--prefix-{{ value }}-suffix',
                             'value' => null,
                         ],
@@ -492,7 +493,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:name-pattern',
+                            'type' => CommandOptionType::ValueNamePattern,
                             'pattern' => '--prefix-{{ value }}-suffix',
                             'value' => 'middle',
                         ],
@@ -505,7 +506,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => null,
                         ],
                     ],
@@ -517,7 +518,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => ['a'],
                         ],
                     ],
@@ -529,7 +530,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => ['a', 'b'],
                         ],
                     ],
@@ -541,7 +542,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => [
                                 'patterns' => ['a', 'b'],
                             ],
@@ -555,7 +556,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => [
                                 'operator' => 'not',
                                 'patterns' => ['a', 'b'],
@@ -570,7 +571,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => [
                                 'a',
                                 'b',
@@ -589,7 +590,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => [
                                 'operator' => 'not',
                                 'patterns' => [
@@ -611,7 +612,7 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'e',
                     'commandOptions' => [
                         'doesNotMatter' => [
-                            'type' => 'value:expressions',
+                            'type' => CommandOptionType::ValueExpressions,
                             'value' => [
                                 'operator' => 'not',
                                 'patterns' => [
@@ -664,12 +665,12 @@ class CliCommandBuilderTest extends TestCase
                     'executable' => 'my-exe',
                     'globalOptions' => [
                         'gitDir' => [
-                            'type' => 'value:string-required',
+                            'type' => CommandOptionType::ValueStringRequired,
                             'name' => '--git-dir',
                             'value' => '/path/to/repo',
                         ],
                         'cwd' => [
-                            'type' => 'value:string-required',
+                            'type' => CommandOptionType::ValueStringRequired,
                             'name' => '-C',
                             'value' => '/path/to/dir',
                         ],
@@ -683,7 +684,7 @@ class CliCommandBuilderTest extends TestCase
                     'command' => ['config'],
                     'commandOptions' => [
                         'local' => [
-                            'type' => 'state:true',
+                            'type' => CommandOptionType::StateTrue,
                             'state' => true,
                         ],
                     ],
@@ -705,7 +706,7 @@ class CliCommandBuilderTest extends TestCase
                     'command' => ['merge'],
                     'commandOptions' => [
                         'strategies' => [
-                            'type' => 'value:strategies',
+                            'type' => CommandOptionType::ValueStrategies,
                             'value' => [
                                 'ort' => [
                                     'weight' => 2,

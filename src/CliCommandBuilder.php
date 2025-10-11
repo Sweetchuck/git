@@ -52,137 +52,91 @@ class CliCommandBuilder
      */
     protected function addOption(array &$command, string $optionName, array $optionInfo): static
     {
-        switch ($optionInfo['type'] ?? null) {
-            case 'state:true':
-                // - null  omitted
-                // - false invalid
-                // - true  --foo
+        $type = $optionInfo['type'] ?? null;
+        if ($type instanceof CommandOptionType) {
+            $type = $type->value;
+        }
+
+        // @todo CommandOptionType and handler callback mapping.
+        switch ($type) {
+            case CommandOptionType::StateTrue->value:
                 $this->addOptionStateTrue($command, $optionName, $optionInfo);
                 break;
 
-            case 'state:false':
-                // - null  omitted
-                // - true  invalid
-                // - false --no-foo
+            case CommandOptionType::StateFalse->value:
                 $this->addOptionStateFalse($command, $optionName, $optionInfo);
                 break;
 
-            case 'state:bool':
-                // - null  omitted
-                // - false --no-foo
-                // - true  --foo
+            case CommandOptionType::StateBool->value:
                 $this->addOptionStateTrueFalse($command, $optionName, $optionInfo);
                 break;
 
-            case 'state:bool:string-optional':
-                // - null:null    omitted
-                // - null:string  invalid
-                // - false:null   --no-foo
-                // - false:string --no-foo=value
-                // - true:null    --foo
-                // - true:string  --foo=value
+            case CommandOptionType::StateBoolStringOptional->value:
                 $this->addOptionStateTrueFalseValueOptional($command, $optionName, $optionInfo);
                 break;
 
-            case 'state:bool:string-required':
-                // - null:null    omitted
-                // - true:null    invalid
-                // - true:string  --foo=value
-                // - false:string --no-foo=value
+            case CommandOptionType::StateBoolStringRequired->value:
                 $this->addOptionStateTrueFalseValueRequired($command, $optionName, $optionInfo);
                 break;
 
-            case 'state:string-required:multi':
-                // - null:                omitted
-                // - array<string, bool>: --foo=value-1 --no-foo=value-2
+            case CommandOptionType::StateStringRequiredMulti->value:
                 $this->addOptionStateStringRequiredMulti($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:false:string-required':
-                // - null   omitted
-                // - false  --no-foo
-                // - true   invalid
-                // - string --foo=value
+            case CommandOptionType::ValueFalseStringRequired->value:
                 $this->addOptionValueFalseStringRequired($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:true-false:string':
-                // - null             omitted
-                // - false            --no-foo
-                // - true             --foo
-                // - non-empty-string --foo=value
+            case CommandOptionType::ValueTrueFalseString->value:
                 $this->addOptionValueTrueFalseString($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:string-optional':
-                // - null: omitted
-                // - empty-string:     --foo
-                // - non-empty-string: --foo=value
+            case CommandOptionType::ValueStringOptional->value:
                 $this->addOptionValueStringOptional($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:string-required':
-                // - null: omitted
-                // - empty-string: omitted
-                // - non-empty-string: --foo=value
+            case CommandOptionType::ValueStringRequired->value:
                 $this->addOptionValueStringRequired($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:multi:false-string':
-                // - null:    omitted
-                // - [false]: --no-foo
-                // - [true]:  --foo
-                // - ["bar"]: --foo=bar
+            case CommandOptionType::ValueMultiFalseString->value:
                 $this->addOptionMultiFalseString($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:string-multiple':
-                // - null:          omitted
-                // - array<string, bool>: --foo=true-key-1 --foo=true-key-2 --no-foo=false-key-1
+            case CommandOptionType::ValueStringMultiple->value:
                 $this->addOptionValueMultiple($command, $optionName, $optionInfo);
                 break;
 
-            case 'array<TId, TValue>':
-                // - null: omitted
-                // - array<TId, TValue>: --foo=value-1 --foo=value-2
+            case CommandOptionType::ArrayString->value:
                 $this->addOptionArrayIdValue($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:map':
-                // - null:          omitted
-                // - array<string, string>: --foo='key1=value1' --foo='key2=value2'
+            case CommandOptionType::ValueMap->value:
                 $this->addOptionValueMap($command, $optionName, $optionInfo);
                 break;
 
-            case 'state:name-suffix':
-                // - null:        omitted
-                // - string(bar): --foobar'
+            case CommandOptionType::StateNameSuffix->value:
                 $this->addOptionStateNameSuffix($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:name-pattern':
-                // In case of pattern = "--{{ value }}-foo"
-                // - null:  omitted
-                // - "bar": --bar-foo
+            case CommandOptionType::ValueNamePattern->value:
                 $this->addOptionValueNamePattern($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:name-mapping':
+            case CommandOptionType::ValueNameMapping->value:
                 $this->addOptionValueNameMapping($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:expressions':
-                // - null:  omitted
-                // - "bar": -e 'bar'
+            case CommandOptionType::ValueExpressions->value:
                 $this->addOptionValueExpressions($command, $optionName, $optionInfo);
                 break;
 
-            case 'value:strategies':
+            case CommandOptionType::ValueStrategies->value:
                 $this->addOptionValueStrategies($command, $optionName, $optionInfo);
                 break;
 
             default:
-                throw new \InvalidArgumentException("Unknown option type: {$optionInfo['type']}");
+                throw new \InvalidArgumentException("Unknown option type: " . ($type ?? 'null'));
         }
 
         return $this;

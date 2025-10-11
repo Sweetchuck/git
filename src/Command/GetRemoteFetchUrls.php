@@ -18,11 +18,11 @@ class GetRemoteFetchUrls extends CliCommandBase
 
         $this->properties['command'] = ['remote', 'get-url'];
         $this->properties['commandOptions']['all'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => true,
         ];
         $this->properties['commandOptions']['push'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
 

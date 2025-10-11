@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Sweetchuck\Git\Option;
 
+use Sweetchuck\Git\CommandOptionType;
+
 /**
  * @property array<string, mixed> $properties
  */
@@ -12,7 +14,7 @@ trait OptionSkipErrorsTrait
     protected function initPropertySkipErrors(): static
     {
         $this->properties['commandOptions']['skipErrors'] = [
-            'type' => 'state:bool',
+            'type' => CommandOptionType::StateBool,
             'name' => '-k',
             'state' => null,
         ];

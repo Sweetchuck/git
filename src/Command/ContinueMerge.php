@@ -12,7 +12,7 @@ class ContinueMerge extends CliCommandBase
         parent::initProperties();
         $this->properties['command'] = ['merge'];
         $this->properties['commandOptions']['continue'] = [
-            'type' => 'state:true',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateTrue,
             'state' => true,
         ];
 

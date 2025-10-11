@@ -25,12 +25,12 @@ class CheckAttr extends CliCommandBase
 
         $this->properties['command'] = ['check-attr'];
         $this->properties['commandOptions']['null'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'name' => '-z',
             'state' => true,
         ];
         $this->properties['commandOptions']['all'] = [
-            'type' => 'state:bool',
+            'type' => \Sweetchuck\Git\CommandOptionType::StateBool,
             'state' => null,
         ];
 

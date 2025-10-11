@@ -47,17 +47,17 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
                 // --no-advice
                 // --bare
                 'gitDir' => [
-                    'type' => 'value:string-required',
+                    'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
                     'name' => '--git-dir',
                     'value' => null,
                 ],
                 'workTree' => [
-                    'type' => 'value:string-required',
+                    'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
                     'name' => '--work-tree',
                     'value' => null,
                 ],
                 'cwd' => [
-                    'type' => 'value:string-required',
+                    'type' => \Sweetchuck\Git\CommandOptionType::ValueStringRequired,
                     'name' => '-C',
                     'value' => null,
                 ],
@@ -147,7 +147,7 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
     }
     // endregion
 
-    //region gitDir
+    // region gitDir
     public function getGitDir(): ?string
     {
         return $this->properties['globalOptions']['gitDir']['value'];
@@ -159,9 +159,9 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
 
         return $this;
     }
-    //endregion
+    // endregion
 
-    //region workTree
+    // region workTree
     public function getWorkTree(): ?string
     {
         return $this->properties['globalOptions']['workTree']['value'];
@@ -173,9 +173,9 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
 
         return $this;
     }
-    //endregion
+    // endregion
 
-    //region cwd
+    // region cwd
     public function getCwd(): ?string
     {
         return $this->properties['globalOptions']['cwd']['value'];
@@ -192,7 +192,7 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
 
         return $this;
     }
-    //endregion
+    // endregion
 
     // region outcomeParser
     protected ?OutcomeParserInterface $outcomeParser = null;

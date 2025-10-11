@@ -26,6 +26,16 @@ class GetChangedFilesTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'empty-repo' => [
                 'expected' => [
@@ -34,10 +44,7 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                 ],
                 'properties' => [],
             ],
@@ -53,10 +60,7 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/modified-file.txt',
@@ -91,10 +95,7 @@ class GetChangedFilesTest extends CommandTestBase
                 ],
                 // @todo Better status.
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/added-file.txt',
@@ -143,10 +144,7 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file1.txt',
@@ -190,10 +188,7 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/main-file.txt',
@@ -226,12 +221,12 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                     [
                         'type' => 'exec',
-                        'command' => 'cd {{ dirSafe }} && git checkout 1.x',
+                        'command' => 'cd {{ dirSafe }} && git checkout main',
                     ],
                 ],
                 'properties' => [
                     'mergeBase' => true,
-                    'commandArguments' => ['1.x', 'feature-branch'],
+                    'commandArguments' => ['main', 'feature-branch'],
                 ],
             ],
             'with-no-index' => [
@@ -274,10 +269,7 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'mkdir -p {{ dirSafe }}/include {{ dirSafe }}/exclude',
@@ -329,10 +321,7 @@ class GetChangedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/deleted-file.txt',

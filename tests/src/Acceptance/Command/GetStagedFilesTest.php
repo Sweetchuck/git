@@ -27,6 +27,16 @@ class GetStagedFilesTest extends CommandTestBase
      */
     public static function casesExecute(): array
     {
+        $initStepGitInitCommon = [
+            'type' => 'exec',
+            'command' => <<<'SHELL'
+                git init --initial-branch="main" {{ dirSafe }} \
+                && cd {{ dirSafe }} \
+                && git config user.email "test@example.com" \
+                && git config user.name "Test User"
+                SHELL,
+        ];
+
         return [
             'empty-repo' => [
                 'expected' => [
@@ -35,10 +45,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                 ],
                 'properties' => [],
             ],
@@ -54,10 +61,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file1.txt',
@@ -82,10 +86,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file2.txt',
@@ -118,10 +119,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file3.txt',
@@ -163,10 +161,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file4.txt',
@@ -217,10 +212,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'createFile',
                         'path' => '{{ dir }}/file6.txt',
@@ -282,10 +274,7 @@ class GetStagedFilesTest extends CommandTestBase
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                     [
                         'type' => 'exec',
                         'command' => 'mkdir -p {{ dirSafe }}/include {{ dirSafe }}/exclude',
@@ -312,16 +301,14 @@ class GetStagedFilesTest extends CommandTestBase
                 ],
             ],
             'with-filePathStyle-absolute' => [
+                // @todo initSteps and expectations.
                 'expected' => [
                     'artifacts' => [
-                        'files' => [], // Only check that it does not error, for now.
+                        'files' => [],
                     ],
                 ],
                 'initSteps' => [
-                    [
-                        'type' => 'exec',
-                        'command' => 'git init --initial-branch=1.x {{ dirSafe }}',
-                    ],
+                    $initStepGitInitCommon,
                 ],
                 'properties' => [
                     'filePathStyle' => FilePathStyle::Absolute,
