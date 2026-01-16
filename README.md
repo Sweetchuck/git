@@ -68,6 +68,7 @@ Using these commands instead of directly calling `\exec()` offers several advant
   * ✔ `git status`
   * ✔ `git ls-files`
   * ✔ `git ls-tree`
+  * 🛠 `git ls-remote`
   * ✔ `git check-ignore`
   * ✔ `git check-attr`
 * grow, mark and tweak your common history
@@ -113,7 +114,6 @@ Using these commands instead of directly calling `\exec()` offers several advant
 * other
   * ✔ `git --version`
   * ✔ `git --exec-path`
-  * 🛠 `git fmt-merge-msg`
   * 🛠 and a lot of other commands
 
 
