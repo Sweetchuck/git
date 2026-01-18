@@ -1061,8 +1061,10 @@ class Repository
 
     /**
      * @param array<string, mixed> $properties
+     *
+     * @return null|array<string, mixed>
      */
-    public function pullRefs(array $properties = []): static
+    public function pullRefs(array $properties = []): ?array
     {
         $result = $this
             ->populateCommonProperties($properties)
@@ -1072,13 +1074,15 @@ class Repository
             ->execute();
         $this->assertOutcome($result, [0]);
 
-        return $this;
+        return $result->artifacts;
     }
 
     /**
      * @param array<string, mixed> $properties
+     *
+     * @return null|array<string, mixed>
      */
-    public function fetchRefs(array $properties = []): static
+    public function fetchRefs(array $properties = []): ?array
     {
         $result = $this
             ->populateCommonProperties($properties)
@@ -1088,7 +1092,7 @@ class Repository
             ->execute();
         $this->assertOutcome($result, [0]);
 
-        return $this;
+        return $result->artifacts;
     }
 
     /**

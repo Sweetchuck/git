@@ -372,6 +372,7 @@ class GetBranchesTest extends CommandTestBase
                                 'track.gone' => false,
                                 'upstream' => 'refs/remotes/upstream/1.x',
                                 'upstream.short' => 'upstream/1.x',
+                                'isDetached' => false,
                             ],
                             'refs/heads/2.x' => [
                                 'isCurrentBranch' => false,
@@ -385,6 +386,7 @@ class GetBranchesTest extends CommandTestBase
                                 'track.gone' => false,
                                 'upstream' => 'refs/remotes/upstream/2.x',
                                 'upstream.short' => 'upstream/2.x',
+                                'isDetached' => false,
                             ],
                         ],
                         'currentBranch' => 'refs/heads/1.x',

@@ -11,7 +11,7 @@ class CommandResult
     public Process $process;
 
     /**
-     * @var array<string, mixed>
+     * @var null|array<string, mixed>
      */
     public ?array $artifacts = null;
 }
