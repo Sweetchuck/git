@@ -5,8 +5,11 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git\Tests\Unit\Command;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Sweetchuck\Git\Command\PushRefs;
+use Sweetchuck\Git\PushResult;
 
 #[CoversClass(PushRefs::class)]
 #[Group('command-git-push')]
@@ -28,6 +31,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                 ],
                 'properties' => [],
             ],
@@ -35,6 +40,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     'origin',
                     'main',
                 ],
@@ -47,6 +54,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--all',
                     '--prune',
                     '--mirror',
@@ -91,6 +100,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--no-all',
                     '--no-prune',
                     '--no-mirror',
@@ -131,6 +142,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--signed=if-asked',
                     '--push-option=foo=bar',
                     '--receive-pack=/usr/bin/git-receive-pack',
@@ -155,6 +168,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--ipv4',
                     'origin',
                     'main',
@@ -169,6 +184,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--ipv6',
                     'origin',
                     'main',
@@ -183,6 +200,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--recurse-submodules=check',
                     'origin',
                     'main',
@@ -197,6 +216,8 @@ class PushRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--push-option=key1=value1',
                     '--push-option=key2',
                     '--push-option=key3=value2',
@@ -218,6 +239,8 @@ class PushRefsTest extends CommandTestBase
                     'git',
                     '--git-dir=/path/to/.git',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--prune',
                     'origin',
                     'main',
@@ -236,6 +259,8 @@ class PushRefsTest extends CommandTestBase
                     '--work-tree=/path/to/worktree',
                     '-C', '/path/to/repo',
                     'push',
+                    '--porcelain',
+                    '--verbose',
                     '--prune',
                     'origin',
                     'main',
@@ -250,5 +275,87 @@ class PushRefsTest extends CommandTestBase
                 ],
             ],
         ];
+    }
+
+
+    /**
+     * @return array<string, mixed>
+     */
+    public static function casesExecute(): array
+    {
+        return [
+            'empty' => [
+                'expected' => [
+                    'artifacts' => [],
+                ],
+                'properties' => [],
+                'processOutcomes' => [
+                    [
+                        'exitCode' => 0,
+                        'stdOutput' => '',
+                        'stdError' => '',
+                    ],
+                ],
+            ],
+            'basic' => [
+                'expected' => [
+                    'artifacts' => [
+                        'refs/heads/1.x:refs/heads/1.x' => [
+                            'result' => PushResult::UpToDate,
+                            'refNameLocal' => 'refs/heads/1.x',
+                            'refNameRemote' => 'refs/heads/1.x',
+                            'message' => 'up to date',
+                        ],
+                    ],
+                ],
+                'properties' => [],
+                'processOutcomes' => [
+                    [
+                        'exitCode' => 0,
+                        'stdOutput' => implode(
+                            "\n",
+                            [
+                                "=\trefs/heads/1.x:refs/heads/1.x\t[up to date]",
+                            ],
+                        ),
+                        'stdError' => '',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $expected
+     * @param array<string, mixed> $properties
+     * @param array<array<string, int|string>> $processOutcomes
+     */
+    #[Test]
+    #[DataProvider('casesExecute')]
+    public function testExecute(array $expected, array $properties, array $processOutcomes = []): void
+    {
+        if (!array_key_exists('processFactory', $properties)) {
+            $properties['processFactory'] = $this->createProcessFactory($processOutcomes);
+        }
+
+        $command = $this->createCommand();
+        $command->setProperties($properties);
+        $result = $command->execute();
+
+        if (isset($expected['exitCode'])) {
+            static::assertSame($expected['exitCode'], $result->process->getExitCode());
+        }
+
+        if (isset($expected['stdOutput'])) {
+            static::assertSame($expected['stdOutput'], $result->process->getOutput());
+        }
+
+        if (isset($expected['stdError'])) {
+            static::assertSame($expected['stdError'], $result->process->getErrorOutput());
+        }
+
+        if (isset($expected['artifacts'])) {
+            static::assertSame($expected['artifacts'], $result->artifacts);
+        }
     }
 }

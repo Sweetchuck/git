@@ -11,6 +11,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Sweetchuck\Git\Command\PushRefs;
 use Sweetchuck\Git\Command\CliCommandBase;
 use Sweetchuck\Git\Command\CommandBase;
+use Sweetchuck\Git\PushResult;
 
 #[CoversClass(PushRefs::class)]
 #[CoversClass(CliCommandBase::class)]
@@ -39,7 +40,14 @@ class PushRefsTest extends CommandTestBase
             'push-single-branch' => [
                 'expected' => [
                     'exitCode' => 0,
-                    'artifacts' => null,
+                    'artifacts' => [
+                        'refs/heads/feature-1:refs/heads/feature-1' => [
+                            'result' => PushResult::NewRef,
+                            'refNameLocal' => 'refs/heads/feature-1',
+                            'refNameRemote' => 'refs/heads/feature-1',
+                            'message' => 'new branch',
+                        ],
+                    ],
                 ],
                 'initSteps' => [
                     $initStepGitInitCommon,
@@ -89,7 +97,20 @@ class PushRefsTest extends CommandTestBase
             'push-multiple-branches' => [
                 'expected' => [
                     'exitCode' => 0,
-                    'artifacts' => null,
+                    'artifacts' => [
+                        'refs/heads/feature-1:refs/heads/feature-1' => [
+                            'result' => PushResult::NewRef,
+                            'refNameLocal' => 'refs/heads/feature-1',
+                            'refNameRemote' => 'refs/heads/feature-1',
+                            'message' => 'new branch',
+                        ],
+                        'refs/heads/feature-2:refs/heads/feature-2' => [
+                            'result' => PushResult::NewRef,
+                            'refNameLocal' => 'refs/heads/feature-2',
+                            'refNameRemote' => 'refs/heads/feature-2',
+                            'message' => 'new branch',
+                        ],
+                    ],
                 ],
                 'initSteps' => [
                     $initStepGitInitCommon,
@@ -166,7 +187,7 @@ class PushRefsTest extends CommandTestBase
             'delete-remote-branch' => [
                 'expected' => [
                     'exitCode' => 0,
-                    'artifacts' => null,
+                    'artifacts' => [],
                 ],
                 'initSteps' => [
                     $initStepGitInitCommon,

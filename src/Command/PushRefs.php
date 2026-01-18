@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sweetchuck\Git\Command;
 
+use Sweetchuck\Git\CommandOptionType;
 use Sweetchuck\Git\Option\OptionAllTrait;
 use Sweetchuck\Git\Option\OptionAtomicTrait;
 use Sweetchuck\Git\Option\OptionDeleteTrait;
@@ -23,6 +24,8 @@ use Sweetchuck\Git\Option\OptionSignedTrait;
 use Sweetchuck\Git\Option\OptionTagsTrait;
 use Sweetchuck\Git\Option\OptionThinTrait;
 use Sweetchuck\Git\Option\OptionVerifyTrait;
+use Sweetchuck\Git\OutcomeParser\PushRefsParser;
+use Sweetchuck\Git\OutcomeParserInterface;
 
 /**
  * Represents the "git push" command.
@@ -55,6 +58,14 @@ class PushRefs extends CliCommandBase
     {
         parent::initProperties();
         $this->properties['command'] = ['push'];
+        $this->properties['commandOptions']['porcelain'] = [
+            'type' => CommandOptionType::StateBool,
+            'state' => true,
+        ];
+        $this->properties['commandOptions']['verbose'] = [
+            'type' => CommandOptionType::StateBool,
+            'state' => true,
+        ];
         $this->properties['commandArguments'][0] = null;
         $this
             ->initPropertyAll()
@@ -143,5 +154,10 @@ class PushRefs extends CliCommandBase
         $this->properties['commandArguments'] = [$this->getRepository(), ...$names];
 
         return $this;
+    }
+
+    protected function getDefaultOutcomeParser(): ?OutcomeParserInterface
+    {
+        return new PushRefsParser();
     }
 }
