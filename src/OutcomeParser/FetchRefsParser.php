@@ -18,7 +18,7 @@ class FetchRefsParser implements OutcomeParserInterface
         string $stdError,
         array $options = [],
     ): ?array {
-        if ($exitCode) {
+        if ($exitCode !== 0 && $exitCode !== 1) {
             return null;
         }
 

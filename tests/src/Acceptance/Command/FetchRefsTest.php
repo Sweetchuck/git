@@ -112,6 +112,175 @@ class FetchRefsTest extends CommandTestBase
                     ],
                 ],
             ],
+            'forced-update' => [
+                'expected' => [
+                    'exitCode' => 0,
+                    'artifacts' => [
+                        'refs/heads/main' => [
+                            'result' => FetchResult::ForcedUpdate,
+                            'ref' => 'refs/heads/main',
+                        ],
+                        'refs/remotes/upstream/main' => [
+                            'result' => FetchResult::UpToDate,
+                            'ref' => 'refs/remotes/upstream/main',
+                        ],
+                    ],
+                ],
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                    [
+                        'type' => 'exec',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }}/workspace \
+                            && touch a && git add a && git commit -m "Init" \
+                            && git push upstream main \
+                            && echo "v2" > a && git add a && git commit --amend -m "Init amended" \
+                            && git push upstream main --force \
+                            && git reset --hard HEAD@{1} \
+                            && git checkout --detach
+                            SHELL,
+                    ],
+                ],
+                'properties' => [
+                    'repository' => 'upstream',
+                    'refs' => ['main:main'],
+                    'force' => true,
+                ],
+            ],
+            'new-ref' => [
+                'expected' => [
+                    'exitCode' => 0,
+                    'artifacts' => [
+                        'refs/heads/feature-2' => [
+                            'result' => FetchResult::NewRef,
+                            'ref' => 'refs/heads/feature-2',
+                        ],
+                        'refs/remotes/upstream/feature-2' => [
+                            'result' => FetchResult::UpToDate,
+                            'ref' => 'refs/remotes/upstream/feature-2',
+                        ],
+                    ],
+                ],
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                    [
+                        'type' => 'exec',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }}/workspace \
+                            && touch a && git add a && git commit -m "Init" \
+                            && git push upstream main \
+                            && git checkout -b feature-2 \
+                            && touch b && git add b && git commit -m "Feature 2" \
+                            && git push upstream feature-2 \
+                            && git checkout main \
+                            && git branch -D feature-2
+                            SHELL,
+                    ],
+                ],
+                'properties' => [
+                    'repository' => 'upstream',
+                    'refs' => ['feature-2:feature-2'],
+                ],
+            ],
+            'prune' => [
+                'expected' => [
+                    'exitCode' => 0,
+                    'artifacts' => [
+                        'refs/remotes/upstream/main' => [
+                            'result' => FetchResult::UpToDate,
+                            'ref' => 'refs/remotes/upstream/main',
+                        ],
+                    ],
+                ],
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                    [
+                        'type' => 'exec',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }}/workspace \
+                            && touch a && git add a && git commit -m "Init" \
+                            && git push upstream main \
+                            && git checkout -b feature-1 \
+                            && git push upstream feature-1 \
+                            && git checkout main \
+                            && git fetch upstream \
+                            && git push upstream :feature-1
+                            SHELL,
+                    ],
+                ],
+                'properties' => [
+                    'repository' => 'upstream',
+                    'prune' => true,
+                ],
+            ],
+            'updated-tag' => [
+                'expected' => [
+                    'exitCode' => 0,
+                    'artifacts' => [
+                        'refs/heads/v1' => [
+                            'result' => FetchResult::NewRef,
+                            'ref' => 'refs/heads/v1',
+                        ],
+                    ],
+                ],
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                    [
+                        'type' => 'exec',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }}/workspace \
+                            && touch a && git add a && git commit -m "Init" \
+                            && git tag v1 \
+                            && git push upstream v1 \
+                            && touch b && git add b && git commit -m "Update" \
+                            && git tag -f v1 \
+                            && git push upstream v1 --force \
+                            && git tag -f v1 HEAD~1
+                            SHELL,
+                    ],
+                ],
+                'properties' => [
+                    'repository' => 'upstream',
+                    'refs' => ['v1:v1'],
+                    'force' => true,
+                ],
+            ],
+            'rejected' => [
+                'expected' => [
+                    'exitCode' => 1,
+                    'artifacts' => [
+                        'refs/heads/main' => [
+                            'result' => FetchResult::Rejected,
+                            'ref' => 'refs/heads/main',
+                        ],
+                        'refs/remotes/upstream/main' => [
+                            'result' => FetchResult::UpToDate,
+                            'ref' => 'refs/remotes/upstream/main',
+                        ],
+                    ],
+                ],
+                'initSteps' => [
+                    $initStepGitInitCommon,
+                    [
+                        'type' => 'exec',
+                        'command' => <<<'SHELL'
+                            cd {{ dirSafe }}/workspace \
+                            && touch a && git add a && git commit -m "Init" \
+                            && git push upstream main \
+                            && echo "upstream" > a && git add a && git commit -m "Upstream change" \
+                            && git push upstream main \
+                            && git reset --hard HEAD~1 \
+                            && echo "local" > a && git add a && git commit -m "Local change" \
+                            && git checkout --detach
+                            SHELL,
+                    ],
+                ],
+                'properties' => [
+                    'repository' => 'upstream',
+                    'refs' => ['main:main'],
+                    'force' => false,
+                ],
+            ],
         ];
     }
 
@@ -158,11 +327,21 @@ class FetchRefsTest extends CommandTestBase
                 static::assertSame(
                     array_keys($expected['artifacts']),
                     array_keys($result->artifacts),
+                    'artifacts keys match',
                 );
+
                 foreach ($expected['artifacts'] as $refName => $item) {
-                    static::assertSame($item['result'], $result->artifacts[$refName]['result']);
+                    static::assertSame(
+                        $item['result'],
+                        $result->artifacts[$refName]['result'],
+                        "artifacts.$refName.result match",
+                    );
                     // Keys "local" and "remote" are random SHA.
-                    static::assertSame($item['ref'], $result->artifacts[$refName]['ref']);
+                    static::assertSame(
+                        $item['ref'],
+                        $result->artifacts[$refName]['ref'],
+                        "artifacts.$refName.ref match",
+                    );
                 }
             }
         }

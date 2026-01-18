@@ -19,17 +19,18 @@ class FetchRefsParserTest extends TestCase
     public static function casesParse(): array
     {
         return [
+            // Exit code 1 still a valid result.
+            'error' => [
+                'expected' => null,
+                'exitCode' => 2,
+                'stdOutput' => '',
+                'stdError' => 'error',
+            ],
             'empty' => [
                 'expected' => [],
                 'exitCode' => 0,
                 'stdOutput' => '',
                 'stdError' => '',
-            ],
-            'error' => [
-                'expected' => null,
-                'exitCode' => 1,
-                'stdOutput' => '',
-                'stdError' => 'error',
             ],
             'basic' => [
                 'expected' => [
