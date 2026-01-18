@@ -11,6 +11,7 @@ use PHPUnit\Framework\Attributes\Group;
 use Sweetchuck\Git\Command\FetchRefs;
 use Sweetchuck\Git\Command\CliCommandBase;
 use Sweetchuck\Git\Command\CommandBase;
+use Sweetchuck\Git\FetchResult;
 
 #[CoversClass(FetchRefs::class)]
 #[CoversClass(CliCommandBase::class)]
@@ -39,7 +40,16 @@ class FetchRefsTest extends CommandTestBase
             'fetch-single-branch' => [
                 'expected' => [
                     'exitCode' => 0,
-                    'artifacts' => null,
+                    'artifacts' => [
+                        'refs/heads/feature-1' => [
+                            'result' => FetchResult::FastForward,
+                            'ref' => 'refs/heads/feature-1',
+                        ],
+                        'refs/remotes/upstream/feature-1' => [
+                            'result' => FetchResult::UpToDate,
+                            'ref' => 'refs/remotes/upstream/feature-1',
+                        ]
+                    ],
                 ],
                 'initSteps' => [
                     $initStepGitInitCommon,
@@ -140,7 +150,22 @@ class FetchRefsTest extends CommandTestBase
                 {$stdError}
                 TEXT,
         );
-        static::assertSame($expected['artifacts'], $result->artifacts);
+
+        if (array_key_exists('artifacts', $expected)) {
+            if ($expected['artifacts'] === null) {
+                static::assertNull($result->artifacts);
+            } else {
+                static::assertSame(
+                    array_keys($expected['artifacts']),
+                    array_keys($result->artifacts),
+                );
+                foreach ($expected['artifacts'] as $refName => $item) {
+                    static::assertSame($item['result'], $result->artifacts[$refName]['result']);
+                    // Keys "local" and "remote" are random SHA.
+                    static::assertSame($item['ref'], $result->artifacts[$refName]['ref']);
+                }
+            }
+        }
 
         $this->executeSteps($projectDir, $verifySteps);
     }

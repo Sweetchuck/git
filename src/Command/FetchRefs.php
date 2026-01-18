@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sweetchuck\Git\Command;
 
+use Sweetchuck\Git\CommandOptionType;
 use Sweetchuck\Git\Option\OptionAllTrait;
 use Sweetchuck\Git\Option\OptionAppendTrait;
 use Sweetchuck\Git\Option\OptionAtomicTrait;
@@ -34,6 +35,8 @@ use Sweetchuck\Git\Option\OptionUpdateShallowTrait;
 use Sweetchuck\Git\Option\OptionUploadPackTrait;
 use Sweetchuck\Git\Option\OptionWriteCommitGraphTrait;
 use Sweetchuck\Git\Option\OptionWriteFetchHeadTrait;
+use Sweetchuck\Git\OutcomeParser\FetchRefsParser;
+use Sweetchuck\Git\OutcomeParserInterface;
 
 /**
  * Represents the "git fetch" command.
@@ -81,6 +84,14 @@ class FetchRefs extends CliCommandBase
     {
         parent::initProperties();
         $this->properties['command'] = ['fetch'];
+        $this->properties['commandOptions']['porcelain'] = [
+            'type' => CommandOptionType::StateBool,
+            'state' => true,
+        ];
+        $this->properties['commandOptions']['verbose'] = [
+            'type' => CommandOptionType::StateBool,
+            'state' => true,
+        ];
         $this->properties['commandArguments'][0] = null;
         $this
             ->initPropertyAll()
@@ -191,5 +202,10 @@ class FetchRefs extends CliCommandBase
         $this->properties['commandArguments'] = [$this->getRepository(), ...$names];
 
         return $this;
+    }
+
+    protected function getDefaultOutcomeParser(): ?OutcomeParserInterface
+    {
+        return new FetchRefsParser();
     }
 }

@@ -5,8 +5,11 @@ declare(strict_types = 1);
 namespace Sweetchuck\Git\Tests\Unit\Command;
 
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Sweetchuck\Git\Command\FetchRefs;
+use Sweetchuck\Git\FetchResult;
 
 #[CoversClass(FetchRefs::class)]
 #[Group('command-git-fetch')]
@@ -28,6 +31,8 @@ class FetchRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                 ],
                 'properties' => [],
             ],
@@ -35,6 +40,8 @@ class FetchRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     'origin',
                     'main',
                 ],
@@ -47,6 +54,8 @@ class FetchRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     '--all',
                     '--append',
                     '--atomic',
@@ -97,6 +106,8 @@ class FetchRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     '--no-all',
                     '--no-append',
                     '--no-atomic',
@@ -147,6 +158,8 @@ class FetchRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     '--ipv4',
                     '--depth=5',
                     '--deepen=6',
@@ -183,6 +196,8 @@ class FetchRefsTest extends CommandTestBase
                 'expected' => [
                     'git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     '--server-option=key1=value1',
                     '--server-option=key2',
                     '--server-option=key3=value2',
@@ -204,6 +219,8 @@ class FetchRefsTest extends CommandTestBase
                     'git',
                     '--git-dir=/path/to/.git',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     '--prune',
                     'origin',
                     'main',
@@ -222,6 +239,8 @@ class FetchRefsTest extends CommandTestBase
                     '--work-tree=/path/to/worktree',
                     '-C', '/path/to/repo',
                     'fetch',
+                    '--porcelain',
+                    '--verbose',
                     '--prune',
                     'origin',
                     'main',
@@ -236,5 +255,101 @@ class FetchRefsTest extends CommandTestBase
                 ],
             ],
         ];
+    }
+
+
+    /**
+     * @return array<string, mixed>
+     */
+    public static function casesExecute(): array
+    {
+        return [
+            'empty' => [
+                'expected' => [
+                    'artifacts' => [],
+                ],
+                'properties' => [],
+                'processOutcomes' => [
+                    [
+                        'exitCode' => 0,
+                        'stdOutput' => '',
+                        'stdError' => '',
+                    ],
+                ],
+            ],
+            'basic' => [
+                'expected' => [
+                    'artifacts' => [
+                        'refs/heads/1.x' => [
+                            'result' => FetchResult::FastForward,
+                            'local' => 'sha_01',
+                            'remote' => 'sha_02',
+                            'ref' => 'refs/heads/1.x',
+                        ],
+                        'refs/heads/2.x' => [
+                            'result' => FetchResult::UpToDate,
+                            'local' => 'sha_03',
+                            'remote' => 'sha_03',
+                            'ref' => 'refs/heads/2.x',
+                        ],
+                        'refs/remotes/upstream/3.x' => [
+                            'result' => FetchResult::UpToDate,
+                            'local' => 'sha_04',
+                            'remote' => 'sha_04',
+                            'ref' => 'refs/remotes/upstream/3.x',
+                        ],
+                    ],
+                ],
+                'properties' => [],
+                'processOutcomes' => [
+                    [
+                        'exitCode' => 0,
+                        'stdOutput' => implode(
+                            "\n",
+                            [
+                                '  sha_01 sha_02 refs/heads/1.x',
+                                '= sha_03 sha_03 refs/heads/2.x',
+                                '= sha_04 sha_04 refs/remotes/upstream/3.x',
+                            ],
+                        ),
+                        'stdError' => '',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $expected
+     * @param array<string, mixed> $properties
+     * @param array<array<string, int|string>> $processOutcomes
+     */
+    #[Test]
+    #[DataProvider('casesExecute')]
+    public function testExecute(array $expected, array $properties, array $processOutcomes = []): void
+    {
+        if (!array_key_exists('processFactory', $properties)) {
+            $properties['processFactory'] = $this->createProcessFactory($processOutcomes);
+        }
+
+        $command = $this->createCommand();
+        $command->setProperties($properties);
+        $result = $command->execute();
+
+        if (isset($expected['exitCode'])) {
+            static::assertSame($expected['exitCode'], $result->process->getExitCode());
+        }
+
+        if (isset($expected['stdOutput'])) {
+            static::assertSame($expected['stdOutput'], $result->process->getOutput());
+        }
+
+        if (isset($expected['stdError'])) {
+            static::assertSame($expected['stdError'], $result->process->getErrorOutput());
+        }
+
+        if (isset($expected['artifacts'])) {
+            static::assertSame($expected['artifacts'], $result->artifacts);
+        }
     }
 }
