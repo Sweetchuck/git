@@ -302,16 +302,14 @@ class GetFilesInWorkingCopyTest extends CommandTestBase
         $command->setProperties($properties);
         $result = $command->execute();
 
-        if (array_key_exists('exitCode', $expected)) {
-            static::assertSame(
-                $expected['exitCode'],
-                $result->process->getExitCode(),
-                sprintf(
-                    "exit code match\n--== stdError BEGIN ==--\n%s\n--== stdError END ==--",
-                    $result->process->getErrorOutput(),
-                ),
-            );
-        }
+        static::assertSame(
+            $expected['exitCode'],
+            $result->process->getExitCode(),
+            sprintf(
+                "exit code match\n--== stdError BEGIN ==--\n%s\n--== stdError END ==--",
+                $result->process->getErrorOutput(),
+            ),
+        );
 
         if (array_key_exists('artifacts', $expected)) {
             static::assertSame(

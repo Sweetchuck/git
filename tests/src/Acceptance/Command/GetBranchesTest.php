@@ -29,6 +29,7 @@ class GetBranchesTest extends CommandTestBase
                     'artifacts' => [
                         'branches' => [],
                         'currentBranch' => null,
+                        'currentBranch.short' => null,
                     ],
                 ],
                 'initSteps' => [
@@ -58,6 +59,7 @@ class GetBranchesTest extends CommandTestBase
                             ],
                         ],
                         'currentBranch' => 'refs/heads/1.x',
+                        'currentBranch.short' => '1.x',
                     ],
                 ],
                 'initSteps' => [
@@ -122,6 +124,7 @@ class GetBranchesTest extends CommandTestBase
                             ],
                         ],
                         'currentBranch' => 'refs/heads/feature',
+                        'currentBranch.short' => 'feature',
                     ],
                 ],
                 'initSteps' => [
@@ -204,6 +207,7 @@ class GetBranchesTest extends CommandTestBase
                             ],
                         ],
                         'currentBranch' => 'refs/heads/feature',
+                        'currentBranch.short' => 'feature',
                     ],
                 ],
                 'initSteps' => [

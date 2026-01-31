@@ -390,6 +390,7 @@ class GetBranchesTest extends CommandTestBase
                             ],
                         ],
                         'currentBranch' => 'refs/heads/1.x',
+                        'currentBranch.short' => '1.x',
                     ],
                 ],
                 'properties' => [],

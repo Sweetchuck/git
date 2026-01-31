@@ -26,6 +26,25 @@ class CommandTestBase extends TestBase
     }
 
     /**
+     * Git exports variables like GIT_AUTHOR_EMAIL and GIT_INDEX_FILE when it
+     * runs a hook (for example "pre-commit"). They would leak into the test
+     * repositories and override their local configuration.
+     *
+     * @return array<string, false>
+     */
+    protected static function getGitEnvVarsToUnset(): array
+    {
+        $envVars = [];
+        foreach (array_keys(getenv()) as $name) {
+            if (str_starts_with($name, 'GIT_')) {
+                $envVars[$name] = false;
+            }
+        }
+
+        return $envVars;
+    }
+
+    /**
      * @param array<array<string, mixed>> $steps
      */
     protected function executeSteps(string $dir, array $steps): static
@@ -41,7 +60,11 @@ class CommandTestBase extends TestBase
                         'expectedExitCode' => 0,
                     ];
                     $command = strtr($step['command'], $replacementPairs);
-                    $process = new Process(['bash', '-c', $command]);
+                    $process = new Process(
+                        ['bash', '-c', $command],
+                        null,
+                        static::getGitEnvVarsToUnset(),
+                    );
                     $process->run();
                     if ($process->getExitCode() !== $step['expectedExitCode']) {
                         throw new \RuntimeException(sprintf(

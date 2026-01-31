@@ -7,7 +7,6 @@ namespace Sweetchuck\Git\Tests\Unit\OutcomeParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use Sweetchuck\Git\FileStatus;
 use PHPUnit\Framework\TestCase;
 use Sweetchuck\Git\OutcomeParser\GetBranchesParser;
 
@@ -80,6 +79,7 @@ class GetBranchesParserTest extends TestCase
                 'expected' => [
                     'branches' => [],
                     'currentBranch' => null,
+                    'currentBranch.short' => null,
                 ],
                 'stdOutput' => '',
                 'options' => $branchOptions,
@@ -103,6 +103,7 @@ class GetBranchesParserTest extends TestCase
                         ],
                     ],
                     'currentBranch' => 'refs/heads/1.x',
+                    'currentBranch.short' => '1.x',
                 ],
                 'stdOutput' => implode(
                     '',
@@ -149,6 +150,7 @@ class GetBranchesParserTest extends TestCase
                         ],
                     ],
                     'currentBranch' => 'refs/heads/1.x',
+                    'currentBranch.short' => '1.x',
                 ],
                 'stdOutput' => implode(
                     '',
@@ -201,6 +203,7 @@ class GetBranchesParserTest extends TestCase
                         ],
                     ],
                     'currentBranch' => 'abcd123',
+                    'currentBranch.short' => 'abcd123',
                 ],
                 'stdOutput' => implode(
                     '',

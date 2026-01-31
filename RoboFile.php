@@ -250,9 +250,9 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
         if ($this->environmentType === 'dev' && $this->environmentName === 'local') {
             $prodNamespace = array_search('src/', $this->composerInfo['autoload']['psr-4'] ?? []);
             $prodNamespace = trim((string) $prodNamespace, '\\');
-            // @phpstan-ignore-next-line
             $taskList['phpstanGeneratePhp.prod'] = $this
                 ->taskPhpstanGeneratePhp()
+                // @phpstan-ignore-next-line
                 ->setSrcFiles(
                     (new Finder())
                         ->in('./.phpstan')
@@ -265,9 +265,9 @@ class RoboFile extends Tasks implements LoggerAwareInterface, ConfigAwareInterfa
 
         $devNamespace = array_search('tests/src/', $this->composerInfo['autoload-dev']['psr-4'] ?? []);
         $devNamespace = trim((string) $devNamespace, '\\');
-        // @phpstan-ignore-next-line
         $taskList['phpstanGeneratePhp.dev'] = $this
             ->taskPhpstanGeneratePhp()
+            // @phpstan-ignore-next-line
             ->setSrcFiles(
                 (new Finder())
                     ->in('./.phpstan')

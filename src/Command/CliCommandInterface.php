@@ -33,6 +33,21 @@ interface CliCommandInterface
 
     public function setWorkTree(?string $dir): static;
 
+    /**
+     * @return ?array<string, string>
+     */
+    public function getEnvVars(): ?array;
+
+    /**
+     * @param ?array<string, string> $envVars
+     */
+    public function setEnvVars(?array $envVars): static;
+
+    /**
+     * @param array<string, ?string> $envVars
+     */
+    public function updateEnvVars(array $envVars): static;
+
     public function getCwd(): ?string;
 
     public function setCwd(?string $dir): static;

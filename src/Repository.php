@@ -27,6 +27,49 @@ class Repository
         return $this->topLevel;
     }
 
+    // region extraEnvVars
+    /**
+     * @var array<string, string>
+     */
+    protected array $envVars = [];
+
+    /**
+     * @return array<string, string>
+     */
+    public function getExtraEnvVars(): array
+    {
+        return $this->envVars;
+    }
+
+    /**
+     * @param array<string, string> $envVars
+     */
+    public function setExtraEnvVars(array $envVars): static
+    {
+        $this->envVars = $envVars;
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, ?string> $envVars
+     */
+    public function updateExtraEnvVars(array $envVars): static
+    {
+        foreach ($envVars as $name => $value) {
+            if ($value === null) {
+                unset($this->envVars[$name]);
+
+                continue;
+            }
+
+            $this->envVars[$name] = $value;
+        }
+
+        return $this;
+    }
+    // endregion
+
     /**
      * @param string $topLevel
      *   The top-level directory of a valid Git repository.
@@ -1132,6 +1175,12 @@ class Repository
      */
     protected function populateCommonProperties(array &$properties): static
     {
+        $extraEnvVars = $this->getExtraEnvVars();
+        if ($extraEnvVars) {
+            $properties['envVars'] = $properties['envVars'] ?? [];
+            $properties['envVars'] += $extraEnvVars;
+        }
+
         $properties['cwd'] = $this->topLevel;
         $properties['topLevel'] = $this->topLevel;
 

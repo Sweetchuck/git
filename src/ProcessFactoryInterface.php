@@ -10,6 +10,21 @@ interface ProcessFactoryInterface
 {
 
     /**
+     * @return array<string, string>
+     */
+    public function getExtraEnvVars(): array;
+
+    /**
+     * @param array<string, string> $envVars
+     */
+    public function setExtraEnvVars(array $envVars): static;
+
+    /**
+     * @param array<string, ?string> $envVars
+     */
+    public function updateExtraEnvVars(array $envVars): static;
+
+    /**
      * @param array<string> $command
      * @param null|array<string> $env
      */

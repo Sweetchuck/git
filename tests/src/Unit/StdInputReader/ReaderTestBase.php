@@ -59,6 +59,7 @@ abstract class ReaderTestBase extends TestBase
         foreach ($reader as $key => $item) {
             static::assertSame($lines[$key], (string) $item);
         }
+        // @phpstan-ignore-next-line
         static::assertCount(count($lines), $reader);
     }
 }

@@ -27,6 +27,7 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
     {
         $this->properties = [
             'workingDirectory' => null,
+            // @todo Change the default value from empty array to null.
             'envVars' => [],
             'executable' => 'git',
             'globalOptions' => [
@@ -128,6 +129,34 @@ class CliCommandBase extends CommandBase implements CliCommandInterface
     public function setEnvVars(?array $envVars): static
     {
         $this->properties['envVars'] = $envVars;
+
+        return $this;
+    }
+
+    /**
+     * @param ?array<string, ?string> $envVars
+     */
+    public function updateEnvVars(?array $envVars): static
+    {
+        if ($envVars === null) {
+            $this->setEnvVars(null);
+
+            return $this;
+        }
+
+        foreach ($envVars as $name => $value) {
+            if ($value === null) {
+                unset($this->properties['envVars'][$name]);
+
+                continue;
+            }
+
+            $this->properties['envVars'][$name] = $value;
+        }
+
+        if (!$this->properties['envVars']) {
+            $this->properties['envVars'] = null;
+        }
 
         return $this;
     }

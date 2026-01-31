@@ -69,9 +69,11 @@ class GetBranchesParser extends FormatParser
     {
         $topKey = $options['assetKey'];
         $artifacts['currentBranch'] = null;
+        $artifacts['currentBranch.short'] = null;
         foreach ($artifacts[$topKey] ?? [] as $branch) {
             if (!empty($branch['isCurrentBranch'])) {
                 $artifacts['currentBranch'] = $branch['refName'];
+                $artifacts['currentBranch.short'] = $branch['refName.short'];
 
                 break;
             }
